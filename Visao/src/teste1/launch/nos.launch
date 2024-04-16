@@ -1,0 +1,5 @@
+<launch>
+<node name="talker" pkg="teste1" type="publisher"/>
+<node name="orelha" pkg="teste1" type="subscriber"/>
+
+</launch>

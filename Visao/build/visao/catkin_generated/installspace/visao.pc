@@ -1,0 +1,8 @@
+prefix=/home/arthur/Projects/TREEKING2K24/Visao/install
+
+Name: visao
+Description: Description of visao
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

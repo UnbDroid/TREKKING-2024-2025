@@ -1,0 +1,8 @@
+prefix=/home/arthur/Projects/TREEKING2K24/Visao/devel
+
+Name: teste1
+Description: Description of teste1
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

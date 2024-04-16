@@ -1,0 +1,15 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/droid/Documentos/EstudosRos/catkin_arthur/devel/lib/python3/dist-packages",
+        "/home/droid/ros_catkin_ws/install_isolated/lib/python3/dist-packages",
+        "/home/droid/ros_catkin_ws/install_isolated/lib/python3.9/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/droid/Documentos/EstudosRos/catkin_arthur/devel/lib/python3/dist-packages",
+        "/home/droid/ros_catkin_ws/install_isolated/lib/python3/dist-packages",
+        "/home/droid/ros_catkin_ws/install_isolated/lib/python3.9/site-packages"
+    ],
+    "files.associations": {
+        "iostream": "cpp"
+    }
+}
