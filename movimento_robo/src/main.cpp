@@ -3,6 +3,10 @@
 #include "Wire.h"
 #include "Servo.h"
 
+//TODO: Criar objetos para motores e sensores e passar as funções para lá
+//TODO: Separar em bibliotecas estilo .h e .cpp
+//TODO: Mudar o README para ter um tutorial de como usar o código
+
 // Declarações do motor -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #define ENCA 3 // YELLOW
