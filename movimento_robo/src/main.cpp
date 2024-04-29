@@ -46,7 +46,7 @@ const float kd = 0.0;
 bfs::Mpu9250 imu; // Criação do objeto imu da classe Mpu9250
 int status; // Status do sensor
 
-const double deg_to_rad = 3.14159265358979; // Fator de conversão de graus para radianos (caso precisemos)
+const double deg_to_rad = 3.14159265358979; // Fator de conversão de graus para radianos (caso precisemos) (vulgo pi para os mais íntimos)
 
 // Parâmetros do filtro (constantes de controle dos valores de movimento dos eixos)
 const float alpha_x = 0.45;
