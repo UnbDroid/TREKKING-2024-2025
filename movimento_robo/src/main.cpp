@@ -1,6 +1,7 @@
 #include "Arduino.h"
 #include "mpu9250.h"
 #include "Wire.h"
+#include "Servo.h"
 
 // Declarações do motor -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -26,6 +27,18 @@ float eintegral = 0; // ki do controle PID
 
 int dir = 1; // 1 para frente, -1 para trás (pelo menos essa é a ideia)
 
+const int encoder_volta = 1044; // valor de encoder referente a uma volta completa da roda
+
+// Constantes do PID
+const float kp = 5.0;
+const float ki = 3.0;
+const float kd = 0.0;
+
+//float kp = 5.0;
+//float ki = 3.0;
+//float kd = 0.0;
+//! Todos sujeitos a mudanças conforme necessário
+
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Declarações do MPU9250 ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -50,7 +63,15 @@ float prev_gyro_z_rad = 0.0; // Valor anterior do giroscópio em radianos
 float gyro_x_rad, gyro_y_rad, gyro_z_rad; // Valores atuais do giroscópio em radianos
 float accel_x_g, accel_y_g, accel_z_g; // Valores atuais do acelerômetro em g (aceleração da gravidade)
 
-// Funções adicionais do código -----------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Declarações do Servo -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Servo volante; // Criação do objeto servo da classe Servo
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Funções adicionais do código ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Função para controle da direção e velocidade do motor
 
@@ -82,79 +103,10 @@ void readEncoder(){
   }
 }
 
-// Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-void setup() {
-
-  // Início da comunicação serial
-  Serial.begin(9600);
-
-  // Declaração de pinos dos motores {
-    pinMode(ENCA, INPUT);
-    pinMode(ENCB, INPUT);
-    pinMode(PWM, OUTPUT);
-    pinMode(IN1, OUTPUT);
-    pinMode(IN2, OUTPUT);
-    attachInterrupt(digitalPinToInterrupt(ENCA), readEncoder, RISING);
-  //}
-
-  while (!Serial) {} // Aguarda a comunicação serial ser estabelecida
-
-  Wire.begin(); // Inicia a comunicação I2C
-  Wire.setClock(400000); // Define a velocidade da comunicação I2C
-
-  imu.Config(&Wire, bfs::Mpu9250::I2C_ADDR_PRIM); // Configura o sensor imu
-
-  // Início da comunicação com o sensor imu
-
-  if (!imu.Begin()) { // Se não conseguir iniciar a comunicação com o sensor imu
-    Serial.println("Erro ao inicializar a comunicação com o sensor imu");
-    while(1) {}
-  }
-
-  if (!imu.ConfigSrd(19)) { // Se não conseguir configurar o SRD
-    Serial.println("Erro ao configurar o SRD");
-    while(1) {}
-  }
-
-}
-
-void loop() {
-  imu.Read(); // Lê os dados do sensor imu
-
-  int encoder_volta = 1044; // valor de encoder referente a uma volta completa da roda
-
-  // Constantes do PID
-  float kp = 5.0;
-  float ki = 3.0;
-  float kd = 0.0;
-  // Todos sujeitos a mudanças conforme necessário
-
-  // Cálculo do tempo decorrido
-  long T = millis(); // tempo atual em milissegundos
-  float dt = (T - prevT)/1000.0; // tempo decorrido em segundos em relação a última medição
-  prevT = T; // atualiza o tempo anterior
-
-  // Definir valores do giroscópio em radianos
-  gyro_x_rad = imu.gyro_x_radps();
-  gyro_y_rad = imu.gyro_y_radps();
-  gyro_z_rad = imu.gyro_z_radps();
-
-  // Definir valores do acelerômetro em g
-  accel_x_g = imu.accel_x_mps2() / 9.81;
-  accel_y_g = imu.accel_y_mps2() / 9.81;
-  accel_z_g = imu.accel_z_mps2() / 9.81;
-
-  // Cálculo do ângulo de roll e pitch usando o acelerômetro (estimativa inicial)
-  roll_angle = atan2(accel_y_g, accel_z_g) * deg_to_rad;
-  pitch_angle = atan2(accel_x_g, accel_z_g) * deg_to_rad;
-
-  // Filtro de Kalman para o ângulo de roll, pitch e yaw (x, y e z respectivamente)
-  roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1 - alpha_x) * roll_angle;
-  pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1 - alpha_y) * pitch_angle;
-  if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += gyro_z_rad * dt;}
-  delay(10); // delay para evitar problemas de leitura do encoder e do MPU9250
-
+void andar_reto(int velocidade_rpm) { // Função para fazer o robô andar reto
+  //! Ainda não testada
+  rpm_referencia = velocidade_rpm; // Velocidade de referência
+  
   // Leitura do encoder
   double posi_atual = 0; // posição atual do encoder
   noInterrupts(); // desabilita interrupções (não sei exatamente o porquê de usar isso, mas sei que funciona assim ent neh galerinha kkkkk)
@@ -205,5 +157,107 @@ void loop() {
 
   // Envio do sinal de controle ao motor
   setMotor(dir, pwmVal, PWM, IN1, IN2);
+}
 
+void virar_volante(int angulo) { // Função para fazer o robô virar
+  //! Ainda não testada
+  volante.write(angulo); // Manda o servo virar para o ângulo desejado
+}
+
+void virar_robo(int angulo) { // Função para fazer o robô virar
+  //! Ainda não testada
+  valor_angulacao_atual = yaw_angle; // Valor atual do ângulo de yaw (z)
+  while (yaw_angle < valor_angulacao_atual + angulo) { // Enquanto o robô não atingir o ângulo desejado
+    if ((valor_angulacao_atual + angulo) - yaw_angle > 35) { // Se a diferença entre o ângulo desejado e o atual for menor que 10 graus
+      virar_volante(35); // Manda o servo virar para o ângulo desejado
+    } else if ((valor_angulacao_atual + angulo) - yaw_angle < (-35)) { // Se a diferença entre o ângulo desejado e o atual for maior que 10 graus
+      virar_volante(-35); // Manda o servo virar para o ângulo desejado
+    } else {
+      virar_volante((valor_angulacao_atual + angulo) - yaw_angle); // Manda o servo virar para o ângulo desejado
+    }
+    andar_reto(80); // O robô anda reto
+  }
+
+}
+
+void leitura_MPU() {
+  //! Ainda não testada
+  imu.Read(); // Lê os dados do sensor imu
+  
+  // Definir valores do giroscópio em radianos
+  gyro_x_rad = imu.gyro_x_radps();
+  gyro_y_rad = imu.gyro_y_radps();
+  gyro_z_rad = imu.gyro_z_radps();
+
+  // Definir valores do acelerômetro em g
+  accel_x_g = imu.accel_x_mps2() / 9.81;
+  accel_y_g = imu.accel_y_mps2() / 9.81;
+  accel_z_g = imu.accel_z_mps2() / 9.81;
+
+  // Cálculo do ângulo de roll e pitch usando o acelerômetro (estimativa inicial)
+  roll_angle = atan2(accel_y_g, accel_z_g) * deg_to_rad;
+  pitch_angle = atan2(accel_x_g, accel_z_g) * deg_to_rad;
+
+  // Filtro de Kalman para o ângulo de roll, pitch e yaw (x, y e z respectivamente)
+  roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1 - alpha_x) * roll_angle;
+  pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1 - alpha_y) * pitch_angle;
+  if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += gyro_z_rad * dt;}
+  delay(10); // delay para evitar problemas de leitura do encoder e do MPU9250
+}
+
+// Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setup() {
+
+  // Início da comunicação serial
+  Serial.begin(9600);
+
+  // Declaração de pinos dos motores {
+
+    pinMode(ENCA, INPUT);
+    pinMode(ENCB, INPUT);
+    pinMode(PWM, OUTPUT);
+    pinMode(IN1, OUTPUT);
+    pinMode(IN2, OUTPUT);
+    attachInterrupt(digitalPinToInterrupt(ENCA), readEncoder, RISING);
+
+  //}
+
+  // Início da comunicação com o MPU9250 {
+
+    while (!Serial) {} // Aguarda a comunicação serial ser estabelecida
+
+    Wire.begin(); // Inicia a comunicação I2C
+    Wire.setClock(400000); // Define a velocidade da comunicação I2C
+
+    imu.Config(&Wire, bfs::Mpu9250::I2C_ADDR_PRIM); // Configura o sensor imu
+
+    // Início da comunicação com o sensor imu
+
+    if (!imu.Begin()) { // Se não conseguir iniciar a comunicação com o sensor imu
+      Serial.println("Erro ao inicializar a comunicação com o sensor imu");
+      while(1) {}
+    }
+
+    if (!imu.ConfigSrd(19)) { // Se não conseguir configurar o SRD
+      Serial.println("Erro ao configurar o SRD");
+      while(1) {}
+    }
+
+  // }
+
+  // Início da comunicação com o Servo {
+
+    volante.attach(9); // Pino do servo
+
+  // }
+
+}
+
+void loop() {
+  // Cálculo do tempo decorrido
+  long T = millis(); // tempo atual em milissegundos
+  float dt = (T - prevT)/1000.0; // tempo decorrido em segundos em relação a última medição
+  prevT = T; // atualiza o tempo anterior
+  leitura_MPU(); // Lê os dados do sensor imu
 }
