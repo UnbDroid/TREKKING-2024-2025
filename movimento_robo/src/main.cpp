@@ -22,6 +22,7 @@ double rps_max = 5.75; // velocidade máxima do motor (apenas por curiosidade, u
 double comprimento_roda = 6*2*3.1415; // Usado para cálculo dos valores em cm (velocidade e espaço percorrido)
 
 long prevT = 0; // tempo anterior para calcular a velocidade do motor
+
 float eprev = 0;
 float eintegral = 0; // ki do controle PID
 
@@ -33,10 +34,6 @@ const int encoder_volta = 1044; // valor de encoder referente a uma volta comple
 const float kp = 5.0;
 const float ki = 3.0;
 const float kd = 0.0;
-
-//float kp = 5.0;
-//float ki = 3.0;
-//float kd = 0.0;
 //! Todos sujeitos a mudanças conforme necessário
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
