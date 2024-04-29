@@ -104,7 +104,11 @@ void readEncoder(){
 }
 
 void andar_reto(int velocidade_rpm) { // Função para fazer o robô andar reto
+  
+  //!
   //! Ainda não testada
+  //!
+  
   rpm_referencia = velocidade_rpm; // Velocidade de referência
   
   // Leitura do encoder
@@ -160,28 +164,19 @@ void andar_reto(int velocidade_rpm) { // Função para fazer o robô andar reto
 }
 
 void virar_volante(int angulo) { // Função para fazer o robô virar
+  
+  //!
   //! Ainda não testada
+  //!
+  
   volante.write(angulo); // Manda o servo virar para o ângulo desejado
 }
-
-void virar_robo(int angulo) { // Função para fazer o robô virar
-  //! Ainda não testada
-  valor_angulacao_atual = yaw_angle; // Valor atual do ângulo de yaw (z)
-  while (yaw_angle < valor_angulacao_atual + angulo) { // Enquanto o robô não atingir o ângulo desejado
-    if ((valor_angulacao_atual + angulo) - yaw_angle > 35) { // Se a diferença entre o ângulo desejado e o atual for menor que 10 graus
-      virar_volante(35); // Manda o servo virar para o ângulo desejado
-    } else if ((valor_angulacao_atual + angulo) - yaw_angle < (-35)) { // Se a diferença entre o ângulo desejado e o atual for maior que 10 graus
-      virar_volante(-35); // Manda o servo virar para o ângulo desejado
-    } else {
-      virar_volante((valor_angulacao_atual + angulo) - yaw_angle); // Manda o servo virar para o ângulo desejado
-    }
-    andar_reto(80); // O robô anda reto
-  }
-
-}
-
 void leitura_MPU() {
+  
+  //!
   //! Ainda não testada
+  //!
+  
   imu.Read(); // Lê os dados do sensor imu
   
   // Definir valores do giroscópio em radianos
@@ -204,6 +199,32 @@ void leitura_MPU() {
   if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += gyro_z_rad * dt;}
   delay(10); // delay para evitar problemas de leitura do encoder e do MPU9250
 }
+
+void virar_robo(int angulo) { // Função para fazer o robô virar
+  
+  //!
+  //! Ainda não testada
+  //!
+  
+  leitura_MPU(); // Lê os dados do sensor imu
+  int giro_volante = 0; // Valor de giro do volante
+  int valor_angulacao_atual = yaw_angle; // Valor atual do ângulo de yaw (z)
+  while (yaw_angle < valor_angulacao_atual + angulo) { // Enquanto o robô não atingir o ângulo desejado
+    leitura_MPU(); // Lê os dados do sensor imu
+    if ((valor_angulacao_atual + angulo) - yaw_angle > 35) { // Se a diferença entre o ângulo desejado e o atual for menor que 10 graus
+      giro_volante = 35
+    } else if ((valor_angulacao_atual + angulo) - yaw_angle < (-35)) { // Se a diferença entre o ângulo desejado e o atual for maior que 10 graus
+      giro_volante = -35;
+    } else {
+      giro_volante = (valor_angulacao_atual + angulo) - yaw_angle; // Gira o volante para o ângulo desejado
+    }
+    virar_volante(giro_volante); // O volante gira para o ângulo desejado
+    int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
+    andar_reto(); // O robô anda reto
+  }
+
+}
+
 
 // Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
 
