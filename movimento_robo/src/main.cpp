@@ -26,6 +26,8 @@ double rps_max = 5.75; // velocidade máxima do motor (apenas por curiosidade, u
 double comprimento_roda = 6*2*3.1415; // Usado para cálculo dos valores em cm (velocidade e espaço percorrido)
 
 long prevT = 0; // tempo anterior para calcular a velocidade do motor
+long T = millis(); // tempo atual em milissegundos
+float dt = (T - prevT)/1000.0; // tempo decorrido em segundos em relação a última medição
 
 float eprev = 0;
 float eintegral = 0; // ki do controle PID
@@ -213,7 +215,7 @@ void virar_robo(int angulo) { // Função para fazer o robô virar
   while (yaw_angle < valor_angulacao_atual + angulo) { // Enquanto o robô não atingir o ângulo desejado
     leitura_MPU(); // Lê os dados do sensor imu
     if ((valor_angulacao_atual + angulo) - yaw_angle > 35) { // Se a diferença entre o ângulo desejado e o atual for menor que 10 graus
-      giro_volante = 35
+      giro_volante = 35;
     } else if ((valor_angulacao_atual + angulo) - yaw_angle < (-35)) { // Se a diferença entre o ângulo desejado e o atual for maior que 10 graus
       giro_volante = -35;
     } else {
@@ -221,7 +223,7 @@ void virar_robo(int angulo) { // Função para fazer o robô virar
     }
     virar_volante(giro_volante); // O volante gira para o ângulo desejado
     int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-    andar_reto(); // O robô anda reto
+    andar_reto(velocidade_rpm); // O robô anda reto
   }
 
 }
@@ -278,8 +280,8 @@ void setup() {
 
 void loop() {
   // Cálculo do tempo decorrido
-  long T = millis(); // tempo atual em milissegundos
-  float dt = (T - prevT)/1000.0; // tempo decorrido em segundos em relação a última medição
+  T = millis(); // tempo atual em milissegundos
+  dt = (T - prevT)/1000.0; // tempo decorrido em segundos em relação a última medição
   prevT = T; // atualiza o tempo anterior
   leitura_MPU(); // Lê os dados do sensor imu
 }
