@@ -86,4 +86,7 @@ void loop() {
   nh.spinOnce();
   delay(1);
 
+  // Ler encoder do motor
+  robo.motor.ler_encoder();
+
 }

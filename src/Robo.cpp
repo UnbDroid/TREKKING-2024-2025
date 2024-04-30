@@ -7,17 +7,20 @@
 #include "Wire.h"
 #include "Tempo.h"
 
+// Construtor da classe Robo
 Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
 : motor(motor), volante(volante), giroscopio(giroscopio)
 {
     Serial.println("Robo construido");
 }
 
+// Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
     //!
     //! Ainda não testada
     //!
+
     motor.rpm_referencia = velocidade_rpm; // Velocidade de referência
   
     double posi_atual = 0; // posição atual do encoder
@@ -58,6 +61,14 @@ void Robo::andar_reto(int velocidade_rpm)
     motor.ligar_motor(motor.dir, pwmVal);
 }
 
+void Robo::andar_reto_cm(int distancia_cm, int velocidade_rpm = 100) {
+    //TODO: Alterar o valor do comprimento da roda para o valor correto
+    while ((motor.posi / motor.encoder_volta) * motor.comprimento_roda < distancia_cm) {
+        andar_reto(velocidade_rpm);
+    }
+}
+
+// Função para fazer o robô virar para um ângulo específico
 void Robo::virar_robo(int angulo)
 {
     //!

@@ -15,7 +15,7 @@ class MotorDC{
         double rps = 0; // velocidade ATUAL do motor em radianos por segundo
         int rpm_referencia = 80; // velocidade desejada do motor, velocidade que ele buscará alcançar
         double rps_max = 5.75; // velocidade máxima do motor (apenas por curiosidade, usar caso seja necessário)
-        double comprimento_roda = 6*2*3.1415; // Usado para cálculo dos valores em cm (velocidade e espaço percorrido)
+        double comprimento_roda = 6*2*3.1415; //TODO: medir o comprimento da roda real
         float eprev = 0;
         float eintegral = 0; // ki do controle PID
         int dir = 1; // 1 para frente, -1 para trás (pelo menos essa é a ideia)
