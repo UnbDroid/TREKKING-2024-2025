@@ -1,8 +1,5 @@
 #include "Arduino.h"
-#include "mpu9250.h"
-#include "Wire.h"
 #include "Volante.h"
-#include "Servo.h"
 #include "Giroscopio.h"
 #include "MotorDC.h"
 #include "Pinos.h"
