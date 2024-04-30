@@ -77,6 +77,6 @@ void Robo::virar_robo(int angulo)
         }
         volante.virar_volante(giro_volante); // O volante gira para o ângulo desejado
         int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-        motor.andar_reto(1, velocidade_rpm); // O robô anda reto
+        motor.ligar_motor(1, velocidade_rpm); // O robô anda reto
     }
 }

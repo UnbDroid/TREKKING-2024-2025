@@ -6,6 +6,7 @@
 #include "Giroscopio.h"
 #include "MotorDC.h"
 #include "Pinos.h"
+#include "Robo.h"
 #include "Tempo.h"
 
 //TODO: Adicionar bibliotecas e funções necessárias para o ROSSerial (Raspberry Pi-Arduino)
@@ -16,9 +17,13 @@
 MotorDC motor_dc(ENCA, ENCB, PWM, IN1, IN2);
 Volante volante(SERVO);
 Giroscopio giroscopio;
+Robo robo(motor_dc, volante, giroscopio);
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+double T;
+double prevT;
+double dt;
 
 // Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
 
