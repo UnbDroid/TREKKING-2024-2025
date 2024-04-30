@@ -5,16 +5,19 @@
 #include "Wire.h"
 #include "mpu9250.h"
 
+//* Este arquivo contém a declaração da classe Giroscopio, que é responsável por 
+//* controlar o sensor MPU9250 e fornecer os valores de roll(x), pitch(y) e yaw(z) do sensor
+
 class Giroscopio{
     public:
-        Giroscopio();
-        float get_roll();
-        float get_pitch();
-        float get_yaw();
+        Giroscopio(); // Construtor da classe Giroscopio
+        float get_roll(); // Função para obter o valor de roll(x) do sensor
+        float get_pitch(); // Função para obter o valor de pitch(y) do sensor
+        float get_yaw(); // Função para obter o valor de yaw(z) do sensor
     private:
         bfs::Mpu9250 imu; // Criação do objeto imu da classe Mpu9250
         int status; // Status do sensor
-        const double deg_to_rad = 3.14159265358979; // Fator de conversão de graus para radianos (caso precisemos) (vulgo pi para os mais íntimos)
+        const double deg_to_rad = (180/3.14159265358979); // Fator de conversão de graus para radianos (caso precisemos) (vulgo pi para os mais íntimos)
         // Parâmetros do filtro (constantes de controle dos valores de movimento dos eixos)
         const float alpha_x = 0.45;
         const float alpha_y = 0.45;

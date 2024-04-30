@@ -1,11 +1,13 @@
 #ifndef __Pinos_h
 #define __Pinos_h
 
+//* Este arquivo contém a declaração dos pinos utilizados no projeto
+
 // Declarações do motor -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#define ENCA 3 // YELLOW
-#define ENCB 8 // WHITE
-#define PWM 5
+#define ENCA 3 // Cabo amarelo
+#define ENCB 8 // Cabo branco
+#define PWM 5 
 #define IN1 6
 #define IN2 7
 
@@ -15,6 +17,7 @@
 
 #define SDA 20
 #define SCL 21
+//! Provavelmente não será necessário, mas é bom ter esses valores aqui para referência
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
