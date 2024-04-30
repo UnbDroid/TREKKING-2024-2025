@@ -1,0 +1,45 @@
+#include "MotorDC.h"
+#include "Arduino.h"
+#include "Wire.h"
+
+MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2)
+{
+  this->ENCA = ENCA;
+  this->ENCB = ENCB;
+  this->PWM = PWM;
+  this->IN1 = IN1;
+  this->IN2 = IN2;
+  pinMode(ENCA, INPUT);
+  pinMode(ENCB, INPUT);
+  pinMode(PWM, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+}
+
+void MotorDC::ligar_motor(int dir, int pwmVal)
+{
+  analogWrite(PWM,pwmVal); // (pino do pwm, valor do pwm (máximo = 255))
+  if(dir == 1){
+    digitalWrite(IN1,HIGH);
+    digitalWrite(IN2,LOW);
+  }
+  else if(dir == -1){
+    digitalWrite(IN1,LOW);
+    digitalWrite(IN2,HIGH);
+  }
+  else{
+    digitalWrite(IN1,LOW);
+    digitalWrite(IN2,LOW);
+  }  
+}
+
+void MotorDC::ler_encoder()
+{
+  double b = digitalRead(ENCB);
+  if(b > 0){
+    posi++;
+  }
+  else{
+    posi--;
+  }
+}
