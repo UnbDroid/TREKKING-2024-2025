@@ -7,6 +7,9 @@
 #include "Wire.h"
 #include "Tempo.h"
 
+//* Este arquivo contém a implementação da classe Robo, que é responsável por
+//* controlar o robô e ter os comandos básicos de movimentação
+
 // Construtor da classe Robo
 Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
 : motor(motor), volante(volante), giroscopio(giroscopio)
@@ -20,6 +23,7 @@ void Robo::andar_reto(int velocidade_rpm)
     //!
     //! Ainda não testada
     //!
+    //TODO: Testar a função
 
     motor.rpm_referencia = velocidade_rpm; // Velocidade de referência
   
@@ -81,6 +85,7 @@ void Robo::virar_robo(int angulo)
     //!
     //! Ainda não testada
     //!
+    //TODO: Testar a função
 
     int giro_volante = 0; // Valor de giro do volante
     float valor_angulacao_inicial = giroscopio.get_yaw(); // Valor atual do ângulo de yaw (z)

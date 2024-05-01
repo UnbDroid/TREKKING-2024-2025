@@ -10,6 +10,8 @@
 #include "std_msgs/Float32.h"
 #include "std_msgs/Int32.h"
 
+//* Este arquivo contém o código principal do robô, que é juntar todas as funções e estruturar a lógica principal do robô
+
 //TODO: Mudar o README para ter um tutorial de como usar o código
 //TODO: Adicionar comentários explicativos no código
 

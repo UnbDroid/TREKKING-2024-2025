@@ -3,6 +3,9 @@
 #include "Wire.h"
 #include "Tempo.h"
 
+//* Esse arquivo contém a implementação da classe Giroscopio, que é responsável por controlar o sensor MPU9250
+//* e fornecer os valores de ângulos de roll(x), pitch(y) e yaw(z)
+
 Giroscopio::Giroscopio() { // Construtor da classe Giroscopio
 
   // Início da comunicação com o MPU9250 {

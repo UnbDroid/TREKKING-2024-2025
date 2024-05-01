@@ -2,6 +2,8 @@
 #include "Arduino.h"
 #include "Wire.h"
 
+//* Esse arquivo contém a implementação da classe MotorDC, que é responsável por controlar o motor DC do robô
+//* e fornecer os valores de velocidade e direção de giro do motor
 
 // Construtor da classe MotorDC
 MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2)
