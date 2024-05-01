@@ -8,7 +8,7 @@
 
 Giroscopio::Giroscopio() { // Construtor da classe Giroscopio
 
-  // Início da comunicação com o MPU9250 {
+    // Início da comunicação com o MPU9250 {
 
     while (!Serial) {} // Aguarda a comunicação serial ser estabelecida
 
@@ -17,19 +17,20 @@ Giroscopio::Giroscopio() { // Construtor da classe Giroscopio
 
     imu.Config(&Wire, bfs::Mpu9250::I2C_ADDR_PRIM); // Configura o sensor imu
 
-  // Início da comunicação com o sensor imu
+    // Início da comunicação com o sensor imu
 
-  if (!imu.Begin()) { // Se não conseguir iniciar a comunicação com o sensor imu
-      Serial.println("Erro ao inicializar a comunicação com o sensor imu");
-      while(1) {}
-  }
+    if (!imu.Begin()) { // Se não conseguir iniciar a comunicação com o sensor imu
+        Serial.println("Erro ao inicializar a comunicação com o sensor imu");
+        while(1) {}
+    }
 
-  if (!imu.ConfigSrd(19)) { // Se não conseguir configurar o SRD
-      Serial.println("Erro ao configurar o SRD");
-      while(1) {}
-  }
+    if (!imu.ConfigSrd(19)) { // Se não conseguir configurar o SRD
+        Serial.println("Erro ao configurar o SRD");
+        while(1) {}
+    }
 
-  // }
+    // }
+    
 }
 
 float Giroscopio::get_roll()

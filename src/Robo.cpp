@@ -11,6 +11,7 @@
 //* controlar o robô e ter os comandos básicos de movimentação
 
 // Construtor da classe Robo
+//! De novo, eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D
 Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
 : motor(motor), volante(volante), giroscopio(giroscopio)
 {
@@ -95,7 +96,7 @@ void Robo::virar_robo(int angulo)
     int giro_volante = 0; // Valor de giro do volante
     float valor_angulacao_inicial = giroscopio.get_yaw(); // Valor atual do ângulo de yaw (z)
     // Enquanto o robô não atingir o ângulo desejado
-    while (static_cast<int>(giroscopio.get_yaw()) != static_cast<int>(valor_angulacao_inicial + angulo)) {
+    while (static_cast<int>(giroscopio.get_yaw()) != static_cast<int>(valor_angulacao_inicial + angulo)) { //! Supostamente esse static_cast é pra converter de float pra int, mas de novo, eu tô confiando 100% no Copilot
         if ((valor_angulacao_inicial + angulo) - giroscopio.get_yaw() > 35) { // Se a diferença entre o ângulo desejado e o atual for menor que 10 graus
           giro_volante = 35;
         } else if ((valor_angulacao_inicial + angulo) - giroscopio.get_yaw() < (-35)) { // Se a diferença entre o ângulo desejado e o atual for maior que 10 graus
