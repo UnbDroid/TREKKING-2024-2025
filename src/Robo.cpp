@@ -63,8 +63,15 @@ void Robo::andar_reto(int velocidade_rpm)
 
 void Robo::andar_reto_cm(int distancia_cm, int velocidade_rpm = 100) {
     //TODO: Alterar o valor do comprimento da roda para o valor correto
-    while ((motor.posi / motor.encoder_volta) * motor.comprimento_roda < distancia_cm) {
-        andar_reto(velocidade_rpm);
+    int voltas_inicio = motor.posi / motor.encoder_volta;
+    if (distancia_cm > 0) {
+        while ((motor.posi / motor.encoder_volta) - voltas_inicio < distancia_cm) {
+            andar_reto(velocidade_rpm);
+        }
+    } else {
+        while ((motor.posi / motor.encoder_volta) - voltas_inicio > distancia_cm) {
+            andar_reto(velocidade_rpm);
+        }
     }
 }
 
