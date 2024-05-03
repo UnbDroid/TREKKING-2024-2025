@@ -22,7 +22,7 @@ class MotorDC{
         double rps_max = 5.75; // velocidade máxima do motor (apenas por curiosidade, usar caso seja necessário)
         double comprimento_roda = 6*2*3.1415; //TODO: medir o comprimento da roda real
         float eprev = 0;
-        float eintegral = 0; // ki do controle PID
+        float eintegral = 0; // erro acumulado pro cálculo do ki
         int dir = 1; // 1 para frente, -1 para trás (pelo menos essa é a ideia)
         const int encoder_volta = 1044; // valor de encoder referente a uma volta completa da roda
         const float kp = 5.0; // constante proporcional do controle PID
