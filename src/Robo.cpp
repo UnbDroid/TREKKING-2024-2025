@@ -66,7 +66,7 @@ void Robo::andar_reto(int velocidade_rpm)
     motor.ligar_motor(motor.dir, pwmVal);
 }
 
-void Robo::andar_reto_cm(int distancia_cm, int velocidade_rpm = 100) {
+void Robo::andar_reto_cm(int distancia_cm, int velocidade_rpm) {
     //TODO: Alterar o valor do comprimento da roda para o valor correto
     //TODO: Testar a função
 
