@@ -17,12 +17,11 @@ class Robo {
 
         void ligar_robo(); // Função para ligar todos os componentes do robô
         void ler_visao();
+        float retornar_posicao_x_do_cone();
+        float retornar_posicao_y_do_cone();
         void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 100);
         void virar_robo(int angulo);
-        float retornar_posicao_x_do_cone();
-        float retornar_posicao_y_do_cone();
-        void testar_visao();
         void alinhar_com_cone();
 
         //! Pode ser que esses objetos deem erro por causa do construtor

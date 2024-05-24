@@ -39,6 +39,18 @@ void Robo::ler_visao() {
     }
 }
 
+// Função para retornar a posição x do cone
+float Robo::retornar_posicao_x_do_cone() { 
+    Robo::ler_visao();
+    return cone_posicao_x;
+}
+
+// Função para retornar a posição y do cone
+float Robo::retornar_posicao_y_do_cone() {
+    Robo::ler_visao();
+    return cone_posicao_y;
+}
+
 // Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
@@ -61,11 +73,11 @@ void Robo::virar_robo(int angulo)
     int giro_volante = 0;
     float valor_angulacao_inicial = giroscopio.get_z();
     float angulo_final = valor_angulacao_inicial + angulo;
-
+    float angulo_atual = giroscopio.get_z();
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
-    while (giroscopio.get_z() > (angulo_final + 3) or giroscopio.get_z() < (angulo_final - 3)) { //! Supostamente esse static_cast é pra converter de float pra int, mas de novo, eu tô confiando 100% no Copilot
+    while (angulo_atual > (angulo_final + 3) or angulo_atual < (angulo_final - 3)) {
         atualizar_tempo();
-        float angulo_atual = giroscopio.get_z();
+        angulo_atual = giroscopio.get_z();
         if ((angulo_final - angulo_atual) > 0) {
             if ((angulo_final - angulo_atual) > 35) {
                 giro_volante = 35;
@@ -90,47 +102,23 @@ void Robo::virar_robo(int angulo)
     volante.resetar_volante();
 }
 
-// Função para retornar a posição x do cone
-float Robo::retornar_posicao_x_do_cone() { 
-    Robo::ler_visao();
-    return cone_posicao_x;
-}
-
-// Função para retornar a posição y do cone
-float Robo::retornar_posicao_y_do_cone() {
-    Robo::ler_visao();
-    return cone_posicao_y;
-}
-
-void Robo::testar_visao() {
-    Robo::ler_visao();
-    if (cone_posicao_x > 0.05) {
-        digitalWrite(7, HIGH);
-    } else {
-        digitalWrite(7, LOW);
-    }
-}
-
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone() {
     Robo::ler_visao();
     int giro_volante = 0;
     atualizar_tempo();
-    while (retornar_posicao_x_do_cone() > 0.05 or retornar_posicao_x_do_cone() < 0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
-        float posicao_x = retornar_posicao_x_do_cone();
+    float posicao_x = retornar_posicao_x_do_cone();
+    while (posicao_x > 0.05 or posicao_x < 0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
-        if (posicao_x > 0.20) {  // Se o cone estiver à direita
+        posicao_x = retornar_posicao_x_do_cone();
+        if (posicao_x > 0.20) {
             giro_volante = -35;
-        } else if (posicao_x < -0.20) { // Se o cone estiver à esquerda
+        } else if (posicao_x < -0.20) {
             giro_volante = 35;
-        } else if (posicao_x > 0.15) {
-            giro_volante = -25;
-        } else if (posicao_x < -0.15) {
-            giro_volante = 25;
         } else if (posicao_x > 0.10) {
-            giro_volante = -15;
+            giro_volante = static_cast<int>(round(posicao_x*(-100)));
         } else if (posicao_x < -0.10) {
-            giro_volante = 15;
+            giro_volante = static_cast<int>(round(posicao_x*(100)));
         } else if (posicao_x > 0.05) {
             giro_volante = -10;
         } else if (posicao_x < -0.05) {
