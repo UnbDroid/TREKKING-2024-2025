@@ -15,74 +15,39 @@
 Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
 : motor(motor), volante(volante), giroscopio(giroscopio)
 {
-    Serial.println("Robo construido");
+
+}
+
+// Função para ligar todos os componentes do robô
+void Robo::ligar_robo() {
+    giroscopio.ligar_mpu();
+    motor.ligar_encoder();
+    volante.inicializar_volante();
+}
+
+//Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
+void Robo::ler_visao() {
+    if (Serial.available() > 0) {
+        String input = Serial.readStringUntil('\n');
+        int commaIndex = input.indexOf(',');
+        if (commaIndex != -1) {
+            String float1Str = input.substring(0, commaIndex);
+            String float2Str = input.substring(commaIndex + 1);
+            cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
+            cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
+        }
+    }
 }
 
 // Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
-    //!
-    //! Ainda não testada
-    //!
-    //TODO: Testar a função
-
-    motor.rpm_referencia = velocidade_rpm; // Velocidade de referência
-  
-    double posi_atual = 0; // posição atual do encoder
-    noInterrupts(); // desabilita interrupções
-    posi_atual = motor.posi; // atualiza a posição atual do encoder
-    interrupts(); // reabilita interrupções
-
-    motor.voltas_anterior = motor.voltas; // atualiza o número de voltas anterior
-
-    motor.voltas = posi_atual/motor.encoder_volta; // calcula o número de voltas do motor
-    motor.rps = (motor.voltas - motor.voltas_anterior)/dt; // calcula a velocidade do motor em rps
-
-    double e = motor.rpm_referencia - (motor.rps * 60); // calcula o erro da velocidade em rpm
-
-    float p = motor.kp * e;
-
-    motor.eintegral += e;
-
-    float d = motor.kd * (e - motor.eprev)/dt;
-
-    float u = p + (motor.ki * motor.eintegral)+ d;
-
-    float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
-    if(pwmVal > 255) {
-        pwmVal = 255;
-    }
-
-    if(u > 0){
-        motor.dir = 1;
-    }
-    else if(u < 0){
-        motor.dir = -1;
-    }
-    else{
-        motor.dir = 0;
-    }
-
-    motor.ligar_motor(motor.dir, pwmVal);
+    motor.andar_reto(velocidade_rpm);
 }
 
-void Robo::andar_reto_cm(int distancia_cm, int velocidade_rpm) {
-    //TODO: Alterar o valor do comprimento da roda para o valor correto
-    //TODO: Testar a função
-
-    //! Com certeza absoluta a gente vai ter que fazer um controle pra velocidade, porque ele vai andar mais do que o necessário
-    //! mas por enquanto vamos deixar assim :D
-    
-    int voltas_inicio = motor.posi / motor.encoder_volta;
-    if (distancia_cm > 0) {
-        while ((motor.posi / motor.encoder_volta) - voltas_inicio < distancia_cm) {
-            andar_reto(velocidade_rpm);
-        }
-    } else {
-        while ((motor.posi / motor.encoder_volta) - voltas_inicio > distancia_cm) {
-            andar_reto(velocidade_rpm);
-        }
-    }
+// Função para fazer o robô andar reto por uma distância específica
+void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
+    motor.andar_reto_cm(distancia_cm, velocidade_rpm);
 }
 
 // Função para fazer o robô virar para um ângulo específico
@@ -93,19 +58,86 @@ void Robo::virar_robo(int angulo)
     //!
     //TODO: Testar a função
 
-    int giro_volante = 0; // Valor de giro do volante
-    float valor_angulacao_inicial = giroscopio.get_yaw(); // Valor atual do ângulo de yaw (z)
-    // Enquanto o robô não atingir o ângulo desejado
-    while (static_cast<int>(giroscopio.get_yaw()) != static_cast<int>(valor_angulacao_inicial + angulo)) { //! Supostamente esse static_cast é pra converter de float pra int, mas de novo, eu tô confiando 100% no Copilot
-        if ((valor_angulacao_inicial + angulo) - giroscopio.get_yaw() > 35) { // Se a diferença entre o ângulo desejado e o atual for menor que 10 graus
-          giro_volante = 35;
-        } else if ((valor_angulacao_inicial + angulo) - giroscopio.get_yaw() < (-35)) { // Se a diferença entre o ângulo desejado e o atual for maior que 10 graus
-          giro_volante = -35;
-        } else {
-          giro_volante = (valor_angulacao_inicial + angulo) - giroscopio.get_yaw(); // Gira o volante para o ângulo desejado
+    int giro_volante = 0;
+    float valor_angulacao_inicial = giroscopio.get_z();
+    float angulo_final = valor_angulacao_inicial + angulo;
+
+    // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
+    while (giroscopio.get_z() > (angulo_final + 3) or giroscopio.get_z() < (angulo_final - 3)) { //! Supostamente esse static_cast é pra converter de float pra int, mas de novo, eu tô confiando 100% no Copilot
+        atualizar_tempo();
+        float angulo_atual = giroscopio.get_z();
+        if ((angulo_final - angulo_atual) > 0) {
+            if ((angulo_final - angulo_atual) > 35) {
+                giro_volante = 35;
+            } else if ((angulo_final - angulo_atual) > 10) {
+                giro_volante = static_cast<int>(round((angulo_final - angulo_atual)));
+            } else {
+                giro_volante = 10;
+            }
+        } else if ((angulo_final - angulo_atual) < 0) {
+            if ((angulo_final - angulo_atual) < -35) {
+                giro_volante = -35;
+            } else if ((angulo_final - angulo_atual) < -10) {
+                giro_volante = static_cast<int>(round((angulo_final - angulo_atual)));
+            } else {
+                giro_volante = -10;
+            }
         }
-        volante.virar_volante(giro_volante); // O volante gira para o ângulo desejado
+        volante.virar_volante_especifico(giro_volante);
         int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-        motor.ligar_motor(1, velocidade_rpm); // O robô anda reto
+        Robo::andar_reto(velocidade_rpm);
     }
+    volante.resetar_volante();
+}
+
+// Função para retornar a posição x do cone
+float Robo::retornar_posicao_x_do_cone() { 
+    Robo::ler_visao();
+    return cone_posicao_x;
+}
+
+// Função para retornar a posição y do cone
+float Robo::retornar_posicao_y_do_cone() {
+    Robo::ler_visao();
+    return cone_posicao_y;
+}
+
+void Robo::testar_visao() {
+    Robo::ler_visao();
+    if (cone_posicao_x > 0.05) {
+        digitalWrite(7, HIGH);
+    } else {
+        digitalWrite(7, LOW);
+    }
+}
+
+// Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
+void Robo::alinhar_com_cone() {
+    Robo::ler_visao();
+    int giro_volante = 0;
+    atualizar_tempo();
+    while (retornar_posicao_x_do_cone() > 0.05 or retornar_posicao_x_do_cone() < 0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
+        float posicao_x = retornar_posicao_x_do_cone();
+        atualizar_tempo();
+        if (posicao_x > 0.20) {  // Se o cone estiver à direita
+            giro_volante = -35;
+        } else if (posicao_x < -0.20) { // Se o cone estiver à esquerda
+            giro_volante = 35;
+        } else if (posicao_x > 0.15) {
+            giro_volante = -25;
+        } else if (posicao_x < -0.15) {
+            giro_volante = 25;
+        } else if (posicao_x > 0.10) {
+            giro_volante = -15;
+        } else if (posicao_x < -0.10) {
+            giro_volante = 15;
+        } else if (posicao_x > 0.05) {
+            giro_volante = -10;
+        } else if (posicao_x < -0.05) {
+            giro_volante = 10;
+        }
+        volante.virar_volante_especifico(giro_volante);
+        Robo::andar_reto(80 + (abs(giro_volante) * 40 / 35));
+    }
+    volante.resetar_volante();
 }

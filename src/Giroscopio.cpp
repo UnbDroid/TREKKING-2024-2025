@@ -8,6 +8,9 @@
 
 Giroscopio::Giroscopio() { // Construtor da classe Giroscopio
 
+}
+
+void Giroscopio::ligar_mpu() {
     // Início da comunicação com o MPU9250 {
 
     while (!Serial) {} // Aguarda a comunicação serial ser estabelecida
@@ -30,33 +33,49 @@ Giroscopio::Giroscopio() { // Construtor da classe Giroscopio
     }
 
     // }
-    
 }
 
-float Giroscopio::get_roll()
-{
-    imu.Read(); // Lê os dados do sensor imu
-    gyro_x_rad = imu.gyro_x_radps(); // Lê o valor do giroscópio no eixo x em radianos por segundo
-    accel_x_g = imu.accel_x_mps2() / 9.81; // Lê o valor do acelerômetro no eixo x em g (aceleração da gravidade)
-    roll_angle = atan2(accel_y_g, accel_z_g) * deg_to_rad; // Calcula o ângulo de roll em radianos
-    roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1 - alpha_x) * roll_angle; // Aplica o filtro de Kalman
-    return roll_angle * deg_to_rad; // Retorna o valor do ângulo de roll
+void Giroscopio::atualizar_leituras() {
+    // read the data
+  imu.Read();
+
+  atualizar_tempo();
+
+  // Get gyroscope data in radians
+  gyro_x_rad = imu.gyro_x_radps();
+  gyro_y_rad = imu.gyro_y_radps();
+  gyro_z_rad = imu.gyro_z_radps();
+
+  // Get accelerometer data in g-force
+  accel_x_g = imu.accel_x_mps2() / 9.81;  // Convert m/s^2 to g
+  accel_y_g = imu.accel_y_mps2() / 9.81;
+  accel_z_g = imu.accel_z_mps2() / 9.81;
+
+  // Calculate roll and pitch angles from accelerometer (initial estimate)
+  // Consider using atan2 for proper quadrant handling
+  pitch_angle = atan2(accel_x_g, accel_z_g) * deg_to_rad;
+  roll_angle = atan2(accel_y_g, accel_z_g) * deg_to_rad;
+
+  // Complementary filter update (adjust alpha as needed)
+  roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1.0 - alpha_x) * pitch_angle;
+  pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1.0 - alpha_y) * roll_angle;
+  if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += gyro_z_rad * dt;}
 }
 
-float Giroscopio::get_pitch()
+float Giroscopio::get_x()
 {
-    imu.Read(); // Lê os dados do sensor imu
-    gyro_y_rad = imu.gyro_y_radps(); // Lê o valor do giroscópio no eixo y em radianos por segundo
-    accel_y_g = imu.accel_y_mps2() / 9.81; // Lê o valor do acelerômetro no eixo y em g (aceleração da gravidade)
-    pitch_angle = atan2(accel_x_g, accel_z_g) * deg_to_rad; // Calcula o ângulo de pitch em radianos
-    pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1 - alpha_y) * pitch_angle; // Aplica o filtro de Kalman
-    return pitch_angle * deg_to_rad; // Retorna o valor do ângulo de pitch
+    atualizar_leituras();
+    return (roll_angle * deg_to_rad); // Retorna o valor do ângulo de roll
 }
 
-float Giroscopio::get_yaw()
+float Giroscopio::get_y()
 {
-    imu.Read(); // Lê os dados do sensor imu
-    gyro_z_rad = imu.gyro_z_radps(); // Lê o valor do giroscópio no eixo z em radianos por segundo
-    if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += gyro_z_rad * dt;} // Calcula o ângulo de yaw em radianos
-    return yaw_angle * deg_to_rad; // Retorna o valor do ângulo de yaw
+    atualizar_leituras();
+    return (pitch_angle * deg_to_rad); // Retorna o valor do ângulo de pitch
+}
+
+float Giroscopio::get_z()
+{
+    atualizar_leituras();
+    return (yaw_angle * deg_to_rad);
 }

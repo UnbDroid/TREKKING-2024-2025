@@ -5,18 +5,18 @@
 
 // Declarações do motor -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#define ENCA 3 // Cabo amarelo
-#define ENCB 8 // Cabo branco
-#define PWM 5 
-#define IN1 6
-#define IN2 7
+#define ENCA 2 // Cabo amarelo
+#define ENCB 3 // Cabo branco
+#define PWM 5 // 5 para uso no Mega, 6 para uso no Uno
+#define IN1 6 // 6 para uso no Mega, 10 para uso no Uno
+#define IN2 7 // 7 para uso no Mega, 11 para uso no Uno
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Declarações do MPU9250 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#define SDA 20
-#define SCL 21
+#define SDA 20 // 20 para uso no Mega, A4 para uso no Uno
+#define SCL 21 // 21 para uso no Mega, A5 para uso no Uno
 //! Provavelmente não será necessário, mas é bom ter esses valores aqui para referência
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
