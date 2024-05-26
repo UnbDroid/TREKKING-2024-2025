@@ -13,8 +13,7 @@
 // Construtor da classe Robo
 //! De novo, eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D
 Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
-: motor(motor), volante(volante), giroscopio(giroscopio)
-{
+: motor(motor), volante(volante), giroscopio(giroscopio){
 
 }
 
@@ -22,7 +21,6 @@ Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
 void Robo::ligar_robo() {
     giroscopio.ligar_mpu();
     motor.ligar_encoder();
-    volante.inicializar_volante();
 }
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
@@ -108,7 +106,7 @@ void Robo::alinhar_com_cone() {
     int giro_volante = 0;
     atualizar_tempo();
     float posicao_x = retornar_posicao_x_do_cone();
-    while (posicao_x > 0.05 or posicao_x < 0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
+    while (posicao_x > 0.05 or posicao_x < -0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
         if (posicao_x > 0.20) {

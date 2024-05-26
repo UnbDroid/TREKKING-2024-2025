@@ -37,6 +37,9 @@ void Giroscopio::ligar_mpu() {
 
 void Giroscopio::atualizar_leituras() {
     // read the data
+  
+  //TODO: Checar frequência de leitura do sensor MPU
+  
   imu.Read();
 
   atualizar_tempo();
