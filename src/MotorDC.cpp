@@ -81,6 +81,7 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   rpm_referencia = velocidade_rpm; // Velocidade de referência
 
+
   double posi_atual = 0;      // posição atual do encoder
   noInterrupts();             // desabilita interrupções
   posi_atual = posi;          // atualiza a posição atual do encoder
@@ -102,6 +103,8 @@ void MotorDC::andar_reto(int velocidade_rpm)
   float u = p + (ki * eintegral) + d;
 
   float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
+  
+  Serial.print("Calculou U");
 
   if (pwmVal > 255) // Limita o valor do pwm para 255
   {
@@ -124,7 +127,15 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   ligar_motor(dir, pwmVal);
 
+  Serial.println("Ligou motor");
+
   eprev = e;
+
+  Serial.print("Posição: ");
+  Serial.print(posi);
+  Serial.print(" | ");
+  Serial.print("RPS: ");
+  Serial.println(rps);
 }
 
 void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
