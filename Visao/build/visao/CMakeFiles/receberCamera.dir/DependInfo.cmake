@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.cpp" "/home/arthur/Projects/TREEKING2K24/Visao/build/visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o"
+  "/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.cpp" "/home/arthur/Projects/TREEKING2K24/Visao/build/visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.o"
   "/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/lerCamera.cpp" "/home/arthur/Projects/TREEKING2K24/Visao/build/visao/CMakeFiles/receberCamera.dir/src/lerCamera.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

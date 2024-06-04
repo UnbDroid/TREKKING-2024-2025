@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "/home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera"
   "/home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera.pdb"
+  "CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o"
+  "CMakeFiles/receberCamera.dir/src/Segmento.cpp.o"
   "CMakeFiles/receberCamera.dir/src/lerCamera.cpp.o"
 )
 

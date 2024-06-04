@@ -197,6 +197,60 @@ receberCamera/fast:
 	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/build
 .PHONY : receberCamera/fast
 
+src/RastreiaCone.o: src/RastreiaCone.cpp.o
+
+.PHONY : src/RastreiaCone.o
+
+# target to build an object file
+src/RastreiaCone.cpp.o:
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o
+.PHONY : src/RastreiaCone.cpp.o
+
+src/RastreiaCone.i: src/RastreiaCone.cpp.i
+
+.PHONY : src/RastreiaCone.i
+
+# target to preprocess a source file
+src/RastreiaCone.cpp.i:
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.i
+.PHONY : src/RastreiaCone.cpp.i
+
+src/RastreiaCone.s: src/RastreiaCone.cpp.s
+
+.PHONY : src/RastreiaCone.s
+
+# target to generate assembly for a file
+src/RastreiaCone.cpp.s:
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.s
+.PHONY : src/RastreiaCone.cpp.s
+
+src/Segmento.o: src/Segmento.cpp.o
+
+.PHONY : src/Segmento.o
+
+# target to build an object file
+src/Segmento.cpp.o:
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.o
+.PHONY : src/Segmento.cpp.o
+
+src/Segmento.i: src/Segmento.cpp.i
+
+.PHONY : src/Segmento.i
+
+# target to preprocess a source file
+src/Segmento.cpp.i:
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.i
+.PHONY : src/Segmento.cpp.i
+
+src/Segmento.s: src/Segmento.cpp.s
+
+.PHONY : src/Segmento.s
+
+# target to generate assembly for a file
+src/Segmento.cpp.s:
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build && $(MAKE) -f visao/CMakeFiles/receberCamera.dir/build.make visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.s
+.PHONY : src/Segmento.cpp.s
+
 src/enviarCamera.o: src/enviarCamera.cpp.o
 
 .PHONY : src/enviarCamera.o
@@ -266,6 +320,12 @@ help:
 	@echo "... test"
 	@echo "... enviarCamera"
 	@echo "... receberCamera"
+	@echo "... src/RastreiaCone.o"
+	@echo "... src/RastreiaCone.i"
+	@echo "... src/RastreiaCone.s"
+	@echo "... src/Segmento.o"
+	@echo "... src/Segmento.i"
+	@echo "... src/Segmento.s"
 	@echo "... src/enviarCamera.o"
 	@echo "... src/enviarCamera.i"
 	@echo "... src/enviarCamera.s"

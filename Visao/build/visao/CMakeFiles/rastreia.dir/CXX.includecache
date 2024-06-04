@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.cpp
+Segmento.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.hpp
+iostream
+-
+
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.hpp
+

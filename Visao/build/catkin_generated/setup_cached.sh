@@ -7,7 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/arthur/Projects/TREEKING2K24/Visao/devel:$CMAKE_PREFIX_PATH"
 export PWD='/home/arthur/Projects/TREEKING2K24/Visao/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/arthur/Projects/TREEKING2K24/Visao/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/arthur/Projects/TREEKING2K24/Visao/src:$ROS_PACKAGE_PATH"

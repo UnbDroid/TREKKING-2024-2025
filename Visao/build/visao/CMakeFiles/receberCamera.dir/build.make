@@ -70,14 +70,44 @@ visao/CMakeFiles/receberCamera.dir/src/lerCamera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/receberCamera.dir/src/lerCamera.cpp.s"
 	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/lerCamera.cpp -o CMakeFiles/receberCamera.dir/src/lerCamera.cpp.s
 
+visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.o: visao/CMakeFiles/receberCamera.dir/flags.make
+visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.o: /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Projects/TREEKING2K24/Visao/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.o"
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/receberCamera.dir/src/Segmento.cpp.o -c /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.cpp
+
+visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/receberCamera.dir/src/Segmento.cpp.i"
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.cpp > CMakeFiles/receberCamera.dir/src/Segmento.cpp.i
+
+visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/receberCamera.dir/src/Segmento.cpp.s"
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.cpp -o CMakeFiles/receberCamera.dir/src/Segmento.cpp.s
+
+visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o: visao/CMakeFiles/receberCamera.dir/flags.make
+visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o: /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/Projects/TREEKING2K24/Visao/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o"
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o -c /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.cpp
+
+visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.i"
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.cpp > CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.i
+
+visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.s"
+	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.cpp -o CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.s
+
 # Object files for target receberCamera
 receberCamera_OBJECTS = \
-"CMakeFiles/receberCamera.dir/src/lerCamera.cpp.o"
+"CMakeFiles/receberCamera.dir/src/lerCamera.cpp.o" \
+"CMakeFiles/receberCamera.dir/src/Segmento.cpp.o" \
+"CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o"
 
 # External object files for target receberCamera
 receberCamera_EXTERNAL_OBJECTS =
 
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: visao/CMakeFiles/receberCamera.dir/src/lerCamera.cpp.o
+/home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: visao/CMakeFiles/receberCamera.dir/src/Segmento.cpp.o
+/home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: visao/CMakeFiles/receberCamera.dir/src/RastreiaCone.cpp.o
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: visao/CMakeFiles/receberCamera.dir/build.make
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.2.0
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: /usr/lib/x86_64-linux-gnu/libopencv_aruco.so.4.2.0
@@ -204,7 +234,7 @@ receberCamera_EXTERNAL_OBJECTS =
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.2.0
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.2.0
 /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera: visao/CMakeFiles/receberCamera.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/Projects/TREEKING2K24/Visao/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/Projects/TREEKING2K24/Visao/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /home/arthur/Projects/TREEKING2K24/Visao/devel/lib/visao/receberCamera"
 	cd /home/arthur/Projects/TREEKING2K24/Visao/build/visao && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/receberCamera.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

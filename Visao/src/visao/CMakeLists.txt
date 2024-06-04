@@ -107,7 +107,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES visao
+#LIBRARIES visao
 #  CATKIN_DEPENDS image_transport opencv roscpp rospy
 #  DEPENDS system_lib
 )
@@ -119,7 +119,6 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -207,10 +206,17 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+
+#caso queira apenas complicar a biblioteca
+#add_library(teste SHARED src/Segmento.hpp src/Segmento.cpp)
+
 find_package(OpenCV)
     include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(receberCamera src/lerCamera.cpp)
+
+add_executable(receberCamera src/lerCamera.cpp src/Segmento.cpp src/RastreiaCone.cpp)
 target_link_libraries(receberCamera ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
 
 add_executable(enviarCamera src/enviarCamera.cpp)

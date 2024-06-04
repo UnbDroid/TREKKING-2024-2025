@@ -6,6 +6,44 @@
 
 #IncludeRegexTransform: 
 
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.hpp
+opencv2/opencv.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/opencv2/opencv.hpp
+opencv2/calib3d/calib3d.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/opencv2/calib3d/calib3d.hpp
+opencv2/core/core.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/opencv2/core/core.hpp
+opencv2/highgui/highgui.hpp
+-
+stdio.h
+-
+stdlib.h
+-
+iostream
+-
+sys/time.h
+-
+Segmento.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.hpp
+
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.hpp
+iostream
+-
+opencv2/opencv.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/opencv2/opencv.hpp
+opencv2/calib3d/calib3d.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/opencv2/calib3d/calib3d.hpp
+opencv2/core/core.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/opencv2/core/core.hpp
+opencv2/highgui/highgui.hpp
+-
+stdio.h
+-
+stdlib.h
+-
+iostream
+-
+
 /home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/lerCamera.cpp
 iostream
 -
@@ -17,6 +55,10 @@ image_transport/image_transport.h
 -
 cv_bridge/cv_bridge.h
 -
+Segmento.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/Segmento.hpp
+RastreiaCone.hpp
+/home/arthur/Projects/TREEKING2K24/Visao/src/visao/src/RastreiaCone.hpp
 
 /opt/ros/noetic/include/cv_bridge/cv_bridge.h
 sensor_msgs/Image.h
@@ -893,6 +935,10 @@ opencv2/features2d.hpp
 /usr/include/opencv4/opencv2/opencv2/features2d.hpp
 opencv2/core/affine.hpp
 /usr/include/opencv4/opencv2/opencv2/core/affine.hpp
+
+/usr/include/opencv4/opencv2/calib3d/calib3d.hpp
+opencv2/calib3d.hpp
+/usr/include/opencv4/opencv2/calib3d/opencv2/calib3d.hpp
 
 /usr/include/opencv4/opencv2/core.hpp
 opencv2/core/cvdef.h
