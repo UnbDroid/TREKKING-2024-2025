@@ -13,10 +13,7 @@ class MotorDC{
     public:
         MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2); // Construtor da classe MotorDC
 
-        void ligar_encoder();
         void ligar_motor(int dir, int pwmVal);
-        static void ler_encoder_static();
-        static MotorDC* instance;
         void ler_encoder();
         void andar_reto(int velocidade_rpm, SENTIDO sentido);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm);

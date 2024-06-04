@@ -20,7 +20,6 @@ Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
 // Função para ligar todos os componentes do robô
 void Robo::ligar_robo() {
     giroscopio.ligar_mpu();
-    motor.ligar_encoder();
 }
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
@@ -50,9 +49,9 @@ float Robo::retornar_posicao_y_do_cone() {
 }
 
 // Função para fazer o robô andar reto indefinidamente
-void Robo::andar_reto(int velocidade_rpm)
+void Robo::andar_reto(int velocidade_rpm, SENTIDO sentido)
 {
-    motor.andar_reto(velocidade_rpm);
+    motor.andar_reto(velocidade_rpm, sentido);
 }
 
 // Função para fazer o robô andar reto por uma distância específica
@@ -95,7 +94,7 @@ void Robo::virar_robo(int angulo)
         }
         volante.virar_volante_especifico(giro_volante);
         int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-        Robo::andar_reto(velocidade_rpm);
+        Robo::andar_reto(velocidade_rpm, FRENTE);
     }
     volante.resetar_volante();
 }
@@ -123,7 +122,7 @@ void Robo::alinhar_com_cone() {
             giro_volante = 10;
         }
         volante.virar_volante_especifico(giro_volante);
-        Robo::andar_reto(80 + (abs(giro_volante) * 40 / 35));
+        Robo::andar_reto(80 + (abs(giro_volante) * 40 / 35), FRENTE);
     }
     volante.resetar_volante();
 }

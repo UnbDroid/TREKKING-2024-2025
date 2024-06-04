@@ -23,11 +23,6 @@ MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, c
   pinMode(IN2, OUTPUT);
   // instance = this;
 }
-//Mudar nome da funcao
-void MotorDC::ligar_encoder() 
-{
-    attachInterrupt(digitalPinToInterrupt(ENCA), MotorDC::ler_encoder, RISING);
-}
 
 // Função para ligar o motor e definir a direção e a velocidade
 void MotorDC::ligar_motor(int dir, int pwmVal)
@@ -65,7 +60,7 @@ void MotorDC::ler_encoder()
   }
 }
 
-void MotorDC::andar_reto(int velocidade_rpm,SENTIDO sentido)
+void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 {
   //!
   //! Ainda não testada
@@ -144,7 +139,7 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
     while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda < distancia_cm)
     {
       atualizar_tempo();
-      andar_reto(velocidade_rpm);
+      andar_reto(velocidade_rpm, FRENTE);
     }
   }
   else
@@ -152,7 +147,7 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
     while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda > distancia_cm)
     {
       atualizar_tempo();
-      andar_reto(velocidade_rpm);
+      andar_reto(velocidade_rpm, TRAS);
     }
   }
 }
