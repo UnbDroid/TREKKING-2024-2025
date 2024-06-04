@@ -126,3 +126,4 @@ void Robo::alinhar_com_cone() {
     }
     volante.resetar_volante();
 }
+// oi
