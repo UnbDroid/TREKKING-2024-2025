@@ -6,7 +6,7 @@
 //* Esse arquivo contém a implementação da classe MotorDC, que é responsável por controlar o motor DC do robô
 //* e fornecer os valores de velocidade e direção de giro do motor
 
-MotorDC* MotorDC::instance = nullptr;
+// MotorDC* MotorDC::instance = nullptr;/
 
 // Construtor da classe MotorDC
 MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2)
@@ -21,12 +21,12 @@ MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, c
   pinMode(PWM, OUTPUT);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
-  instance = this;
+  // instance = this;
 }
-
+//Mudar nome da funcao
 void MotorDC::ligar_encoder() 
 {
-    attachInterrupt(digitalPinToInterrupt(ENCA), MotorDC::ler_encoder_static, RISING);
+    attachInterrupt(digitalPinToInterrupt(ENCA), MotorDC::ler_encoder, RISING);
 }
 
 // Função para ligar o motor e definir a direção e a velocidade
@@ -51,39 +51,31 @@ void MotorDC::ligar_motor(int dir, int pwmVal)
   }
 }
 
-void MotorDC::ler_encoder_static()
-{
-  instance->ler_encoder();
-}
-
 // Função para ler o encoder do motor
 void MotorDC::ler_encoder()
 {
   double b = digitalRead(ENCB);
   if (b > 0)
-  { // Se ler pulso positivo do encoder
+  { // Se ler pulso positivo do encoder, sentido horario
     posi++;
   }
   else
-  { // Se ler pulso negativo do encoder
+  { // Se ler pulso negativo do encoder, sentido anti-horario
     posi--;
   }
 }
 
-void MotorDC::andar_reto(int velocidade_rpm)
+void MotorDC::andar_reto(int velocidade_rpm,SENTIDO sentido)
 {
   //!
   //! Ainda não testada
   //!
   // TODO: Testar a função
 
-  attachInterrupt(digitalPinToInterrupt(ENCA), MotorDC::ler_encoder_static, RISING);
-
   rpm_referencia = velocidade_rpm; // Velocidade de referência
 
-
   double posi_atual = 0;      // posição atual do encoder
-  noInterrupts();             // desabilita interrupções
+  noInterrupts();              // desabilita interrupções
   posi_atual = posi;          // atualiza a posição atual do encoder
   interrupts();               // reabilita interrupções
 
@@ -100,7 +92,7 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   float d = kd * (e - eprev) / dt;
 
-  float u = p + (ki * eintegral) + d;
+  float u = p + (ki * eintegral*dt) + d;
 
   float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
   
@@ -112,20 +104,20 @@ void MotorDC::andar_reto(int velocidade_rpm)
   }
 
   // Define a direção do motor com base no valor de u
-  if (u > 0)
-  {
-    dir = 1;
-  }
-  else if (u < 0)
-  {
-    dir = -1;
-  }
-  else
-  {
-    dir = 0;
-  }
+  // if (u > 0)
+  // {
+  //   dir = 1;
+  // }
+  // else if (u < 0)
+  // {
+  //   dir = -1;
+  // }
+  // else
+  // {
+  //   dir = 0;
+  // }
 
-  ligar_motor(dir, pwmVal);
+  ligar_motor(sentido, pwmVal);
 
   Serial.println("Ligou motor");
 
@@ -149,7 +141,7 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
   int voltas_inicio = posi / encoder_volta;
   if (distancia_cm > 0)
   {
-    while ((posi / encoder_volta) - voltas_inicio < distancia_cm)
+    while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda < distancia_cm)
     {
       atualizar_tempo();
       andar_reto(velocidade_rpm);
@@ -157,7 +149,7 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
   }
   else
   {
-    while ((posi / encoder_volta) - voltas_inicio > distancia_cm)
+    while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda > distancia_cm)
     {
       atualizar_tempo();
       andar_reto(velocidade_rpm);
