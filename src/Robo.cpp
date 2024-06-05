@@ -49,9 +49,9 @@ float Robo::retornar_posicao_y_do_cone() {
 }
 
 // Função para fazer o robô andar reto indefinidamente
-void Robo::andar_reto(int velocidade_rpm, SENTIDO sentido)
+void Robo::andar_reto(int velocidade_rpm)
 {
-    motor.andar_reto(velocidade_rpm, sentido);
+    motor.andar_reto(velocidade_rpm);
 }
 
 // Função para fazer o robô andar reto por uma distância específica
@@ -94,7 +94,7 @@ void Robo::virar_robo(int angulo)
         }
         volante.virar_volante_especifico(giro_volante);
         int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-        Robo::andar_reto(velocidade_rpm, FRENTE);
+        Robo::andar_reto(velocidade_rpm);
     }
     volante.resetar_volante();
 }
@@ -122,7 +122,7 @@ void Robo::alinhar_com_cone() {
             giro_volante = 10;
         }
         volante.virar_volante_especifico(giro_volante);
-        Robo::andar_reto(80 + (abs(giro_volante) * 40 / 35), FRENTE);
+        Robo::andar_reto(80 + (abs(giro_volante) * 40 / 35));
     }
     volante.resetar_volante();
 }

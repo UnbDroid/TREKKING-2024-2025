@@ -15,9 +15,9 @@ class MotorDC{
 
         void ligar_motor(int dir, int pwmVal);
         void ler_encoder();
-        void andar_reto(int velocidade_rpm, SENTIDO sentido);
+        void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm);
-        volatile long posi; // posição do motor em ticks do encoder
+        volatile double posi; // posição do motor em ticks do encoder
 
     private:
         int ENCA; // Cabo amarelo
@@ -36,9 +36,9 @@ class MotorDC{
         float eprev = 0;
         float eintegral = 0; // erro acumulado pro cálculo do ki
         int dir = 1; // 1 para frente, -1 para trás (pelo menos essa é a ideia)
-        const int encoder_volta = 1044; // valor de encoder referente a uma volta completa da roda
-        const float kp = 5.0; // constante proporcional do controle PID
-        const float ki = 3.0; // constante integral do controle PID
+        const int encoder_volta = 732; // valor de encoder referente a uma volta completa da roda
+        const float kp = 2.2; // constante proporcional do controle PID
+        const float ki = 1.2; // constante integral do controle PID
         const float kd = 0.0; // constante derivativa do controle PID
 };
 

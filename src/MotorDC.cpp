@@ -60,7 +60,7 @@ void MotorDC::ler_encoder()
   }
 }
 
-void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
+void MotorDC::andar_reto(int velocidade_rpm)
 {
   //!
   //! Ainda não testada
@@ -69,7 +69,7 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 
   rpm_referencia = velocidade_rpm; // Velocidade de referência
 
-  long posi_atual = 0;      // posição atual do encoder
+  volatile double posi_atual = 0;      // posição atual do encoder
   noInterrupts();              // desabilita interrupções
   posi_atual = posi;          // atualiza a posição atual do encoder
   interrupts();               // reabilita interrupções
@@ -78,6 +78,15 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 
   voltas = posi_atual / encoder_volta;            // calcula o número de voltas do motor
   rps = (voltas - voltas_anterior) / dt; // calcula a velocidade do motor em rps
+  Serial.print("Voltas");
+  Serial.print(voltas);
+  Serial.print(" | ");
+  Serial.print("Voltas Anterior: ");
+  Serial.print(voltas_anterior);
+  Serial.print(" | ");
+  Serial.print("RPM: ");
+  Serial.print(rps*60);
+  Serial.print(" | ");
 
   double e = rpm_referencia - (rps * 60); // calcula o erro da velocidade em rpm
 
@@ -85,9 +94,11 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 
   eintegral += e;
 
-  float d = kd * (e - eprev) / dt;
+  // atualizar_tempo();
 
-  float u = p + (ki * eintegral*dt) + d;
+  float d = kd * ((e - eprev) / dt);
+
+  float u = p + (ki * eintegral * dt) + d; //p + (ki * eintegral*dt) + d;
 
   float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
   
@@ -99,20 +110,20 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
   }
 
   // Define a direção do motor com base no valor de u
-  // if (u > 0)
-  // {
-  //   dir = 1;
-  // }
-  // else if (u < 0)
-  // {
-  //   dir = -1;
-  // }
-  // else
-  // {
-  //   dir = 0;
-  // }
+  if (u > 0)
+  {
+    dir = 1;
+  }
+  else if (u < 0)
+  {
+    dir = -1;
+  }
+  else
+  {
+    dir = 0;
+  }
 
-  ligar_motor(sentido, pwmVal);
+  ligar_motor(dir, pwmVal);
 
   // Serial.println("Ligou motor");
 
@@ -121,8 +132,6 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
   // Serial.print("Posição: ");
   // Serial.print(posi);
   // Serial.print(" | ");
-  // Serial.print("RPM: ");
-  // Serial.println(rps*60);
 }
 
 void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
@@ -139,7 +148,7 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
     while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda < distancia_cm)
     {
       atualizar_tempo();
-      andar_reto(velocidade_rpm, FRENTE);
+      andar_reto(velocidade_rpm);
     }
   }
   else
@@ -147,7 +156,7 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
     while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda > distancia_cm)
     {
       atualizar_tempo();
-      andar_reto(velocidade_rpm, TRAS);
+      andar_reto(velocidade_rpm);
     }
   }
 }

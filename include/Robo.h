@@ -19,7 +19,7 @@ class Robo {
         void ler_visao();
         float retornar_posicao_x_do_cone();
         float retornar_posicao_y_do_cone();
-        void andar_reto(int velocidade_rpm, SENTIDO sentido);
+        void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 100);
         void virar_robo(int angulo);
         void alinhar_com_cone();
