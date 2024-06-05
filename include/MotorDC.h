@@ -17,6 +17,7 @@ class MotorDC{
         void ler_encoder();
         void andar_reto(int velocidade_rpm, SENTIDO sentido);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm);
+        volatile long posi; // posição do motor em ticks do encoder
 
     private:
         int ENCA; // Cabo amarelo
@@ -25,7 +26,6 @@ class MotorDC{
         int IN1;
         int IN2;
         
-        volatile double posi; // posição do motor em radianos
         double voltas = 0; // número de voltas do motor
         double voltas_anterior = 0; // número de voltas do motor no instante anterior, para cálculo do erro
         double rps = 0; // velocidade ATUAL do motor em radianos por segundo

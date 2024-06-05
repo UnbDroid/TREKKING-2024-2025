@@ -49,7 +49,7 @@ void MotorDC::ligar_motor(int dir, int pwmVal)
 // Função para ler o encoder do motor
 void MotorDC::ler_encoder()
 {
-  double b = digitalRead(ENCB);
+  volatile double b = digitalRead(ENCB);
   if (b > 0)
   { // Se ler pulso positivo do encoder, sentido horario
     posi++;
@@ -69,7 +69,7 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 
   rpm_referencia = velocidade_rpm; // Velocidade de referência
 
-  double posi_atual = 0;      // posição atual do encoder
+  long posi_atual = 0;      // posição atual do encoder
   noInterrupts();              // desabilita interrupções
   posi_atual = posi;          // atualiza a posição atual do encoder
   interrupts();               // reabilita interrupções
@@ -91,7 +91,7 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 
   float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
   
-  Serial.print("Calculou U");
+  // Serial.print("Calculou U");
 
   if (pwmVal > 255) // Limita o valor do pwm para 255
   {
@@ -114,15 +114,15 @@ void MotorDC::andar_reto(int velocidade_rpm, SENTIDO sentido)
 
   ligar_motor(sentido, pwmVal);
 
-  Serial.println("Ligou motor");
+  // Serial.println("Ligou motor");
 
   eprev = e;
 
-  Serial.print("Posição: ");
-  Serial.print(posi);
-  Serial.print(" | ");
-  Serial.print("RPS: ");
-  Serial.println(rps);
+  // Serial.print("Posição: ");
+  // Serial.print(posi);
+  // Serial.print(" | ");
+  // Serial.print("RPM: ");
+  // Serial.println(rps*60);
 }
 
 void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
