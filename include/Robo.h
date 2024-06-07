@@ -13,7 +13,7 @@
 
 class Robo {
     public:
-        Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
+        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
 
         void ligar_robo(); // Função para ligar todos os componentes do robô
         void ler_visao();
@@ -28,7 +28,8 @@ class Robo {
         //! Eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D 
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        MotorDC& motor; // Referência ao objeto motor da classe MotorDC
+        MotorDC& motor_esquerdo; // Referência ao objeto motor_esquerdo da classe MotorDC
+        MotorDC& motor_direito; // Referência ao objeto motor_esquerdo da classe MotorDC
         Volante& volante; // Referência ao objeto volante da classe Volante
         Giroscopio& giroscopio; // Referência ao objeto giroscopio da classe Giroscopio
 

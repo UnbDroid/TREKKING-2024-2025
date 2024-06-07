@@ -12,8 +12,8 @@
 
 // Construtor da classe Robo
 //! De novo, eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D
-Robo::Robo(MotorDC& motor, Volante& volante, Giroscopio& giroscopio)
-: motor(motor), volante(volante), giroscopio(giroscopio){
+Robo::Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio)
+: motor_esquerdo(motor_esquerdo), motor_direito(motor_direito), volante(volante), giroscopio(giroscopio){
 
 }
 
@@ -51,12 +51,14 @@ float Robo::retornar_posicao_y_do_cone() {
 // Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
-    motor.andar_reto(velocidade_rpm);
+    motor_esquerdo.andar_reto(velocidade_rpm);
+    motor_direito.andar_reto(velocidade_rpm);
 }
 
 // Função para fazer o robô andar reto por uma distância específica
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
-    motor.andar_reto_cm(distancia_cm, velocidade_rpm);
+    motor_esquerdo.andar_reto_cm(distancia_cm, velocidade_rpm);
+    motor_direito.andar_reto_cm(distancia_cm, velocidade_rpm);
 }
 
 // Função para fazer o robô virar para um ângulo específico
@@ -94,7 +96,13 @@ void Robo::virar_robo(int angulo)
         }
         volante.virar_volante_especifico(giro_volante);
         int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-        Robo::andar_reto(velocidade_rpm);
+        if (giro_volante > 0) {
+            motor_esquerdo.andar_reto(velocidade_rpm);
+            motor_direito.andar_reto(velocidade_rpm - 20);
+        } else {
+            motor_esquerdo.andar_reto(velocidade_rpm - 20);
+            motor_direito.andar_reto(velocidade_rpm);
+        }
     }
     volante.resetar_volante();
 }
@@ -122,7 +130,14 @@ void Robo::alinhar_com_cone() {
             giro_volante = 10;
         }
         volante.virar_volante_especifico(giro_volante);
-        Robo::andar_reto(80 + (abs(giro_volante) * 40 / 35));
+        if (giro_volante > 0) {
+            motor_esquerdo.andar_reto(80 + (abs(giro_volante) * 40 / 35));
+            motor_direito.andar_reto(60 + (abs(giro_volante) * 40 / 35));
+        } else {
+            motor_esquerdo.andar_reto(60 + (abs(giro_volante) * 40 / 35));
+            motor_direito.andar_reto(80 + (abs(giro_volante) * 40 / 35));
+        }
+
     }
     volante.resetar_volante();
 }

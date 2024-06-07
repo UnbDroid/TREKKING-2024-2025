@@ -13,7 +13,8 @@
 
 // Declarações dos objetos -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-MotorDC motor_dc(ENCA, ENCB, PWM, IN1, IN2);
+MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
 // Volante volante(SERVO);
 // Giroscopio giroscopio;
 // Robo robo(motor_dc, volante, giroscopio);
@@ -28,8 +29,12 @@ double dt;
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void interrupcao_encoder() {
-  motor_dc.ler_encoder();
+void interrupcao_encoder_esquerdo() {
+  motor_dc_esquerdo.ler_encoder();
+}
+
+void interrupcao_encoder_direito() {
+  motor_dc_direito.ler_encoder();
 }
 
 // Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -52,7 +57,8 @@ void setup() {
   // Inicialização dos objetos (teste) ---------------------------------------------------------------------------------------------------------------------------------------------
 
   // volante.inicializar_volante();
-  attachInterrupt(digitalPinToInterrupt(ENCA), interrupcao_encoder, RISING);
+  attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
+  attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_direito, RISING);
   // giroscopio.ligar_mpu();
 
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -81,13 +87,11 @@ void loop() {
   // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // robo.virar_robo(90);
-  motor_dc.andar_reto(30); //! Ajustar aqui a velocidade em RPM
+  motor_dc_esquerdo.andar_reto(30); //! Ajustar aqui a velocidade em RPM
+  motor_dc_direito.andar_reto(30); //! Ajustar aqui a velocidade em RPM
   // analogWrite(PWM, 100);
   // digitalWrite(IN1, HIGH);
   // digitalWrite(IN2, LOW);
-  // motor_dc.ler_encoder();
-  Serial.print("Posição: ");
-  Serial.println(motor_dc.posi);
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // delay(10);

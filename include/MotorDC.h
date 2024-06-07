@@ -6,9 +6,7 @@
 
 //* Este arquivo contém a declaração da classe MotorDC, que é responsável por
 //* controlar o motor DC e fornecer os valores de velocidade e direção de giro do motor
-enum SENTIDO{
-    FRENTE=1,TRAS=-1
-};
+
 class MotorDC{
     public:
         MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2); // Construtor da classe MotorDC
