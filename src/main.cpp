@@ -43,12 +43,16 @@
 
   void ligar_robo() {
     robo.ligar_robo();
+    motor_dc_esquerdo.congirurar(732, 2.2, 1.2, 0);
+    motor_dc_direito.congirurar(732, 2.2, 1.2, 0);
     attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
     attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+// bool teste = true;
 
 
 // Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -57,7 +61,7 @@
 
     //! Início da comunicação serial ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-      Serial.begin(9600);
+      Serial.begin(115200);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -96,24 +100,34 @@
     
       atualizar_tempo();
 
+      robo.virar_robo(90);
+
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-      // robo.virar_robo(90);
+      // robo.andar_reto(80);
 
-      motor_dc_esquerdo.andar_reto(20); //! Ajustar aqui a velocidade em RPM
-      motor_dc_direito.andar_reto(20); //! Ajustar aqui a velocidade em RPM
+      // motor_dc_esquerdo.andar_reto(50); //! Ajustar aqui a velocidade em RPM
+      // motor_dc_direito.andar_reto(50); //! Ajustar aqui a velocidade em RPM
       
-      // analogWrite(PWM, 100);
-      // digitalWrite(IN1, HIGH);
-      // digitalWrite(IN2, LOW);
+      // if (teste == true) {
 
-      Serial.print("Posição Esquerda: ");
-      Serial.print(motor_dc_esquerdo.posi);
-      Serial.print(" | ");
-      Serial.print("Posição Direita: ");
-      Serial.println(motor_dc_direito.posi);
+        // analogWrite(PWM_Esquerdo, 255);
+        // digitalWrite(IN1_Esquerdo, HIGH);
+        // digitalWrite(IN2_Esquerdo, LOW);
+
+        // analogWrite(PWM_Direito, 255);
+        // digitalWrite(IN1_Direito, HIGH);
+        // digitalWrite(IN2_Direito, LOW);
+
+      //   teste = false;
+      // }
+
+      // volante.resetar_volante();
+
+      Serial.print("Yaw: ");
+      Serial.println(giroscopio.get_z());
 
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

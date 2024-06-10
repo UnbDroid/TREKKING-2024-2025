@@ -24,6 +24,14 @@ MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, c
   // instance = this;
 }
 
+void MotorDC::congirurar(int ticks_por_volta, float kp, float ki, float kd)
+{
+  this -> encoder_volta = ticks_por_volta;
+  this -> kp = kp;
+  this -> ki = ki;
+  this -> kd = kd;
+}
+
 // Função para ligar o motor e definir a direção e a velocidade
 void MotorDC::ligar_motor(int dir, int pwmVal)
 {
@@ -78,15 +86,6 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   voltas = posi_atual / encoder_volta;            // calcula o número de voltas do motor
   rps = (voltas - voltas_anterior) / dt; // calcula a velocidade do motor em rps
-  Serial.print("Voltas");
-  Serial.print(voltas);
-  Serial.print(" | ");
-  Serial.print("Voltas Anterior: ");
-  Serial.print(voltas_anterior);
-  Serial.print(" | ");
-  Serial.print("RPM: ");
-  Serial.print(rps*60);
-  Serial.print(" | ");
 
   double e = rpm_referencia - (rps * 60); // calcula o erro da velocidade em rpm
 
@@ -94,15 +93,11 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   eintegral += e;
 
-  // atualizar_tempo();
-
   float d = kd * ((e - eprev) / dt);
 
   float u = p + (ki * eintegral * dt) + d; //p + (ki * eintegral*dt) + d;
 
   float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
-  
-  // Serial.print("Calculou U");
 
   if (pwmVal > 255) // Limita o valor do pwm para 255
   {
@@ -125,13 +120,8 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   ligar_motor(dir, pwmVal);
 
-  // Serial.println("Ligou motor");
-
   eprev = e;
-
-  // Serial.print("Posição: ");
-  // Serial.print(posi);
-  // Serial.print(" | ");
+  
 }
 
 void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
