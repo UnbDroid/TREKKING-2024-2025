@@ -11,7 +11,6 @@
 //* controlar o robô e ter os comandos básicos de movimentação
 
 // Construtor da classe Robo
-//! De novo, eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D
 Robo::Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio)
 : motor_esquerdo(motor_esquerdo), motor_direito(motor_direito), volante(volante), giroscopio(giroscopio){
 

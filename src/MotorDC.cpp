@@ -139,9 +139,6 @@ void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
   // TODO: Alterar o valor do comprimento da roda para o valor correto
   // TODO: Testar a função
 
-  //! Com certeza absoluta a gente vai ter que fazer um controle pra velocidade, porque ele vai andar mais do que o necessário
-  //! mas por enquanto vamos deixar assim :D
-
   int voltas_inicio = posi / encoder_volta;
   if (distancia_cm > 0)
   {
