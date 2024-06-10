@@ -13,7 +13,7 @@
 
 #define ENCA_Direito 18 // Cabo amarelo
 #define ENCB_Direito 19 // Cabo branco
-#define PWM_Direito 8
+#define PWM_Direito 11
 #define IN1_Direito 12
 #define IN2_Direito 13
 

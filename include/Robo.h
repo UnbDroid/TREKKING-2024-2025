@@ -34,6 +34,7 @@ class Robo {
         Giroscopio& giroscopio; // Referência ao objeto giroscopio da classe Giroscopio
 
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
     private:
         float cone_posicao_x = 0.0; // Posição do cone no eixo x
         float cone_posicao_y = 0.0; // Posição do cone no eixo y
