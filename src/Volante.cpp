@@ -34,7 +34,7 @@ void Volante::virar_volante(int angulo)
     s.write(angulo_final);
     //TODO: Verificar o ângulo máximo que o servo pode virar
 }
-//virar_volante_
+
 void Volante::virar_volante_especifico(int angulo)
 {
     s.write(angulo + angulo_base);
