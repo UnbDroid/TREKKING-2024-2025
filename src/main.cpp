@@ -2,6 +2,7 @@
 #include "Volante.h"
 #include "Giroscopio.h"
 #include "MotorDC.h"
+#include "Servo.h"
 #include "Pinos.h"
 #include "Robo.h"
 #include "Tempo.h"
@@ -13,11 +14,13 @@
 
 // Declarações dos objetos -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
-  MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
-  Volante volante(SERVO);
-  Giroscopio giroscopio;
-  Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, giroscopio);
+  // MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+  // MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
+  // Volante volante(SERVO);
+  // Giroscopio giroscopio;
+  // Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, giroscopio);
+
+  Servo s;
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -33,20 +36,21 @@
 
 // Funções de inicialização -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  void interrupcao_encoder_esquerdo() {
-    motor_dc_esquerdo.ler_encoder();
-  }
+  // void interrupcao_encoder_esquerdo() {
+  //   motor_dc_esquerdo.ler_encoder();
+  // }
 
-  void interrupcao_encoder_direito() {
-    motor_dc_direito.ler_encoder();
-  }
+  // void interrupcao_encoder_direito() {
+  //   motor_dc_direito.ler_encoder();
+  // }
 
   void ligar_robo() {
-    robo.ligar_robo();
-    motor_dc_esquerdo.congirurar(732, 2.2, 1.2, 0);
-    motor_dc_direito.congirurar(732, 2.2, 1.2, 0);
-    attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
-    attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
+    // robo.ligar_robo();
+    // volante.setup();
+    // motor_dc_esquerdo.congirurar(732, 2.2, 1.2, 0);
+    // motor_dc_direito.congirurar(732, 2.2, 1.2, 0);
+    // attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
+    // attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,7 +65,7 @@
 
     //! Início da comunicação serial ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-      Serial.begin(115200);
+      Serial.begin(9600);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -69,6 +73,7 @@
     //! Inicialização dos objetos (oficial) -------------------------------------------------------------------------------------------------------------------------------------------
     
       ligar_robo();
+      s.attach(SERVO);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -100,7 +105,7 @@
     
       atualizar_tempo();
 
-      robo.virar_robo(90);
+      // robo.virar_robo(90);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -124,10 +129,19 @@
       //   teste = false;
       // }
 
-      // volante.resetar_volante();
 
-      Serial.print("Yaw: ");
-      Serial.println(giroscopio.get_z());
+      s.write(90);
+      Serial.println (s.read());
+      delay(1000);
+      s.write(0);
+      Serial.println (s.read());
+      delay(1000);
+      s.write(180);
+      Serial.println (s.read());
+      delay(1000);
+
+      // Serial.print("Yaw: ");
+      // Serial.println(giroscopio.get_z());
 
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

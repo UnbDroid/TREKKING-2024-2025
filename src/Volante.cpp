@@ -7,34 +7,22 @@
 Volante::Volante(const int SERVO)
 {
     this->SERVO = SERVO;
+}
+
+void Volante::setup()
+{
     s.attach(SERVO);
-    s.write(return_angulo_inicial());
-    set_angulo_base(return_angulo_inicial());
-}
-
-int Volante::return_angulo_inicial()
-{
-    return 90;
-}
-
-void Volante::set_angulo_base(int angulo)
-{
-    angulo_base = angulo;
+    s.write(90);
 }
 
 void Volante::resetar_volante()
 {
-    s.write(angulo_base);
+    s.write(90);
 }
 
 void Volante::virar_volante(int angulo)
-{
-    int angulo_inicial = return_angulo_inicial();
-    int angulo_final = angulo_inicial + angulo;
+{;
+    int angulo_final = (90 + angulo);
     s.write(angulo_final);
-}
-
-void Volante::virar_volante_especifico(int angulo)
-{
-    s.write(angulo + angulo_base);
+    Serial.println(s.read());
 }

@@ -20,7 +20,7 @@ class Giroscopio{
     private:
         bfs::Mpu9250 imu; // Criação do objeto imu da classe Mpu9250
         int status; // Status do sensor
-        const double deg_to_rad = (180/3.1415); // Fator de conversão de graus para radianos (caso precisemos) (vulgo pi para os mais íntimos)
+        const double deg_to_rad = (180/3.1415); // Fator de conversão de radianos para graus
         // Parâmetros do filtro (constantes de controle dos valores de movimento dos eixos)
         const float alpha_x = 0.45;
         const float alpha_y = 0.45;

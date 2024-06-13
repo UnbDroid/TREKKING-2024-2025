@@ -16,6 +16,7 @@ class Robo {
         Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
 
         void ligar_robo(); // Função para ligar todos os componentes do robô
+        void resetar_encoder();
         void ler_visao();
         float retornar_posicao_x_do_cone();
         float retornar_posicao_y_do_cone();

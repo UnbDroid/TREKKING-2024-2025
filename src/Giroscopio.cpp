@@ -43,7 +43,7 @@ void Giroscopio::atualizar_leituras() {
   
   imu.Read();
 
-  atualizar_tempo();
+  T = micros();
 
   // Recebe os dados do giroscópio em rad/s
   gyro_x_rad = imu.gyro_x_radps();
@@ -55,6 +55,9 @@ void Giroscopio::atualizar_leituras() {
   accel_y_g = imu.accel_y_mps2() / 9.81;
   accel_z_g = imu.accel_z_mps2() / 9.81;
 
+  dt = ((float) (T - prevT))/( 1.0e6 );
+  prevT = T;
+
   // Calcula o roll e o pitch a partir dos dados do acelerômetro (estimativa inicial)
   pitch_angle = atan2(accel_x_g, accel_z_g) * deg_to_rad;
   roll_angle = atan2(accel_y_g, accel_z_g) * deg_to_rad;
@@ -62,7 +65,7 @@ void Giroscopio::atualizar_leituras() {
   // Filtro de Kalman para os ângulos de roll e pitch (usa os dados do giroscópio para corrigir as estimativas)
   roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1.0 - alpha_x) * pitch_angle;
   pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1.0 - alpha_y) * roll_angle;
-  if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += gyro_z_rad * dt;}
+  if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += (gyro_z_rad * dt * 2);}
 
 }
 

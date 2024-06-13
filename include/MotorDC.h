@@ -14,6 +14,7 @@ class MotorDC{
         void congirurar (int ticks_por_volta, float kp, float ki, float kd); // Função para configurar o motor
         void ligar_motor(int dir, int pwmVal);
         void ler_encoder();
+        void resetar_encoder();
         void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm);
         volatile double posi; // posição do motor em ticks do encoder
