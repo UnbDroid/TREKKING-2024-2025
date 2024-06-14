@@ -26,7 +26,7 @@ class MotorDC{
         float ki; // constante integral do controle PID
         float kd; // constante derivativa do controle PID
         int rpm_referencia; // velocidade desejada do motor, velocidade que ele buscará alcançar
-        double rps_max = 1.26; // velocidade máxima do motor (apenas por curiosidade, usar caso seja necessário)
+        double rpm_max = 87; // velocidade máxima do motor (apenas por curiosidade, usar caso seja necessário)
         double raio_roda_cm = 6; // raio da roda em cm
         double comprimento_roda = 2 * M_PI * raio_roda_cm; //TODO: medir o comprimento da roda real
         float eprev = 0;

@@ -112,6 +112,15 @@ void MotorDC::andar_reto(int velocidade_rpm)
     pwmVal = 255;
   }
 
+  // if (IN1 == 6) {
+  //   Serial.print("pwmVal Esquerdo: ");
+  //   Serial.print(pwmVal);
+  //   Serial.print(" | ");
+  // } else {
+  //   Serial.print("pwmVal Direito: ");
+  //   Serial.println(pwmVal);
+  // }
+
   // Define a direção do motor com base no valor de u
   if (u > 0)
   {

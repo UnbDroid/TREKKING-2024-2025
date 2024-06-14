@@ -47,8 +47,8 @@
   void ligar_robo() {
     // robo.ligar_robo();
     // volante.setup();
-    motor_dc_esquerdo.congirurar(732, 2.2, 1.2, 0);
-    motor_dc_direito.congirurar(732, 2.2, 1.2, 0);
+    motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
+    motor_dc_direito.congirurar(2100, 3.0, 2.5, 0);
     attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
     attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   }
@@ -90,8 +90,19 @@
 
     // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-      // motor_dc.andar_reto_cm(10, 80);
-      // robo.virar_robo(90);
+      // Esquerda: 2200
+
+      // while (motor_dc_esquerdo.posi < 2100) {
+        //   atualizar_tempo();
+      //   analogWrite(PWM_Esquerdo, 30);
+      //   digitalWrite(IN1_Esquerdo, HIGH);
+      //   digitalWrite(IN2_Esquerdo, LOW);
+      //   Serial.println(motor_dc_esquerdo.posi);
+      // }
+      // analogWrite(PWM_Esquerdo, 0);
+      // digitalWrite(IN1_Esquerdo, HIGH);
+      // digitalWrite(IN2_Esquerdo, HIGH);
+      // delay(5000);
 
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,8 +129,16 @@
       
       // if (teste == true) {
 
-        motor_dc_esquerdo.andar_reto(-50);
-        motor_dc_direito.andar_reto(-50);
+        motor_dc_esquerdo.andar_reto(70);
+        motor_dc_direito.andar_reto(70);
+
+        // analogWrite(PWM_Esquerdo, 255);
+        // digitalWrite(IN1_Esquerdo, HIGH);
+        // digitalWrite(IN2_Esquerdo, LOW);
+
+        // analogWrite(PWM_Direito, 255);
+        // digitalWrite(IN1_Direito, HIGH);
+        // digitalWrite(IN2_Direito, LOW);
 
         Serial.print("Encoder Esquerdo: ");
         Serial.print(motor_dc_esquerdo.rps * 60);
@@ -127,6 +146,8 @@
         Serial.print("Encoder Direito: ");
         Serial.println(motor_dc_direito.rps * 60);
 
+        // 1 CM
+        // 0,6 CM
 
       //   teste = false;
       // }
