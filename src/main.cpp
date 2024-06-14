@@ -14,8 +14,8 @@
 
 // Declarações dos objetos -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  // MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
-  // MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
+  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+  MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
   // Volante volante(SERVO);
   // Giroscopio giroscopio;
   // Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, giroscopio);
@@ -36,21 +36,21 @@
 
 // Funções de inicialização -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  // void interrupcao_encoder_esquerdo() {
-  //   motor_dc_esquerdo.ler_encoder();
-  // }
+  void interrupcao_encoder_esquerdo() {
+    motor_dc_esquerdo.ler_encoder();
+  }
 
-  // void interrupcao_encoder_direito() {
-  //   motor_dc_direito.ler_encoder();
-  // }
+  void interrupcao_encoder_direito() {
+    motor_dc_direito.ler_encoder();
+  }
 
   void ligar_robo() {
     // robo.ligar_robo();
     // volante.setup();
-    // motor_dc_esquerdo.congirurar(732, 2.2, 1.2, 0);
-    // motor_dc_direito.congirurar(732, 2.2, 1.2, 0);
-    // attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
-    // attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
+    motor_dc_esquerdo.congirurar(732, 2.2, 1.2, 0);
+    motor_dc_direito.congirurar(732, 2.2, 1.2, 0);
+    attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
+    attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@
     //! Inicialização dos objetos (oficial) -------------------------------------------------------------------------------------------------------------------------------------------
     
       ligar_robo();
-      s.attach(SERVO);
+      // s.attach(SERVO);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,27 +118,29 @@
       
       // if (teste == true) {
 
-        // analogWrite(PWM_Esquerdo, 255);
-        // digitalWrite(IN1_Esquerdo, HIGH);
-        // digitalWrite(IN2_Esquerdo, LOW);
+        motor_dc_esquerdo.andar_reto(-50);
+        motor_dc_direito.andar_reto(-50);
 
-        // analogWrite(PWM_Direito, 255);
-        // digitalWrite(IN1_Direito, HIGH);
-        // digitalWrite(IN2_Direito, LOW);
+        Serial.print("Encoder Esquerdo: ");
+        Serial.print(motor_dc_esquerdo.rps * 60);
+        Serial.print(" / ");
+        Serial.print("Encoder Direito: ");
+        Serial.println(motor_dc_direito.rps * 60);
+
 
       //   teste = false;
       // }
 
 
-      s.write(90);
-      Serial.println (s.read());
-      delay(1000);
-      s.write(0);
-      Serial.println (s.read());
-      delay(1000);
-      s.write(180);
-      Serial.println (s.read());
-      delay(1000);
+      // s.write(90);
+      // Serial.println (s.read());
+      // delay(1000);
+      // s.write(0);
+      // Serial.println (s.read());
+      // delay(1000);
+      // s.write(180);
+      // Serial.println (s.read());
+      // delay(1000);
 
       // Serial.print("Yaw: ");
       // Serial.println(giroscopio.get_z());
