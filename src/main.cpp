@@ -39,7 +39,13 @@
   void interrupcao_encoder_esquerdo() {
     motor_dc_esquerdo.ler_encoder();
   }
+  void interrupcao_encoder_esquerdo() {
+    motor_dc_esquerdo.ler_encoder();
+  }
 
+  void interrupcao_encoder_direito() {
+    motor_dc_direito.ler_encoder();
+  }
   void interrupcao_encoder_direito() {
     motor_dc_direito.ler_encoder();
   }
