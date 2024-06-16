@@ -112,15 +112,6 @@ void MotorDC::andar_reto(int velocidade_rpm)
     pwmVal = 255;
   }
 
-  // if (IN1 == 6) {
-  //   Serial.print("pwmVal Esquerdo: ");
-  //   Serial.print(pwmVal);
-  //   Serial.print(" | ");
-  // } else {
-  //   Serial.print("pwmVal Direito: ");
-  //   Serial.println(pwmVal);
-  // }
-
   // Define a direção do motor com base no valor de u
   if (u > 0)
   {
@@ -139,28 +130,4 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   eprev = e;
   
-}
-
-void MotorDC::andar_reto_cm(int distancia_cm, int velocidade_rpm)
-{
-  // TODO: Alterar o valor do comprimento da roda para o valor correto
-  // TODO: Testar a função
-
-  int voltas_inicio = posi / encoder_volta;
-  if (distancia_cm > 0)
-  {
-    while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda < distancia_cm)
-    {
-      atualizar_tempo();
-      andar_reto(velocidade_rpm);
-    }
-  }
-  else
-  {
-    while (((posi / encoder_volta) - voltas_inicio)*comprimento_roda > distancia_cm)
-    {
-      atualizar_tempo();
-      andar_reto(velocidade_rpm);
-    }
-  }
 }

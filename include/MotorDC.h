@@ -16,9 +16,8 @@ class MotorDC{
         void ler_encoder();
         void resetar_encoder();
         void andar_reto(int velocidade_rpm);
-        void andar_reto_cm(int distancia_cm, int velocidade_rpm);
         volatile double posi; // posição do motor em ticks do encoder
-        double rps = 0; // velocidade ATUAL do motor em radianos por segundo
+        double rps = 0; // velocidade ATUAL do motor em rotações por segundo
         double voltas = 0; // número de voltas do motor
         double voltas_anterior = 0; // número de voltas do motor no instante anterior, para cálculo do erro
         int encoder_volta; // valor de encoder referente a uma volta completa da roda
@@ -28,7 +27,7 @@ class MotorDC{
         int rpm_referencia; // velocidade desejada do motor, velocidade que ele buscará alcançar
         double rpm_max = 87; // velocidade máxima do motor (apenas por curiosidade, usar caso seja necessário)
         double raio_roda_cm = 6; // raio da roda em cm
-        double comprimento_roda = 2 * M_PI * raio_roda_cm; //TODO: medir o comprimento da roda real
+        double comprimento_roda = 2 * M_PI * raio_roda_cm; //TODO: medir o raio da roda real
         float eprev = 0;
         float eintegral = 0; // erro acumulado pro cálculo do ki
         int dir = 1; // 1 para frente, -1 para trás (pelo menos essa é a ideia)

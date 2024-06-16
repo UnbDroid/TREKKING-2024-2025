@@ -12,17 +12,22 @@ Volante::Volante(const int SERVO)
 void Volante::setup()
 {
     s.attach(SERVO);
-    s.write(90);
+    s.write(angulo_base);
+}
+
+void Volante::definir_angulo_base()
+{
+    s.write(s.read());
 }
 
 void Volante::resetar_volante()
 {
-    s.write(90);
+    s.write(angulo_base);
 }
 
 void Volante::virar_volante(int angulo)
 {;
-    int angulo_final = (90 + angulo);
+    int angulo_final = (angulo_base + angulo);
     s.write(angulo_final);
     Serial.println(s.read());
 }
