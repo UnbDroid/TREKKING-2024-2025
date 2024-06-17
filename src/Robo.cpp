@@ -62,9 +62,7 @@ void Robo::andar_reto(int velocidade_rpm)
 
 // Função para fazer o robô andar reto por uma distância específica
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
-    int angulo_inicial = giroscopio.get_z();
-    motor_esquerdo.resetar_encoder();
-    motor_direito.resetar_encoder();
+    float angulo_inicial = giroscopio.get_z();
     while ((motor_esquerdo.posi/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm and (motor_direito.posi/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
         atualizar_tempo();
         motor_esquerdo.andar_reto(velocidade_rpm);
@@ -88,8 +86,6 @@ void Robo::virar_robo(int angulo)
     float angulo_inicial = giroscopio.get_z();
     float angulo_final = angulo_inicial + angulo;
     float angulo_atual = giroscopio.get_z();
-    motor_esquerdo.resetar_encoder();
-    motor_direito.resetar_encoder();
     int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
     while (angulo_atual < (angulo_final - 3) or angulo_atual > (angulo_final + 3)) {
@@ -125,8 +121,6 @@ void Robo::virar_robo(int angulo)
         volante.virar_volante(giro_volante);
         if (velocidade_rpm != (80 + (abs(giro_volante) * 40 / 35))) {
             velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35);
-            motor_esquerdo.resetar_encoder();
-            motor_direito.resetar_encoder();
         }
         if (giro_volante > 0) {
             motor_esquerdo.andar_reto(velocidade_rpm);
@@ -165,8 +159,6 @@ void Robo::alinhar_com_cone() {
         volante.virar_volante(giro_volante);
         if (velocidade_rpm != (80 + (abs(giro_volante) * 40 / 35))) {
             velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35);
-            motor_esquerdo.resetar_encoder();
-            motor_direito.resetar_encoder();
         }
         if (giro_volante > 0) {
             motor_esquerdo.andar_reto(velocidade_rpm);

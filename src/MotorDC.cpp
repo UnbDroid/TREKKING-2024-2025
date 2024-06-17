@@ -128,7 +128,12 @@ void MotorDC::andar_reto(int velocidade_rpm)
     dir = 0;
   }
 
-  ligar_motor(dir, pwmVal);
+  if (velocidade_rpm != 0) {
+    ligar_motor(dir, pwmVal);
+  } else {
+    ligar_motor(0, 0);
+  }
+
 
   eprev = e;
   
