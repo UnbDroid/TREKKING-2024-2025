@@ -99,11 +99,13 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   float p = kp * e;
 
-  eintegral += e;
+  eintegral += e * dt;
+
+  float i = ki * eintegral;
 
   float d = kd * ((e - eprev) / dt);
 
-  float u = p + (ki * eintegral * dt) + d; //p + (ki * eintegral*dt) + d;
+  float u = p + i + d; //p + (ki * eintegral*dt) + d;
 
   float pwmVal = fabs(u); // valor do pwm que será enviado ao motor
 
