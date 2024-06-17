@@ -54,7 +54,7 @@
     // robo.ligar_robo();
     // volante.setup();
     motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
-    motor_dc_direito.congirurar(2100, 3.0, 2.5, 0);
+    motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);
     attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
     attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   }
@@ -80,6 +80,63 @@
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+      // while (millis() < 3000) {
+      //   atualizar_tempo();
+
+      //   motor_dc_esquerdo.andar_reto(30); //! Ajustar aqui a velocidade em RPM
+      //   motor_dc_direito.andar_reto(30); //! Ajustar aqui a velocidade em RPM
+
+      //   Serial.print("Encoder Esquerdo: ");
+      //   Serial.print(motor_dc_esquerdo.rps * 60);
+      //   Serial.print(" / ");
+      //   Serial.print("Encoder Direito: ");
+      //   Serial.println(motor_dc_direito.rps * 60);
+      // }
+
+      // while (millis() < 6000) {
+      //   atualizar_tempo();
+
+      //   motor_dc_esquerdo.andar_reto(50); //! Ajustar aqui a velocidade em RPM
+      //   motor_dc_direito.andar_reto(50); //! Ajustar aqui a velocidade em RPM
+
+      //   Serial.print("Encoder Esquerdo: ");
+      //   Serial.print(motor_dc_esquerdo.rps * 60);
+      //   Serial.print(" / ");
+      //   Serial.print("Encoder Direito: ");
+      //   Serial.println(motor_dc_direito.rps * 60);
+      // }
+
+      // while (millis() < 9000) {
+      //   atualizar_tempo();
+
+      //   motor_dc_esquerdo.andar_reto(20); //! Ajustar aqui a velocidade em RPM
+      //   motor_dc_direito.andar_reto(20); //! Ajustar aqui a velocidade em RPM
+
+      //   Serial.print("Encoder Esquerdo: ");
+      //   Serial.print(motor_dc_esquerdo.rps * 60);
+      //   Serial.print(" / ");
+      //   Serial.print("Encoder Direito: ");
+      //   Serial.println(motor_dc_direito.rps * 60);
+      // }
+
+      // while ((motor_dc_esquerdo.rps * 60) > 0) {
+      //   atualizar_tempo();
+
+      //   motor_dc_esquerdo.andar_reto(0); //! Ajustar aqui a velocidade em RPM
+      //   motor_dc_direito.andar_reto(0); //! Ajustar aqui a velocidade em RPM
+
+      //   Serial.print("Encoder Esquerdo: ");
+      //   Serial.print(motor_dc_esquerdo.rps * 60);
+      //   Serial.print(" / ");
+      //   Serial.print("Encoder Direito: ");
+      //   Serial.println(motor_dc_direito.rps * 60);
+      // }
+
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
   }
 
   void loop() {
@@ -94,8 +151,8 @@
 
       // robo.andar_reto(80); //! Ajustar aqui a velocidade em RPM
 
-      motor_dc_esquerdo.andar_reto(50); //! Ajustar aqui a velocidade em RPM
-      motor_dc_direito.andar_reto(50); //! Ajustar aqui a velocidade em RPM
+      motor_dc_esquerdo.andar_reto(87); //! Ajustar aqui a velocidade em RPM
+      motor_dc_direito.andar_reto(87); //! Ajustar aqui a velocidade em RPM
 
       Serial.print("Encoder Esquerdo: ");
       Serial.print(motor_dc_esquerdo.rps * 60);
