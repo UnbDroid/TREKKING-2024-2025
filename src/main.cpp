@@ -20,9 +20,9 @@
 
   MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
   MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
-  // Volante volante(SERVO);
-  // Giroscopio giroscopio;
-  // Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, giroscopio);
+  Volante volante(SERVO);
+  Giroscopio giroscopio;
+  Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, giroscopio);
 
   Servo s;
 
@@ -31,11 +31,9 @@
 
 
 // Declaração das variáveis de tempo ------------------------------------------------------------------------------------------------------------------------------------------------
-
   long T;
   long prevT; 
   double dt;
-
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -51,8 +49,8 @@
   }
 
   void ligar_robo() {
-    // robo.ligar_robo();
-    // volante.setup();
+    robo.ligar_robo();
+    volante.setup();
     motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
     motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);
     attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
@@ -139,26 +137,45 @@
 
   }
 
+  int var_teste = 0;
+  
   void loop() {
 
     //! Núcleo do código ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
+      
       atualizar_tempo();
+
+      // volante.virar_volante(35);
+      // delay(1000);
+      // volante.virar_volante(0);
+      // delay(1000);
+      // volante.virar_volante(-35);
+      // delay(1000);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+      // if (Serial.available() > 0) {
+      //   var_teste += Serial.parseInt();
+      // }
+
+      // Serial.println(var_teste);
+
       // robo.andar_reto(80); //! Ajustar aqui a velocidade em RPM
 
-      motor_dc_esquerdo.andar_reto(87); //! Ajustar aqui a velocidade em RPM
-      motor_dc_direito.andar_reto(87); //! Ajustar aqui a velocidade em RPM
+      // motor_dc_esquerdo.andar_reto(87); //! Ajustar aqui a velocidade em RPM
+      // motor_dc_direito.andar_reto(87); //! Ajustar aqui a velocidade em RPM
 
-      Serial.print("Encoder Esquerdo: ");
-      Serial.print(motor_dc_esquerdo.rps * 60);
-      Serial.print(" / ");
-      Serial.print("Encoder Direito: ");
-      Serial.println(motor_dc_direito.rps * 60);
+      // Serial.print("Encoder Esquerdo: ");
+      // Serial.print(motor_dc_esquerdo.rps * 60);
+      // Serial.print(" / ");
+      // Serial.print("Encoder Direito: ");
+      // Serial.println(motor_dc_direito.rps * 60);
+
+      Serial.print("Z: ");
+      Serial.println(giroscopio.get_z());
 
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -65,7 +65,9 @@ void Giroscopio::atualizar_leituras() {
   // Filtro de Kalman para os ângulos de roll e pitch (usa os dados do giroscópio para corrigir as estimativas)
   roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1.0 - alpha_x) * pitch_angle;
   pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1.0 - alpha_y) * roll_angle;
-  if ((gyro_z_rad * dt) > 0.001 or (gyro_z_rad * dt) < (-0.001)) {yaw_angle += (gyro_z_rad * dt * 2);}
+  Serial.print("Yaw: ");
+  Serial.println((double) (gyro_z_rad));
+  if ((gyro_z_rad * dt) > 0.00004 or (gyro_z_rad * dt) < (-0.00004)) {yaw_angle += (gyro_z_rad * dt * 2.72);}
 
 }
 

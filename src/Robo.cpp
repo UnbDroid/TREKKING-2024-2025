@@ -65,12 +65,10 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
     float angulo_inicial = giroscopio.get_z();
     while ((motor_esquerdo.posi/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm and (motor_direito.posi/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
         atualizar_tempo();
-        motor_esquerdo.andar_reto(velocidade_rpm);
-        motor_direito.andar_reto(velocidade_rpm);
+        andar_reto(velocidade_rpm);
         volante.virar_volante(static_cast<int>(round((angulo_inicial - giroscopio.get_z())*0.5)));
     }
-    motor_esquerdo.andar_reto(0);
-    motor_direito.andar_reto(0);
+    andar_reto(0);
     volante.definir_angulo_base();
 }
 
@@ -135,6 +133,8 @@ void Robo::virar_robo(int angulo)
 
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone() {
+    // Serial.begin(9600);
+    // Serial.println("Alinhando");
     Robo::ler_visao();
     int giro_volante = 0;
     atualizar_tempo();
@@ -170,4 +170,13 @@ void Robo::alinhar_com_cone() {
 
     }
     volante.resetar_volante();
+    Serial.flush();
+    if (Serial.availableForWrite() > 0) {
+        Serial.println("Alinhado");
+    } else {
+        Serial.end();
+        Serial.begin(9600);
+        Serial.println("Alinhado");
+    }
+    Serial.end();
 }
