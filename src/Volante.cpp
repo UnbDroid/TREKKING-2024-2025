@@ -29,5 +29,4 @@ void Volante::virar_volante(int angulo)
 {;
     int angulo_final = (angulo_base - angulo);
     s.write(angulo_final);
-    Serial.println(s.read());
 }

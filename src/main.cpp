@@ -61,7 +61,7 @@
 
     //! Início da comunicação serial ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-      Serial.begin(115200);
+      Serial.begin(9600);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -75,14 +75,30 @@
     //! Caminho do robô ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
       // robo.alinhar_com_cone()
-      // robo.andar_reto_cm(100, 87);
+      
+      // robo.virar_robo(0);
       // delay(1000);
-      // robo.virar_robo(90);
-      // delay(1000);
-      // robo.andar_reto_cm(100, 87);
-      // delay(1000);
-      // robo.virar_robo(90);
-      // delay(1000);
+      // robo.andar_reto_cm(20, 87);
+      // if(robo.retornar_posicao_y_do_cone()>25){
+      //   volante.virar_volante(20);
+      // }
+      while(!Serial.available()){
+        volante.virar_volante(10);
+        delay(2000);
+        volante.virar_volante(-15);
+        delay(2000);
+      }
+      int giro_volante=0;
+
+      while(1){
+        robo.alinhar_com_cone();
+        atualizar_tempo();
+        // motor_dc_direito.andar_reto(70);
+        // motor_dc_esquerdo.andar_reto(70);
+      }
+      motor_dc_direito.ligar_motor(0,0);
+      motor_dc_esquerdo.ligar_motor(0,0);
+      delay(1000);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -93,13 +109,13 @@
     //! Núcleo do código ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
       //* No momento inutilizado
-
+    
       // Serial.print("Posição X do cone: ");
       // Serial.println(robo.retornar_posicao_x_do_cone());
       // Serial.print("Posição Y do cone: ");
       // Serial.println(robo.retornar_posicao_y_do_cone());
 
-      robo.alinhar_com_cone();
+      
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
