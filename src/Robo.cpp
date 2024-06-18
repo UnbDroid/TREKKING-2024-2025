@@ -57,7 +57,7 @@ void Robo::andar_reto(int velocidade_rpm)
 
 // Função para fazer o robô andar reto por uma distância específica
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
-    giroscopio.primeira_leitura = true;
+    giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
     atualizar_tempo();
     float angulo_inicial = giroscopio.get_z();
     giroscopio.last_time = prevT;
@@ -75,11 +75,6 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 // Função para fazer o robô virar para um ângulo específico
 void Robo::virar_robo(int angulo)
 {
-    //!
-    //! Ainda não testada
-    //!
-    //TODO: Testar a função
-
     int giro_volante = 0;
     giroscopio.primeira_leitura = true;
     float angulo_inicial = giroscopio.get_z();

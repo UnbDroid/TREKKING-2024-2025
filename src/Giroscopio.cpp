@@ -33,8 +33,8 @@ void Giroscopio::ligar_mpu() {
             while(1) {}
         }
 
-        imu.ConfigGyroRange(bfs::Mpu9250::GYRO_RANGE_250DPS);
-        imu.ConfigAccelRange(bfs::Mpu9250::ACCEL_RANGE_2G);
+        imu.ConfigGyroRange(bfs::Mpu9250::GYRO_RANGE_250DPS); // Aumenta a precisão do sensor
+        imu.ConfigAccelRange(bfs::Mpu9250::ACCEL_RANGE_2G); // Aumenta a precisão do sensor
 
     // --------------------------------------------------------------------------------------------------------------------
 
