@@ -135,7 +135,6 @@ void Robo::virar_robo(int angulo)
 void Robo::alinhar_com_cone() {
     // Serial.begin(9600);
     // Serial.println("Alinhando");
-    Robo::ler_visao();
     int giro_volante = 0;
     atualizar_tempo();
     float posicao_x = retornar_posicao_x_do_cone();
