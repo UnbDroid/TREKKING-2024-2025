@@ -74,11 +74,11 @@
 
     //! Caminho do robô ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
-      robo.andar_reto_cm(100, 80);
+      robo.andar_reto_cm(100);
       delay(1000);
       robo.virar_robo(90);
       delay(1000);
-      robo.andar_reto_cm(100, 80);
+      robo.andar_reto_cm(100);
       delay(1000);
       robo.virar_robo(90);
       delay(1000);
