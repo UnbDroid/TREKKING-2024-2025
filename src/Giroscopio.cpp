@@ -33,7 +33,8 @@ void Giroscopio::ligar_mpu() {
             while(1) {}
         }
 
-        imu.
+        imu.ConfigGyroRange(bfs::Mpu9250::GYRO_RANGE_250DPS);
+        imu.ConfigAccelRange(bfs::Mpu9250::ACCEL_RANGE_2G);
 
     // --------------------------------------------------------------------------------------------------------------------
 
@@ -45,31 +46,35 @@ void Giroscopio::atualizar_leituras() {
   
   imu.Read();
 
-  T = micros();
+  current_time = micros();
 
-  // Recebe os dados do giroscópio em rad/s
+  dt_mpu = ((float) (current_time - last_time))/( 1.0e6 );
+
+  last_time = current_time;
+
+  // Get gyroscope data in radians
   gyro_x_rad = imu.gyro_x_radps();
   gyro_y_rad = imu.gyro_y_radps();
   gyro_z_rad = imu.gyro_z_radps();
 
-  // Recebe os dados do giroscópio em g (aceleração da gravidade)
-  accel_x_g = imu.accel_x_mps2() / 9.81;
+  // Get accelerometer data in g-force
+  accel_x_g = imu.accel_x_mps2() / 9.81;  // Convert m/s^2 to g
   accel_y_g = imu.accel_y_mps2() / 9.81;
   accel_z_g = imu.accel_z_mps2() / 9.81;
 
-  dt = ((float) (T - prevT))/( 1.0e6 );
-  prevT = T;
-
-  // Calcula o roll e o pitch a partir dos dados do acelerômetro (estimativa inicial)
+  // Calculate roll and pitch angles from accelerometer (initial estimate)
+  // Consider using atan2 for proper quadrant handling
   pitch_angle = atan2(accel_x_g, accel_z_g) * deg_to_rad;
   roll_angle = atan2(accel_y_g, accel_z_g) * deg_to_rad;
 
-  // Filtro de Kalman para os ângulos de roll e pitch (usa os dados do giroscópio para corrigir as estimativas)
-  roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1.0 - alpha_x) * pitch_angle;
-  pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1.0 - alpha_y) * roll_angle;
-  Serial.print("Yaw: ");
-  Serial.println((double) (gyro_z_rad));
-  if ((gyro_z_rad * dt) > 0.00004 or (gyro_z_rad * dt) < (-0.00004)) {yaw_angle += (gyro_z_rad * dt * 2.72);}
+  // Complementary filter update (adjust alpha as needed)
+  if (primeira_leitura == false) {
+    roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1.0 - alpha_x) * pitch_angle;
+    pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1.0 - alpha_y) * roll_angle;
+    if ((gyro_z_rad * dt) > 0.0001 or (gyro_z_rad * dt) < (-0.0001)) {yaw_angle += gyro_z_rad * dt * -1;}
+  } else {
+    primeira_leitura = false;
+  }
 
 }
 

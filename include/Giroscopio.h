@@ -17,18 +17,22 @@ class Giroscopio{
         float get_x(); // Função para obter o valor de roll(x) do sensor
         float get_y(); // Função para obter o valor de pitch(y) do sensor
         float get_z(); // Função para obter o valor de yaw(z) do sensor
-    private:
-        bfs::Mpu9250 imu; // Criação do objeto imu da classe Mpu9250
-        int status; // Status do sensor
-        const double deg_to_rad = (180/3.1415); // Fator de conversão de radianos para graus
-        // Parâmetros do filtro (constantes de controle dos valores de movimento dos eixos)
-        const float alpha_x = 0.45;
-        const float alpha_y = 0.45;
-        const float alpha_z = 0.45;
+        unsigned long last_time = 0;
+        bool primeira_leitura = true;
         // Ângulos de roll(x), pitch(y) e yaw(z) em graus
         float roll_angle = 0.0;
         float pitch_angle = 0.0;
         float yaw_angle = 0.0;
+    private:
+        bfs::Mpu9250 imu; // Criação do objeto imu da classe Mpu9250
+        int status; // Status do sensor
+        const double deg_to_rad = (180/3.1415); // Fator de conversão de radianos para graus
+        unsigned long current_time;
+        float dt_mpu;
+        // Parâmetros do filtro (constantes de controle dos valores de movimento dos eixos)
+        const float alpha_x = 0.45;
+        const float alpha_y = 0.45;
+        const float alpha_z = 0.45;
         // Variáveis temporárias para armazenamento dos dados do sensor
         float prev_gyro_z_rad =0.0; // Valor anterior do giroscópio em radianos
         float gyro_x_rad, gyro_y_rad, gyro_z_rad; // Valores atuais do giroscópio em radianos
