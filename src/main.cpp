@@ -2,21 +2,15 @@
 #include "Volante.h"
 #include "Giroscopio.h"
 #include "MotorDC.h"
-#include "Servo.h"
 #include "Pinos.h"
 #include "Robo.h"
 #include "Tempo.h"
 
-
-
 //* Este arquivo contém o código principal do robô, que junta todas as funções e estrutura a lógica principal do robô
 
 //TODO: Mudar o README para ter um tutorial de como usar o código
-//TODO: Adicionar comentários explicativos no código
 
-
-
-// Declarações dos objetos -----------------------------------------------------------------------------------------------------------------------------------------------------------
+//! Declarações dos objetos -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
   MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
   MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
@@ -24,17 +18,17 @@
   Giroscopio giroscopio;
   Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, giroscopio);
 
-  Servo s;
-
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-// Declaração das variáveis de tempo ------------------------------------------------------------------------------------------------------------------------------------------------
+//! Declaração das variáveis de tempo ------------------------------------------------------------------------------------------------------------------------------------------------
+  
   long T;
   long prevT; 
   double dt;
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -61,7 +55,7 @@
 
 
 
-// Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
+//! Funções principais do código ----------------------------------------------------------------------------------------------------------------------------------------------------
 
   void setup() {
 
@@ -76,6 +70,10 @@
     
       ligar_robo();
 
+    //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //! Caminho do robô ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+      
       robo.andar_reto_cm(100, 80);
       delay(1000);
       robo.virar_robo(90);
@@ -87,112 +85,16 @@
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-      // while (millis() < 3000) {
-      //   atualizar_tempo();
-
-      //   motor_dc_esquerdo.andar_reto(30); //! Ajustar aqui a velocidade em RPM
-      //   motor_dc_direito.andar_reto(30); //! Ajustar aqui a velocidade em RPM
-
-      //   Serial.print("Encoder Esquerdo: ");
-      //   Serial.print(motor_dc_esquerdo.rps * 60);
-      //   Serial.print(" / ");
-      //   Serial.print("Encoder Direito: ");
-      //   Serial.println(motor_dc_direito.rps * 60);
-      // }
-
-      // while (millis() < 6000) {
-      //   atualizar_tempo();
-
-      //   motor_dc_esquerdo.andar_reto(50); //! Ajustar aqui a velocidade em RPM
-      //   motor_dc_direito.andar_reto(50); //! Ajustar aqui a velocidade em RPM
-
-      //   Serial.print("Encoder Esquerdo: ");
-      //   Serial.print(motor_dc_esquerdo.rps * 60);
-      //   Serial.print(" / ");
-      //   Serial.print("Encoder Direito: ");
-      //   Serial.println(motor_dc_direito.rps * 60);
-      // }
-
-      // while (millis() < 9000) {
-      //   atualizar_tempo();
-
-      //   motor_dc_esquerdo.andar_reto(20); //! Ajustar aqui a velocidade em RPM
-      //   motor_dc_direito.andar_reto(20); //! Ajustar aqui a velocidade em RPM
-
-      //   Serial.print("Encoder Esquerdo: ");
-      //   Serial.print(motor_dc_esquerdo.rps * 60);
-      //   Serial.print(" / ");
-      //   Serial.print("Encoder Direito: ");
-      //   Serial.println(motor_dc_direito.rps * 60);
-      // }
-
-      // while ((motor_dc_esquerdo.rps * 60) > 0) {
-      //   atualizar_tempo();
-
-      //   motor_dc_esquerdo.andar_reto(0); //! Ajustar aqui a velocidade em RPM
-      //   motor_dc_direito.andar_reto(0); //! Ajustar aqui a velocidade em RPM
-
-      //   Serial.print("Encoder Esquerdo: ");
-      //   Serial.print(motor_dc_esquerdo.rps * 60);
-      //   Serial.print(" / ");
-      //   Serial.print("Encoder Direito: ");
-      //   Serial.println(motor_dc_direito.rps * 60);
-      // }
-
-    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
   }
 
-  int var_teste = 0;
-  
   void loop() {
 
     //! Núcleo do código ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
-      // atualizar_tempo();
-
-      // volante.virar_volante(25);
-      // delay(1000);
-      // volante.virar_volante(0);
-      // delay(1000);
-      // volante.virar_volante(-25);
-      // delay(1000);
-      // volante.virar_volante(0);
-      // delay(1000);
+      //* No momento inutilizado
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    // Funções de teste ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-      // if (Serial.available() > 0) {
-      //   var_teste += Serial.parseInt();
-      // }
-
-      // Serial.println(var_teste);
-
-      // robo.andar_reto(80); //! Ajustar aqui a velocidade em RPM
-
-      // motor_dc_esquerdo.andar_reto(87); //! Ajustar aqui a velocidade em RPM
-      // motor_dc_direito.andar_reto(87); //! Ajustar aqui a velocidade em RPM
-
-      // Serial.print("Encoder Esquerdo: ");
-      // Serial.print(motor_dc_esquerdo.rps * 60);
-      // Serial.print(" / ");
-      // Serial.print("Encoder Direito: ");
-      // Serial.println(motor_dc_direito.rps * 60);
-
-      // Serial.print("Z: ");
-      // Serial.println(giroscopio.get_z());
-
-      // delay(3000);
-      // robo.virar_robo(90);
-
-    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
   }
 
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//! -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
