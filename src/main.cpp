@@ -89,13 +89,14 @@
       // if(robo.retornar_posicao_y_do_cone()>25){
       //   volante.virar_volante(20);
       // }
-      while(!Serial.available()){
-        volante.virar_volante(10);
-        delay(2000);
-        volante.virar_volante(-15);
-        delay(2000);
+
+      while (!Serial.available()) {
+        // volante.virar_volante(10);
+        // delay(500);
+        // volante.virar_volante(-10);
+        // delay(500);
       }
-      robo.alinhar_com_cone();
+      // volante.resetar_volante();
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -107,6 +108,15 @@
       
       //* No momento inutilizado
     
+      // volante.virar_volante(0);
+      // delay(1000);
+      // volante.virar_volante(30);
+      // delay(1000);
+      // volante.virar_volante(-30);
+      // delay(1000);
+
+      robo.alinhar_com_cone();
+
       // Serial.print("Posição X do cone: ");
       // Serial.println(robo.retornar_posicao_x_do_cone());
       // Serial.print("Posição Y do cone: ");
