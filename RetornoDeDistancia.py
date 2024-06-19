@@ -8,9 +8,10 @@ import time
 
 #! Coisas da Comunicação Serial --------------------------------------------------
 
-arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=0.1)
+arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
 
 #! -------------------------------------------------------------------------------
+
 
 # Parâmetros da câmera (preencha com os valores da sua câmera)
 focal_length = 640  # Substitua com a distância focal da sua câmera (em pixels)
@@ -29,6 +30,10 @@ track_history = defaultdict(lambda: [])
 # Variáveis de controle
 seguir = True
 deixar_rastro = True
+
+# sys.stdout.flush()
+
+# arduino.write(f"{0.00},{0.00}\n".encode('utf-8'))
 
 while True:
     # Capture a imagem do vídeo
@@ -76,13 +81,13 @@ while True:
                         print(f"Distância estimada para o objeto: {distance:.2f} cm")
 
                         # Calcular a posição do objeto em relação ao centro da tela
-                        center_x = (x + w / 2) / img.shape[1]
-                        center_y = (y + h / 2) / img.shape[0]
+                        center_x = (x)/ img.shape[1]
+                        center_y = (y)/ img.shape[0]
                         offset_x = (
-                            center_x - 0.58
+                            center_x - 0.5
                         )  # Centro da tela na coordenada x é 0.68
                         offset_y = (
-                            center_y - 0.8
+                            center_y - 0.5
                         )  # Centro da tela na coordenada y é 0.8
 
                         print(

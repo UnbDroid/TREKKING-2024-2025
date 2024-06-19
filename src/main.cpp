@@ -61,7 +61,7 @@
 
     //! Início da comunicação serial ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-      Serial.begin(9600);
+      Serial.begin(115200);
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -78,10 +78,6 @@
       // robo.andar_reto_cm(100, 87);
       // delay(1000);
       // robo.virar_robo(90);
-      // delay(1000);
-      // robo.andar_reto_cm(100, 87);
-      // delay(1000);
-      // robo.virar_robo(90);
       // robo.alinhar_com_cone()
       // robo.virar_robo(0);
       // delay(1000);
@@ -89,13 +85,14 @@
       // if(robo.retornar_posicao_y_do_cone()>25){
       //   volante.virar_volante(20);
       // }
-
-      while (!Serial.available()) {
-        // volante.virar_volante(10);
-        // delay(500);
-        // volante.virar_volante(-10);
-        // delay(500);
+      while (!Serial) {
       }
+      robo.andar_reto_cm(50, 87);
+      delay(1000);
+      robo.virar_robo(-90);
+      delay(1000);
+
+      robo.alinhar_com_cone(15);
       // volante.resetar_volante();
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -115,7 +112,6 @@
       // volante.virar_volante(-30);
       // delay(1000);
 
-      robo.alinhar_com_cone();
 
       // Serial.print("Posição X do cone: ");
       // Serial.println(robo.retornar_posicao_x_do_cone());
