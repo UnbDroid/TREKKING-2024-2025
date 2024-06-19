@@ -130,7 +130,36 @@ void Robo::virar_robo(int angulo)
     motor_direito.andar_reto(0);
     motor_esquerdo.andar_reto(0);
 }
-
+float Robo::getAnguloCone(){
+    float catetoOposto = retornar_posicao_x_do_cone();;
+    float catetoAdjacente = retornar_posicao_y_do_cone();
+    float hipotenusa = pow(pow(catetoOposto,2)+pow(catetoAdjacente,2),1/2);
+    float anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
+    return catetoOposto>0?anguloCone:anguloCone*-1;
+}
+void Robo::andarAteCone(float distanciaAteParar){
+    float AnguloIncialRobo = giroscopio.get_z();
+    float erro =0;
+    while(retornar_posicao_y_do_cone>distanciaAteParar){
+        atualizar_tempo();
+        erro = getAnguloCone()-AnguloIncialRobo;
+        float kp = 0.5;
+        float ki,kd = 0;
+        float p = kp*erro;
+        float u = p;
+        volante.virar_volante(u);
+        if (u > 0) {
+            motor_esquerdo.andar_reto(87);
+            motor_direito.andar_reto(77);
+        } else {
+            motor_esquerdo.andar_reto(77);
+            motor_direito.andar_reto(87);
+        }
+    }
+    motor_direito.ligar_motor(0,0);
+    motor_esquerdo.ligar_motor(0,0);
+    delay(500);
+}
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone() {
     // Serial.begin(9600);

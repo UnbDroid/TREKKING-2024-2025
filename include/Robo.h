@@ -14,7 +14,7 @@
 class Robo {
     public:
         Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
-
+        void andarAteCone(float distanciaAteParar);
         void resetar_encoder();
         void ler_visao();
         float retornar_posicao_x_do_cone();
@@ -23,7 +23,7 @@ class Robo {
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 100);
         void virar_robo(int angulo);
         void alinhar_com_cone();
-
+        float getAnguloCone();
         //! Pode ser que esses objetos deem erro por causa do construtor
         //! Eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D 
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
