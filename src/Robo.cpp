@@ -129,10 +129,10 @@ void Robo::virar_robo(int angulo)
     motor_esquerdo.andar_reto(0);
 }
 float Robo::getAnguloCone(){
-    float catetoOposto = retornar_posicao_x_do_cone();;
-    float catetoAdjacente = retornar_posicao_y_do_cone();
-    float hipotenusa = pow(pow(catetoOposto,2)+pow(catetoAdjacente,2),1/2);
-    float anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
+    float catetoOposto = retornar_posicao_x_do_cone();
+    float hipotenusa = retornar_posicao_y_do_cone();
+    float catetoAdjacente = pow(pow(hipotenusa,2)-pow(catetoOposto,2),1/2);
+    float anguloCone=asin(catetoAdjacente/hipotenusa)*180/PI;
     return catetoOposto>0?anguloCone:anguloCone*-1;
 }
 void Robo::andarAteCone(float distanciaAteParar){
