@@ -86,8 +86,6 @@ void Robo::virar_robo(int angulo)
     while (angulo_atual < (angulo_final - 3) or angulo_atual > (angulo_final + 3)) {
         angulo_atual = giroscopio.get_z();
         atualizar_tempo();
-        Serial.print("Yaw: ");
-        Serial.println(angulo_atual);
         if ((angulo_final - angulo_atual) > 0) {
             if ((angulo_final - angulo_atual) > 35) {
                 giro_volante = 35;
@@ -168,43 +166,44 @@ void Robo::alinhar_com_cone() {
     atualizar_tempo();
     float posicao_x = retornar_posicao_x_do_cone();
     int velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35); // Velocidade de referência
-    while (posicao_x > 0.05 or posicao_x < -0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
+    if (posicao_x > 0.05 or posicao_x < -0.05) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
         if (posicao_x > 0.20) {
-            giro_volante = -35;
+            giro_volante = 30;
         } else if (posicao_x < -0.20) {
-            giro_volante = 35;
+            giro_volante = -35;
+        }
         } else if (posicao_x > 0.10) {
-            giro_volante = static_cast<int>(round(posicao_x*(-100)));
-        } else if (posicao_x < -0.10) {
             giro_volante = static_cast<int>(round(posicao_x*(100)));
+        } else if (posicao_x < 0.10) {
+            giro_volante = static_cast<int>(round(posicao_x*(-100)));
         } else if (posicao_x > 0.05) {
-            giro_volante = -10;
-        } else if (posicao_x < -0.05) {
             giro_volante = 10;
+        } else if (posicao_x < -0.05) {
+            giro_volante = -10;
         }
         volante.virar_volante(giro_volante);
-        if (velocidade_rpm != (80 + (abs(giro_volante) * 40 / 35))) {
-            velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35);
-        }
-        if (giro_volante > 0) {
-            motor_esquerdo.andar_reto(velocidade_rpm);
-            motor_direito.andar_reto(velocidade_rpm - 10);
-        } else {
-            motor_esquerdo.andar_reto(velocidade_rpm - 10);
-            motor_direito.andar_reto(velocidade_rpm);
-        }
+        // if (velocidade_rpm != (80 + (abs(giro_volante) * 40 / 35))) {
+        //     velocidade_rpm = 80 + (abs(giro_volante) * 40 / 35);
+        // }
+        // if (giro_volante > 0) {
+        //     motor_esquerdo.andar_reto(velocidade_rpm);
+        //     motor_direito.andar_reto(velocidade_rpm - 10);
+        // } else {
+        //     motor_esquerdo.andar_reto(velocidade_rpm - 10);
+        //     motor_direito.andar_reto(velocidade_rpm);
+        // }
 
     }
     volante.resetar_volante();
-    Serial.flush();
-    if (Serial.availableForWrite() > 0) {
-        Serial.println("Alinhado");
-    } else {
-        Serial.end();
-        Serial.begin(9600);
-        Serial.println("Alinhado");
-    }
-    Serial.end();
+    // Serial.flush();
+    // if (Serial.availableForWrite() > 0) {
+    //     Serial.println("Alinhado");
+    // } else {
+    //     Serial.end();
+    //     Serial.begin(9600);
+    //     Serial.println("Alinhado");
+    // }
+    // Serial.end();
 }
