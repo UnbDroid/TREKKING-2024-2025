@@ -1,13 +1,13 @@
 from ultralytics import YOLO
 
-# Load the YOLOv8 model
-model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/best.pt")
+# Load a YOLOv8n PyTorch model
+model = YOLO("V1.pt")
 
-# Export the model to ONNX format
-model.export(format="onnx")  # creates 'yolov8n.onnx'
+# Export the model to NCNN format
+model.export(format="ncnn")  # creates 'yolov8n_ncnn_model'
 
-# Load the exported ONNX model
-onnx_model = YOLO("best.onnx")
+# Load the exported NCNN model
+ncnn_model = YOLO("./V1_ncnn_model")
 
-# When predicting, set the 'imgsz' parameter to 224x224
-results = model.predict(source='/home/caldo/Documents/Droid/TREEKING2K24/bus.jpg', imgsz=(224, 224))
+# Run inference
+results = ncnn_model("https://ultralytics.com/images/bus.jpg")
