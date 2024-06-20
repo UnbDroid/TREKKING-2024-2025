@@ -75,25 +75,14 @@
     //! Caminho do robô ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
  
-      // robo.andar_reto_cm(100, 87);
-      // delay(1000);
-      // robo.virar_robo(90);
-      // robo.alinhar_com_cone()
-      // robo.virar_robo(0);
-      // delay(1000);
-      // robo.andar_reto_cm(20, 87);
-      // if(robo.retornar_posicao_y_do_cone()>25){
-      //   volante.virar_volante(20);
+      // while (!Serial) {
       // }
-      while (!Serial) {
-      }
-      robo.andar_reto_cm(50, 87);
+      robo.andar_reto_cm(86, 87);
       delay(1000);
       robo.virar_robo(-90);
       delay(1000);
-
       robo.alinhar_com_cone(15);
-      // volante.resetar_volante();
+      volante.resetar_volante();
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

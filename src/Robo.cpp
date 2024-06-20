@@ -24,15 +24,20 @@ void Robo::resetar_encoder() {
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
-    if (Serial.available() > 0) {
-        String input = Serial.readStringUntil('\n');
-        int commaIndex = input.indexOf(',');
-        if (commaIndex != -1) {
-            String float1Str = input.substring(0, commaIndex);
-            String float2Str = input.substring(commaIndex + 1);
-            cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
-            cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
-        }
+    int tempoDeEspera = millis()+50;
+    while (!Serial.available()&&millis()<tempoDeEspera) {
+
+    }
+    if(millis()>tempoDeEspera){
+        cone_posicao_x=400; 
+    }
+    String input = Serial.readStringUntil('\n');
+    int commaIndex = input.indexOf(',');
+    if (commaIndex != -1) {
+        String float1Str = input.substring(0, commaIndex);
+        String float2Str = input.substring(commaIndex + 1);
+        cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
+        cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
     }
 }
 
@@ -87,28 +92,16 @@ void Robo::virar_robo(int angulo)
         angulo_atual = giroscopio.get_z();
         atualizar_tempo();
         if ((angulo_final - angulo_atual) > 0) {
-            if ((angulo_final - angulo_atual) > 35) {
+            if ((angulo_final - angulo_atual) > 10) {
                 giro_volante = 35;
-            } else if ((angulo_final - angulo_atual) > 30) {
-                giro_volante = 30;
-            } else if ((angulo_final - angulo_atual) > 20) {
-                giro_volante = 20;
-            } else if ((angulo_final - angulo_atual) > 10) {
-                giro_volante = 15;
             } else {
-                giro_volante = 10;
+                giro_volante = 20;
             }
         } else if ((angulo_final - angulo_atual) < 0) {
-            if ((angulo_final - angulo_atual) < -35) {
+            if ((angulo_final - angulo_atual) < -10) {
                 giro_volante = -35;
-            } else if ((angulo_final - angulo_atual) < -30) {
-                giro_volante = -30;
-            } else if ((angulo_final - angulo_atual) < -20) {
-                giro_volante = -20;
-            } else if ((angulo_final - angulo_atual) < -10) {
-                giro_volante = -15;
             } else {
-                giro_volante = -10;
+                giro_volante = -20;
             }
         }
         volante.virar_volante(giro_volante);
@@ -176,7 +169,13 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     // Serial.println("Alinhando");
     int giro_volante = 0;
     atualizar_tempo();
+    int tempoEspera = 50;
     float posicao_x = retornar_posicao_x_do_cone();
+    while(posicao_x==400){
+        atualizar_tempo();
+        andar_reto_cm(3,87);
+        posicao_x = retornar_posicao_x_do_cone();
+    }
     int velocidade_rpm = 85; // Velocidade de referência
     float angulo_inicial = giroscopio.get_z();
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada

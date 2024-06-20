@@ -1,5 +1,7 @@
 import cv2
 import serial
+import torch
+import onnxruntime
 import sys
 from ultralytics import YOLO
 from collections import defaultdict
@@ -8,7 +10,7 @@ import time
 
 #! Coisas da Comunicação Serial --------------------------------------------------
 
-arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
+# arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
 
 #! -------------------------------------------------------------------------------
 
@@ -19,13 +21,23 @@ known_object_width = (
     10  # Substitua com a largura real do objeto em centímetros (ou outra unidade)
 )
 
-cap = cv2.VideoCapture(2)
+task = "track"  # Tarefa de rastreamento
+
+sess_options = onnxruntime.SessionOptions()
+
+sess_options.intra_op_num_threads = 4
+sess = onnxruntime.InferenceSession("/home/caldo/Documents/Droid/TREEKING2K24/best.onnx", sess_options)
+
+cap = cv2.VideoCapture(0)
 
 # Carregue o modelo YOLO
-model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/V1.pt")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/best.onnx")
 
 # Dicionário para rastrear IDs e histórico de posições
 track_history = defaultdict(lambda: [])
+
+
 
 # Variáveis de controle
 seguir = True
@@ -46,7 +58,7 @@ while True:
                 img,
                 persist=True,
                 conf=0.75,
-                imgsz=640,
+                imgsz=96,
                 iou=0.3,
                 max_det=2,
                 stream_buffer=True,
@@ -98,7 +110,7 @@ while True:
                         
                         # Enviar posição do objeto para o Arduino via serial
                         print("estou indo mandar")
-                        arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
+                        # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
                         print("mandei via serial")
 
                 except Exception as e:
@@ -106,7 +118,8 @@ while True:
                     sys.stdout.flush()
 
     # Exibir imagem com resultados
-    cv2.imshow("Tela", img)
+    # img = cv2.resize(img,(96,96))
+    # cv2.imshow("Tela", img)
 
     # Tecla 'q' para sair
     k = cv2.waitKey(1)
@@ -115,6 +128,6 @@ while True:
 
 # Liberar recursos
 cap.release()
-cv2.destroyAllWindows()
-arduino.close()  # Fecha a comunicação serial
+# cv2.destroyAllWindows()
+# arduino.close()  # Fecha a comunicação serial
 print("Desligando...")

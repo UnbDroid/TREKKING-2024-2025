@@ -49,8 +49,8 @@ void MotorDC::ligar_motor(int dir, int pwmVal)
   }
   else
   { // 0 para parar
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, LOW);
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, HIGH);
   }
 }
 
