@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project(VISAO)
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( visao visao.cpp )
+target_link_libraries( visao ${OpenCV_LIBS} )
