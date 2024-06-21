@@ -126,11 +126,9 @@ float Robo::getAnguloCone(){
     return catetoOposto>0?anguloCone:-anguloCone;
 }
 void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
-    giroscopio.primeira_leitura = true;
-    float AnguloIncialRobo = giroscopio.get_z();
     virar_robo(anguloCone);
     while(retornar_posicao_y_do_cone()>distanciaAteParar){
-        andar_reto(87);
+        alinhar_com_cone(distanciaAteParar);
     }
     motor_direito.ligar_motor(0,0);
     motor_esquerdo.ligar_motor(0,0);
