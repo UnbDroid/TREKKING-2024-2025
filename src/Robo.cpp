@@ -23,10 +23,10 @@ void Robo::resetar_encoder() {
 }
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
+
 void Robo::ler_visao() {
     int tempoDeEspera = millis()+50;
     while (!Serial.available()&&millis()<tempoDeEspera) {
-
     }
     if(millis()>tempoDeEspera){
         cone_posicao_x=400; 
@@ -125,44 +125,18 @@ float Robo::getAnguloCone(){
     float anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
     return catetoOposto>0?anguloCone:-anguloCone;
 }
-void Robo::andarAteCone(float distanciaAteParar){
+void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
     giroscopio.primeira_leitura = true;
     float AnguloIncialRobo = giroscopio.get_z();
-    float AnguloAlvoRobo = AnguloIncialRobo + getAnguloCone();
-    float erro = 0;
-    // virar_robo(AnguloAlvoRobo-AnguloIncialRobo);
+    virar_robo(anguloCone);
     while(retornar_posicao_y_do_cone()>distanciaAteParar){
-        erro = AnguloAlvoRobo-giroscopio.get_z();
-        atualizar_tempo();
-        float kp = 1;
-        float ki,kd = 0;
-        float p = kp*erro;
-        float u = p;
-        if (u > 35) {
-            u = 35;
-        } else if (u < -35) {
-            u = -35;
-        }
-        volante.virar_volante(u);
-        delay(100);
-        AnguloAlvoRobo = giroscopio.get_z() + getAnguloCone();
-        
-        // if (u > 0) {
-        //     motor_esquerdo.andar_reto(87);
-        //     motor_direito.andar_reto(82);
-        // } else if (u < 0) {
-        //     motor_esquerdo.andar_reto(82);
-        //     motor_direito.andar_reto(87);
-        // } else {
-        //     motor_esquerdo.andar_reto(87);
-        //     motor_direito.andar_reto(87);
-        
-        // }
+        andar_reto(87);
     }
     motor_direito.ligar_motor(0,0);
     motor_esquerdo.ligar_motor(0,0);
     delay(500);
 }
+
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone(float distanciaAteParar) {
     // Serial.begin(9600);

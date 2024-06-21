@@ -22,7 +22,7 @@ class Robo {
         void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 87);
         void virar_robo(int angulo);
-        void alinhar_com_cone(float distanciaAteParar);
+        void alinhar_com_cone(float distanciaAteParar,int anguloCone);
         float getAnguloCone();
         //! Pode ser que esses objetos deem erro por causa do construtor
         //! Eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D 
