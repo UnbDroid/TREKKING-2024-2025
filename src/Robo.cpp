@@ -175,12 +175,29 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         else if(posicao_x< -0.17){
             volante.virar_volante(-13);
         }
+        else {
+            volante.resetar_volante();
+        }
+
+        if (cone_posicao_x > 0.05 or cone_posicao_x < -0.05) {
+            velocidade_rpm = 50;
+            if (cone_posicao_x > 0.05) {
+                motor_esquerdo.andar_reto(velocidade_rpm);
+                motor_direito.andar_reto(velocidade_rpm - 10);
+            }
+            else {
+                motor_esquerdo.andar_reto(velocidade_rpm - 10);
+                motor_direito.andar_reto(velocidade_rpm);
+            }
+        } else {
+            velocidade_rpm = 85;
+            motor_esquerdo.andar_reto(velocidade_rpm);
+            motor_direito.andar_reto(velocidade_rpm);
+        }
         
 
         
 
-        motor_esquerdo.andar_reto(velocidade_rpm);
-        motor_direito.andar_reto(velocidade_rpm - 10);
         
         // if (giro_volante > 35) {
         //     giro_volante = 35;

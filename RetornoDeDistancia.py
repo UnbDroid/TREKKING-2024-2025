@@ -26,13 +26,13 @@ task = "track"  # Tarefa de rastreamento
 sess_options = onnxruntime.SessionOptions()
 
 sess_options.intra_op_num_threads = 4
-sess = onnxruntime.InferenceSession("/home/caldo/Documents/Droid/TREEKING2K24/best.onnx", sess_options)
+sess = onnxruntime.InferenceSession("/home/caldo/Documents/Droid/TREEKING2K24/V3.onnx", sess_options)
 
 cap = cv2.VideoCapture(0)
 
 # Carregue o modelo YOLO
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/best.onnx")
+model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/V3.onnx")
 
 # Dicionário para rastrear IDs e histórico de posições
 track_history = defaultdict(lambda: [])
