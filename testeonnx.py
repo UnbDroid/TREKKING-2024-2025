@@ -1,13 +1,13 @@
 from ultralytics import YOLO
 
-# Load a YOLOv8n PyTorch model
-model = YOLO("V1.pt")
+# Load the YOLOv8 model
+model = YOLO("V2_128.pt")
 
-# Export the model to NCNN format
-model.export(format="ncnn")  # creates 'yolov8n_ncnn_model'
+# Export the model to ONNX format
+model.export(format="onnx")  # creates 'yolov8n.onnx'
 
-# Load the exported NCNN model
-ncnn_model = YOLO("./V1_ncnn_model")
+# Load the exported ONNX model
+onnx_model = YOLO("V2_128.onnx")
 
 # Run inference
-results = ncnn_model("https://ultralytics.com/images/bus.jpg")
+results = onnx_model("https://ultralytics.com/images/bus.jpg", imgsz=96)

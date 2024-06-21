@@ -37,7 +37,7 @@ class Robo {
     
     private:
         float cone_posicao_x = 0.0; // Posição do cone no eixo x
-        float cone_posicao_y = 0.0; // Posição do cone no eixo y
+        float cone_posicao_y = 90.0; // Posição do cone no eixo y
         float angulo_atual_x = 0.0; // Ângulo atual do robô no eixo x
         float angulo_atual_y = 0.0; // Ângulo atual do robô no eixo y
         float angulo_atual_z = 0.0; // Ângulo atual do robô no eixo z
