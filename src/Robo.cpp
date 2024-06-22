@@ -127,9 +127,7 @@ float Robo::getAnguloCone(){
 }
 void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
     virar_robo(anguloCone);
-    while(retornar_posicao_y_do_cone()>distanciaAteParar){
-        alinhar_com_cone(distanciaAteParar);
-    }
+    alinhar_com_cone(distanciaAteParar);
     motor_direito.ligar_motor(0,0);
     motor_esquerdo.ligar_motor(0,0);
     delay(500);

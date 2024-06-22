@@ -25,14 +25,14 @@ task = "track"  # Tarefa de rastreamento
 
 sess_options = onnxruntime.SessionOptions()
 
-sess_options.intra_op_num_threads = 4
-sess = onnxruntime.InferenceSession("/home/caldo/Documents/Droid/TREEKING2K24/V3.onnx", sess_options)
+sess_options.intra_op_num_threads = 8
+sess = onnxruntime.InferenceSession("/home/caldo/Documents/Droid/TREEKING2K24/V2_128.onnx", sess_options)
 
 cap = cv2.VideoCapture(0)
 
 # Carregue o modelo YOLO
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/V3.onnx")
+model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/V2_128.onnx")
 
 # Dicionário para rastrear IDs e histórico de posições
 track_history = defaultdict(lambda: [])
@@ -57,8 +57,8 @@ while True:
             results = model.track(
                 img,
                 persist=True,
-                conf=0.75,
-                imgsz=96,
+                conf=0.6,
+                imgsz=128,
                 iou=0.3,
                 max_det=2,
                 stream_buffer=True,
@@ -119,7 +119,7 @@ while True:
 
     # Exibir imagem com resultados
     # img = cv2.resize(img,(96,96))
-    # cv2.imshow("Tela", img)
+    cv2.imshow("Tela", img)
 
     # Tecla 'q' para sair
     k = cv2.waitKey(1)
@@ -128,6 +128,6 @@ while True:
 
 # Liberar recursos
 cap.release()
-# cv2.destroyAllWindows()
+cv2.destroyAllWindows()
 # arduino.close()  # Fecha a comunicação serial
 print("Desligando...")
