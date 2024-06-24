@@ -10,7 +10,10 @@
 
 //* Este arquivo contém a declaração da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
-
+enum Direcao{
+    frente=1,
+    tras=-1
+};
 class Robo {
     public:
         Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
@@ -21,7 +24,7 @@ class Robo {
         float retornar_posicao_y_do_cone();
         void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 87);
-        void virar_robo(int angulo);
+        void virar_robo(Direcao direcao, int angulo);
         void alinhar_com_cone(float distanciaAteParar);
         float getAnguloCone();
         //! Pode ser que esses objetos deem erro por causa do construtor
