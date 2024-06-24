@@ -75,12 +75,19 @@
     //! Caminho do robô ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
  
-      while (!Serial) {
-        delay(1);
-      }
-      robo.andar_reto_cm(90);
-      delay(1000);
-      robo.andarAteCone(15, 37);
+      // while (!Serial) {
+      //   delay(1);
+      // }
+      // robo.andar_reto_cm(100);
+      // delay(5000);
+      // robo.virar_robo(tras,-30);
+      // delay(500);
+      // delay(100);
+      // Serial.println(giroscopio.get_z());
+      
+      robo.andarAteCone(20, 90);
+      delay(5000);
+      robo.virar_robo(tras,-90);
       // robo.andarAteCone(15, -180);
       // robo.virar_robo(-90);
       // delay(1000);
@@ -107,7 +114,6 @@
       // delay(1000);
       // volante.virar_volante(-30);
       // delay(1000);
-
 
       // Serial.print("Posição X do cone: ");
       // Serial.println(robo.retornar_posicao_x_do_cone());

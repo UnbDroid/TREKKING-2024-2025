@@ -25,11 +25,13 @@ void Robo::resetar_encoder() {
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 
 void Robo::ler_visao() {
-    int tempoDeEspera = millis()+50;
-    while (!Serial.available()&&millis()<tempoDeEspera) {
+    Serial.println("voltei");
+    const unsigned long tempoDeEspera = millis();
+    while ((Serial.available()<0) && (millis()-tempoDeEspera)<100) {
     }
-    if(millis()>tempoDeEspera){
-        cone_posicao_x=400; 
+    if((millis()-tempoDeEspera)<100){
+        cone_posicao_x=400;
+        return; 
     }
     String input = Serial.readStringUntil('\n');
     int commaIndex = input.indexOf(',');
@@ -80,15 +82,13 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
     volante.definir_angulo_base();
 }
 
-// Função para fazer o robô virar para um ângulo específico
-void Robo::virar_robo(int angulo)
-{
+void Robo::virar_robo(Direcao direcao, int angulo){
     int giro_volante = 0;
     giroscopio.primeira_leitura = true;
     float angulo_inicial = giroscopio.get_z();
     float angulo_final = angulo_inicial + angulo;
     float angulo_atual = giroscopio.get_z();
-    int velocidade_rpm = 87; // Velocidade de referência
+    int velocidade_rpm = 87*direcao; // Velocidade de referência
     giroscopio.last_time = prevT;
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
     while (angulo_atual < (angulo_final - 3) or angulo_atual > (angulo_final + 3)) {
@@ -107,7 +107,7 @@ void Robo::virar_robo(int angulo)
                 giro_volante = -20;
             }
         }
-        volante.virar_volante(giro_volante);
+        volante.virar_volante(giro_volante * direcao);
         if (giro_volante > 0) {
             motor_esquerdo.andar_reto(velocidade_rpm);
             motor_direito.andar_reto(velocidade_rpm - 5);
@@ -118,9 +118,12 @@ void Robo::virar_robo(int angulo)
     }
     
     volante.resetar_volante();
+    // while (motor_esquerdo.rps != 0 && motor_direito.rps != 0) {
     motor_direito.andar_reto(0);
     motor_esquerdo.andar_reto(0);
+    // }
 }
+
 float Robo::getAnguloCone(){
     float catetoOposto = retornar_posicao_x_do_cone()*100;
     float catetoAdjacente = retornar_posicao_y_do_cone();
@@ -129,7 +132,8 @@ float Robo::getAnguloCone(){
     return catetoOposto>0?anguloCone:-anguloCone;
 }
 void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
-    virar_robo(anguloCone);
+    virar_robo(frente, anguloCone);
+    delay(2000);
     alinhar_com_cone(distanciaAteParar);
     motor_direito.ligar_motor(0,0);
     motor_esquerdo.ligar_motor(0,0);
@@ -138,15 +142,17 @@ void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
 
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone(float distanciaAteParar) {
-    // Serial.begin(9600);
-    // Serial.println("Alinhando");
-    int giro_volante = 0;
+    giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
     atualizar_tempo();
-    int tempoEspera = 50;
+    float angulo_inicial = giroscopio.get_z();
+    giroscopio.last_time = prevT;
     float posicao_x = retornar_posicao_x_do_cone();
+    Serial.println(posicao_x);
     while(posicao_x==400){
+        andar_reto(85);
         atualizar_tempo();
-        andar_reto_cm(3,87);
+        float anguloAtual = giroscopio.get_z();
+        volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*7));
         posicao_x = retornar_posicao_x_do_cone();
     }
     int velocidade_rpm = 85; // Velocidade de referência
