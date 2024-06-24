@@ -52,7 +52,10 @@ float Robo::retornar_posicao_y_do_cone() {
     ler_visao();
     return cone_posicao_y;
 }
-
+// void Robo::andarParaTras(int velocidade_rpm){
+//     motor
+    
+// }
 // Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
@@ -147,7 +150,6 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         posicao_x = retornar_posicao_x_do_cone();
     }
     int velocidade_rpm = 85; // Velocidade de referência
-    float angulo_inicial = giroscopio.get_z();
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();

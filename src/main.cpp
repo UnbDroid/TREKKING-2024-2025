@@ -78,20 +78,25 @@
       while (!Serial) {
         delay(1);
       }
-      robo.andar_reto_cm(100);
+      robo.andar_reto_cm(90);
       delay(1000);
-      robo.andarAteCone(15, 30);
-      robo.andarAteCone(15, -180);
+      robo.andarAteCone(15, 37);
+      // robo.andarAteCone(15, -180);
       // robo.virar_robo(-90);
       // delay(1000);
       // robo.alinhar_com_cone(15);
     
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
 
   }
 
   void loop() {
-
+    // robo.andar_reto(85);
+    // Serial.println("to aqui ");
+    /* atualizar_tempo();
+    robo.andar_reto(60); */
+    // delay(500);
     //! Núcleo do código ---------------------------------------------------------------------------------------------------------------------------------------------------------------
       
       //* No momento inutilizado
@@ -110,9 +115,9 @@
       // Serial.println(robo.retornar_posicao_y_do_cone());
 
 
-      // atualizar_tempo()
-      // Serial.print("Yaw: ");
-      // Serial.println(giroscopio.get_z());
+      /* atualizar_tempo();
+      Serial.print("Yaw: ");
+      Serial.println(giroscopio.get_z()); */
       
 
     //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
