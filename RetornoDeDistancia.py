@@ -31,7 +31,6 @@ sess = onnxruntime.InferenceSession("V4_128.onnx", sess_options)
 cap = cv2.VideoCapture(0)
 
 # Carregue o modelo YOLO
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = YOLO("V4_128.onnx")
 
 # Dicionário para rastrear IDs e histórico de posições
