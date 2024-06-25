@@ -82,9 +82,9 @@ void Giroscopio::atualizar_leituras() {
 
   // Complementary filter update (adjust alpha as needed)
   if (primeira_leitura == false) {
-    roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt) + (1.0 - alpha_x) * pitch_angle;
-    pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt) + (1.0 - alpha_y) * roll_angle;
-    if ((gyro_z_rad * dt) > 0.0001 or (gyro_z_rad * dt) < (-0.0001)) {yaw_angle += gyro_z_rad * dt * -1;}
+    roll_angle = alpha_x * (roll_angle + gyro_x_rad * dt_mpu) + (1.0 - alpha_x) * pitch_angle;
+    pitch_angle = alpha_y * (pitch_angle + gyro_y_rad * dt_mpu) + (1.0 - alpha_y) * roll_angle;
+    if ((gyro_z_rad * dt_mpu) > 0.001 or (gyro_z_rad * dt_mpu) < (-0.001)) {yaw_angle += gyro_z_rad * dt_mpu * -1;}
   } else {
     primeira_leitura = false;
   }

@@ -10,7 +10,7 @@ import time
 
 #! Coisas da Comunicação Serial --------------------------------------------------
 
-# arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
+arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
 
 #! -------------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ import time
 # Parâmetros da câmera (preencha com os valores da sua câmera)
 focal_length = 640  # Substitua com a distância focal da sua câmera (em pixels)
 known_object_width = (
-    10  # Substitua com a largura real do objeto em centímetros (ou outra unidade)
+    28  # Substitua com a largura real do objeto em centímetros (ou outra unidade)
 )
 
 task = "track"  # Tarefa de rastreamento
@@ -29,7 +29,7 @@ sess_options.intra_op_num_threads = 0
 
 sess = onnxruntime.InferenceSession("V4_128.onnx", sess_options)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 # Carregue o modelo YOLO
 model = YOLO("V4_128.onnx")
@@ -37,7 +37,12 @@ model = YOLO("V4_128.onnx")
 # Dicionário para rastrear IDs e histórico de posições
 track_history = defaultdict(lambda: [])
 
-
+# def angulo(x,y):
+#     cateto_oposto = x*100
+#     cateto_adjacente = y
+#     hipotenusa = np.sqrt(cateto_oposto**2 + cateto_adjacente**2)
+#     angulo = np.arcsin(cateto_oposto/hipotenusa)
+#     return angulo
 
 # Variáveis de controle
 seguir = True
@@ -101,7 +106,7 @@ while True:
                         offset_y = (
                             center_y - 0.5
                         )  # Centro da tela na coordenada y é 0.8
-
+                        # angulo_cone = angulo(offset_x,distance)
                         print(
                             f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})"
                         )
@@ -109,9 +114,9 @@ while True:
                         sys.stdout.flush()
                         
                         # Enviar posição do objeto para o Arduino via serial
-                        print("estou indo mandar")
-                        # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
-                        print("mandei via serial")
+                        # print("estou indo mandar")
+                        arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
+                        # print("mandei via serial")
 
                 except Exception as e:
                     print(f"Erro no rastreamento: {e}")
@@ -129,5 +134,5 @@ while True:
 # Liberar recursos
 cap.release()
 cv2.destroyAllWindows()
-# arduino.close()  # Fecha a comunicação serial
+arduino.close()  # Fecha a comunicação serial
 print("Desligando...")

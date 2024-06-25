@@ -57,16 +57,21 @@ void Robo::andar_reto(int velocidade_rpm)
 
 // Função para fazer o robô andar reto por uma distância específica
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
-    giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
+    // giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
     atualizar_tempo();
     float angulo_inicial = giroscopio.get_z();
-    giroscopio.last_time = prevT;
+    // giroscopio.last_time = prevT;
     int enc_inicial_esquerdo = motor_esquerdo.posi;
     int enc_inicial_direito = motor_direito.posi;
     while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
         atualizar_tempo();
         andar_reto(velocidade_rpm);
-        volante.virar_volante((int)(round((angulo_inicial - giroscopio.get_z())*0.5)*5));
+        float yaw = giroscopio.get_z();
+        int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
+        volante.virar_volante(giro_volante);
+        Serial.print(angulo_inicial);
+        Serial.print(" ");
+        Serial.println(yaw);
     }
     andar_reto(0);
     volante.definir_angulo_base();
@@ -74,12 +79,12 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 
 void Robo::virar_robo(Direcao direcao, int angulo){
     int giro_volante = 0;
-    giroscopio.primeira_leitura = true;
+    // giroscopio.primeira_leitura = true;
     float angulo_inicial = giroscopio.get_z();
     float angulo_final = angulo_inicial + angulo;
     float angulo_atual = giroscopio.get_z();
     int velocidade_rpm = 87*direcao; // Velocidade de referência
-    giroscopio.last_time = prevT;
+    // giroscopio.last_time = prevT;
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
     while (angulo_atual < (angulo_final - 3) or angulo_atual > (angulo_final + 3)) {
         angulo_atual = giroscopio.get_z();
@@ -87,14 +92,10 @@ void Robo::virar_robo(Direcao direcao, int angulo){
         if ((angulo_final - angulo_atual) > 0) {
             if ((angulo_final - angulo_atual) > 10) {
                 giro_volante = 35;
-            } else {
-                giro_volante = 20;
             }
         } else if ((angulo_final - angulo_atual) < 0) {
             if ((angulo_final - angulo_atual) < -10) {
                 giro_volante = -35;
-            } else {
-                giro_volante = -20;
             }
         }
         volante.virar_volante(giro_volante * direcao);
@@ -123,6 +124,24 @@ void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
     motor_esquerdo.ligar_motor(0,0);
     delay(500);
 }
+float Robo::getAnguloCone(){
+    
+    float catetoOposto = retornar_posicao_x_do_cone()*100;
+    float catetoAdjacente = (float)retornar_posicao_y_do_cone();
+    double primeiro = pow(catetoAdjacente,2);
+    double segundo = pow(catetoOposto,2);
+    double soma = primeiro + segundo;
+    double hipotenusa = pow(soma, 0.5);
+    double anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
+    Serial.print(primeiro);
+    Serial.print(" ");
+    Serial.print(segundo);
+    Serial.print(" ");
+    Serial.print(hipotenusa);
+    Serial.print(" ");
+    Serial.println(anguloCone);
+    return anguloCone;
+}
 
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone(float distanciaAteParar) {
@@ -137,17 +156,17 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     float angulo_inicial = giroscopio.get_z();
     giroscopio.last_time = prevT;
     float posicao_x = retornar_posicao_x_do_cone();
+    float posicaoY = 1000;
     float giro_volante = 0;
     int velocidade_rpm = 85; // Velocidade de referência
     while(posicao_x==NAOENCONTRADO) {
         atualizar_tempo();
         andar_reto(velocidade_rpm);
         float anguloAtual = giroscopio.get_z();
-        //Serial.println(anguloAtual);
         volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
         posicao_x = retornar_posicao_x_do_cone();
     }
-    
+    posicaoY = retornar_posicao_y_do_cone();
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
