@@ -23,15 +23,13 @@ void Robo::resetar_encoder() {
 }
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
-
 void Robo::ler_visao() {
-    Serial.println("voltei");
-    const unsigned long tempoDeEspera = millis();
-    while ((Serial.available()<0) && (millis()-tempoDeEspera)<100) {
+    int tempoDeEspera = millis()+50;
+    while (!Serial.available()&&millis()<tempoDeEspera) {
     }
-    if((millis()-tempoDeEspera)<100){
-        cone_posicao_x=400;
-        return; 
+    if (millis()>tempoDeEspera) {
+        cone_posicao_x=400; 
+        return;
     }
     String input = Serial.readStringUntil('\n');
     int commaIndex = input.indexOf(',');
@@ -54,10 +52,7 @@ float Robo::retornar_posicao_y_do_cone() {
     ler_visao();
     return cone_posicao_y;
 }
-// void Robo::andarParaTras(int velocidade_rpm){
-//     motor
-    
-// }
+
 // Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
@@ -131,9 +126,10 @@ float Robo::getAnguloCone(){
     float anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
     return catetoOposto>0?anguloCone:-anguloCone;
 }
+
 void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
     virar_robo(frente, anguloCone);
-    delay(2000);
+    delay(1000);
     alinhar_com_cone(distanciaAteParar);
     motor_direito.ligar_motor(0,0);
     motor_esquerdo.ligar_motor(0,0);
@@ -147,41 +143,34 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     float angulo_inicial = giroscopio.get_z();
     giroscopio.last_time = prevT;
     float posicao_x = retornar_posicao_x_do_cone();
-    Serial.println(posicao_x);
-    while(posicao_x==400){
-        andar_reto(85);
+    float giro_volante = 0;
+    int velocidade_rpm = 85; // Velocidade de referência
+    while(posicao_x==400) {
+        andar_reto(velocidade_rpm);
         atualizar_tempo();
         float anguloAtual = giroscopio.get_z();
         volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*7));
         posicao_x = retornar_posicao_x_do_cone();
     }
-    int velocidade_rpm = 85; // Velocidade de referência
+    
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
-        giro_volante = (int) (round(posicao_x * 100));
-        if(posicao_x>0.05 && posicao_x<0.1){
-            volante.virar_volante(4);
-        }
-        else if(posicao_x>=0.13 && posicao_x<=0.17){
-            volante.virar_volante(10);
-        }
-        else if(posicao_x>0.17){
-            volante.virar_volante(13);
+        giro_volante = (int)(round(posicao_x*100));
+    
+        if (giro_volante > 35) {
+            giro_volante = 35;
+        } else if (giro_volante < -35) {
+            giro_volante = -35;
+        } else if (giro_volante < 10 && giro_volante > 5) {
+            giro_volante = 10;
+        } else if (giro_volante > -10 && giro_volante < -5) {
+            giro_volante = -10;
+        } else if (giro_volante <= 5 && giro_volante >= -5) {
+            giro_volante = 0;
         }
 
-        else if(posicao_x< -0.05 && posicao_x> -0.13){
-            volante.virar_volante(-4);
-        }
-        else if(posicao_x<= -0.13 && posicao_x>= -0.17){
-            volante.virar_volante(-10);
-        }
-        else if(posicao_x< -0.17){
-            volante.virar_volante(-13);
-        }
-        else {
-            volante.resetar_volante();
-        }
+        volante.virar_volante(giro_volante);
 
         if (cone_posicao_x > 0.05 or cone_posicao_x < -0.05) {
             velocidade_rpm = 50;

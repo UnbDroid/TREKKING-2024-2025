@@ -1,133 +1,102 @@
 import cv2
-import serial
-import torch
-import onnxruntime
-import sys
-from ultralytics import YOLO
-from collections import defaultdict
 import numpy as np
-import time
+import ncnn
+import serial
+import sys
+from collections import defaultdict
 
-#! Coisas da Comunicação Serial --------------------------------------------------
+# Replace these with appropriate paths
+param_path = "/home/caldo/Documents/Droid/TREEKING2K24/V1_ncnn_model/model.ncnn.param"
+bin_path = "/home/caldo/Documents/Droid/TREEKING2K24/V1_ncnn_model/model.ncnn.bin"
 
-# arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
+# Initialize the NCNN model
+net = ncnn.Net()
+net.load_param(param_path)
+net.load_model(bin_path)
 
-#! -------------------------------------------------------------------------------
-
-
-# Parâmetros da câmera (preencha com os valores da sua câmera)
-focal_length = 640  # Substitua com a distância focal da sua câmera (em pixels)
-known_object_width = (
-    10  # Substitua com a largura real do objeto em centímetros (ou outra unidade)
-)
-
-task = "track"  # Tarefa de rastreamento
-
-sess_options = onnxruntime.SessionOptions()
-
-sess_options.intra_op_num_threads = 8
-sess = onnxruntime.InferenceSession("/home/caldo/Documents/Droid/TREEKING2K24/V2_128.onnx", sess_options)
-
+# Initialize the video capture
 cap = cv2.VideoCapture(0)
 
-# Carregue o modelo YOLO
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = YOLO("/home/caldo/Documents/Droid/TREEKING2K24/V2_128.onnx")
+# Serial communication setup (uncomment for actual use)
+# arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
 
-# Dicionário para rastrear IDs e histórico de posições
+# Camera parameters
+focal_length = 640
+known_object_width = 10
+
+# Dictionary to track IDs and position history
 track_history = defaultdict(lambda: [])
 
-
-
-# Variáveis de controle
+# Control variables
 seguir = True
 deixar_rastro = True
 
-# sys.stdout.flush()
-
-# arduino.write(f"{0.00},{0.00}\n".encode('utf-8'))
-
 while True:
-    # Capture a imagem do vídeo
     success, img = cap.read()
-
     if success:
-        # Processamento com YOLO
+        # Prepare the image for NCNN input
+        input_img = cv2.resize(img, (128, 128))
+        input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2RGB)
+        input_img = input_img.astype(np.float32)
+        input_img = input_img / 255.0
+        input_img = input_img.transpose(2, 0, 1)
+        input_img = np.expand_dims(input_img, axis=0)
+
+        # Run inference with NCNN
+        blob = ncnn.Mat(input_img)
+        ex = net.create_extractor()
+        ex.input("input", blob)
+        ret, output = ex.extract("output")
+
+        # Process the results
         if seguir:
-            results = model.track(
-                img,
-                persist=True,
-                conf=0.6,
-                imgsz=128,
-                iou=0.3,
-                max_det=2,
-                stream_buffer=True,
-                save_txt=False,
-            )
-        else:
-            results = model(img)
+            # Assuming the output is the bounding boxes, class ids, and scores
+            # Adjust this part according to your model's output format
+            boxes = output.reshape(-1, 6)
+            for box in boxes:
+                x, y, w, h, conf, cls_id = box
+                if conf > 0.80:  # Confidence threshold
+                    track_id = int(cls_id)  # Example of using class ID as track ID
+                    x_center = x + w / 2
+                    y_center = y + h / 2
+                    track_history[track_id].append((x_center, y_center))
 
-        # Processamento dos resultados
-        for result in results:
-            # Visualização dos resultados na imagem
-            img = result.plot()
+                    if len(track_history[track_id]) > 4:
+                        track_history[track_id].pop(0)
 
-            # Rastreamento e estimativa de distância
-            if seguir and deixar_rastro:
-                try:
-                    # Obter caixas e IDs de rastreamento
-                    boxes = result.boxes.xywh.cpu()
-                    track_ids = result.boxes.id.int().cpu().tolist()
+                    # Estimate distance
+                    distance = (known_object_width * focal_length) / w
+                    print(f"Distância estimada para o objeto: {distance:.2f} cm")
 
-                    # Traçar rastreamento
-                    for box, track_id in zip(boxes, track_ids):
-                        x, y, w, h = box
-                        track = track_history[track_id]
-                        track.append((float(x), float(y)))  # Ponto central x, y
-                        # Limitar histórico de rastreamento
-                        if len(track) > 4:
-                            track.pop(0)
+                    center_x = x_center / img.shape[1]
+                    center_y = y_center / img.shape[0]
+                    offset_x = center_x - 0.5
+                    offset_y = center_y - 0.5
 
-                        # Estimar distância usando largura do objeto e razão de triângulos similares
-                        distance = (known_object_width * focal_length) / w
-                        print(f"Distância estimada para o objeto: {distance:.2f} cm")
+                    print(f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})")
 
-                        # Calcular a posição do objeto em relação ao centro da tela
-                        center_x = (x)/ img.shape[1]
-                        center_y = (y)/ img.shape[0]
-                        offset_x = (
-                            center_x - 0.5
-                        )  # Centro da tela na coordenada x é 0.68
-                        offset_y = (
-                            center_y - 0.5
-                        )  # Centro da tela na coordenada y é 0.8
-
-                        print(
-                            f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})"
-                        )
-                        
-                        sys.stdout.flush()
-                        
-                        # Enviar posição do objeto para o Arduino via serial
-                        print("estou indo mandar")
-                        # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
-                        print("mandei via serial")
-
-                except Exception as e:
-                    print(f"Erro no rastreamento: {e}")
+                    # Send position to Arduino
                     sys.stdout.flush()
+                    print("estou indo mandar")
+                    # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
+                    print("mandei via serial")
 
-    # Exibir imagem com resultados
-    # img = cv2.resize(img,(96,96))
-    cv2.imshow("Tela", img)
+        # Display the image with results
+        for box in boxes:
+            x, y, w, h, conf, cls_id = box
+            if conf > 0.80:
+                cv2.rectangle(img, (int(x), int(y)), (int(x + w), int(y + h)), (0, 255, 0), 2)
+                cv2.putText(img, f"ID: {int(cls_id)}", (int(x), int(y) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-    # Tecla 'q' para sair
+        cv2.imshow("Tela", img)
+
+    # Key press to exit
     k = cv2.waitKey(1)
     if k == ord("q"):
         break
 
-# Liberar recursos
+# Release resources
 cap.release()
 cv2.destroyAllWindows()
-# arduino.close()  # Fecha a comunicação serial
+# arduino.close()
 print("Desligando...")
