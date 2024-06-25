@@ -6,7 +6,7 @@
 #include "Arduino.h"
 #include "Wire.h"
 #include "Tempo.h"
-
+#define NAOENCONTRADO 400
 //* Este arquivo contém a implementação da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
 
@@ -24,11 +24,11 @@ void Robo::resetar_encoder() {
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
-    int tempoDeEspera = millis()+50;
-    while (!Serial.available()&&millis()<tempoDeEspera) {
+    unsigned long tempoDeEspera = millis();
+    while (!Serial.available() && (millis()-tempoDeEspera)<500) {
     }
     if (millis()>tempoDeEspera) {
-        cone_posicao_x=400; 
+        cone_posicao_x=NAOENCONTRADO; 
         return;
     }
     String input = Serial.readStringUntil('\n');
@@ -119,12 +119,8 @@ void Robo::virar_robo(Direcao direcao, int angulo){
     // }
 }
 
-float Robo::getAnguloCone(){
-    float catetoOposto = retornar_posicao_x_do_cone()*100;
-    float catetoAdjacente = retornar_posicao_y_do_cone();
-    float hipotenusa = pow((pow(catetoAdjacente,2)+pow(catetoOposto,2)),(1/2));
-    float anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
-    return catetoOposto>0?anguloCone:-anguloCone;
+float Robo::getPosicaoXCone(){
+    return this->cone_posicao_x; 
 }
 
 void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
@@ -145,11 +141,11 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     float posicao_x = retornar_posicao_x_do_cone();
     float giro_volante = 0;
     int velocidade_rpm = 85; // Velocidade de referência
-    while(posicao_x==400) {
+    while(posicao_x==NAOENCONTRADO) {
         andar_reto(velocidade_rpm);
         atualizar_tempo();
         float anguloAtual = giroscopio.get_z();
-        volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*7));
+        volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
         posicao_x = retornar_posicao_x_do_cone();
     }
     
