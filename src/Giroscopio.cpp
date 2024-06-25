@@ -48,7 +48,20 @@ void Giroscopio::atualizar_leituras() {
 
   current_time = micros();
 
+//   Serial.print("Current time: ");
+//   Serial.println(current_time);
+
+//   Serial.print(" | ");
+
+//   Serial.print("Last time: ");
+//   Serial.println(last_time);
+
+//   Serial.print(" | ");
+
   dt_mpu = ((float) (current_time - last_time))/( 1.0e6 );
+
+//   Serial.print("dt_mpu: ");
+//   Serial.println(dt_mpu);
 
   last_time = current_time;
 

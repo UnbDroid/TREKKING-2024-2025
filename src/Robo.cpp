@@ -24,20 +24,15 @@ void Robo::resetar_encoder() {
 
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
-    unsigned long tempoDeEspera = millis();
-    while (!Serial.available() && (millis()-tempoDeEspera)<500) {
-    }
-    if (millis()>tempoDeEspera) {
-        cone_posicao_x=NAOENCONTRADO; 
-        return;
-    }
-    String input = Serial.readStringUntil('\n');
-    int commaIndex = input.indexOf(',');
-    if (commaIndex != -1) {
-        String float1Str = input.substring(0, commaIndex);
-        String float2Str = input.substring(commaIndex + 1);
-        cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
-        cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
+    if (Serial.available() > 0) {
+        String input = Serial.readStringUntil('\n');
+        int commaIndex = input.indexOf(',');
+        if (commaIndex != -1) {
+            String float1Str = input.substring(0, commaIndex);
+            String float2Str = input.substring(commaIndex + 1);
+            cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
+            cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
+        }
     }
 }
 
@@ -119,9 +114,6 @@ void Robo::virar_robo(Direcao direcao, int angulo){
     // }
 }
 
-float Robo::getPosicaoXCone(){
-    return this->cone_posicao_x; 
-}
 
 void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
     virar_robo(frente, anguloCone);
@@ -134,6 +126,12 @@ void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
 
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone(float distanciaAteParar) {
+    unsigned long tempoDeEspera = millis();
+    while (!Serial.available() && (millis()-tempoDeEspera)<500) {
+    }
+    if (millis()>tempoDeEspera) {
+        cone_posicao_x=NAOENCONTRADO;
+    }
     giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
     atualizar_tempo();
     float angulo_inicial = giroscopio.get_z();
@@ -142,9 +140,10 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     float giro_volante = 0;
     int velocidade_rpm = 85; // Velocidade de referência
     while(posicao_x==NAOENCONTRADO) {
-        andar_reto(velocidade_rpm);
         atualizar_tempo();
+        andar_reto(velocidade_rpm);
         float anguloAtual = giroscopio.get_z();
+        //Serial.println(anguloAtual);
         volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
         posicao_x = retornar_posicao_x_do_cone();
     }

@@ -26,6 +26,7 @@ task = "track"  # Tarefa de rastreamento
 sess_options = onnxruntime.SessionOptions()
 
 sess_options.intra_op_num_threads = 0
+
 sess = onnxruntime.InferenceSession("V4_128.onnx", sess_options)
 
 cap = cv2.VideoCapture(0)
