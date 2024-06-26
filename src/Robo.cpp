@@ -15,7 +15,10 @@ Robo::Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Gi
 : motor_esquerdo(motor_esquerdo), motor_direito(motor_direito), volante(volante), giroscopio(giroscopio){
 
 }
+Robo::Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, MPU6050&imu)
+: motor_esquerdo(motor_esquerdo), motor_direito(motor_direito), volante(volante), imu(imu){
 
+}
 // Função para zerar os valores dos encoderes
 void Robo::resetar_encoder() {
     motor_esquerdo.resetar_encoder();
@@ -59,14 +62,16 @@ void Robo::andar_reto(int velocidade_rpm)
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
     // giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
     atualizar_tempo();
-    float angulo_inicial = giroscopio.get_z();
+    imu.update();
+    float angulo_inicial = imu.getAngleZ();
     // giroscopio.last_time = prevT;
     int enc_inicial_esquerdo = motor_esquerdo.posi;
     int enc_inicial_direito = motor_direito.posi;
     while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
         atualizar_tempo();
         andar_reto(velocidade_rpm);
-        float yaw = giroscopio.get_z();
+        imu.update();
+        float yaw = imu.getAngleZ();
         int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
         volante.virar_volante(giro_volante);
         Serial.print(angulo_inicial);
@@ -80,14 +85,20 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 void Robo::virar_robo(Direcao direcao, int angulo){
     int giro_volante = 0;
     // giroscopio.primeira_leitura = true;
-    float angulo_inicial = giroscopio.get_z();
+    imu.update();
+    float angulo_inicial = imu.getAngleZ();
     float angulo_final = angulo_inicial + angulo;
-    float angulo_atual = giroscopio.get_z();
+    imu.update();
+    float angulo_atual = imu.getAngleZ();
     int velocidade_rpm = 87*direcao; // Velocidade de referência
     // giroscopio.last_time = prevT;
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
-    while (angulo_atual < (angulo_final - 3) or angulo_atual > (angulo_final + 3)) {
-        angulo_atual = giroscopio.get_z();
+    while (angulo_atual < (angulo_final) or angulo_atual > (angulo_final)) {
+        imu.update();
+        angulo_atual = imu.getAngleZ();
+        Serial.print(angulo_atual);
+        Serial.print(" ");
+        Serial.println(angulo_final);
         atualizar_tempo();
         if ((angulo_final - angulo_atual) > 0) {
             if ((angulo_final - angulo_atual) > 10) {
@@ -153,8 +164,9 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     }
     giroscopio.primeira_leitura = true; // Evitar a computação da primeira leitura do giroscópio, pois ela é estourada
     atualizar_tempo();
-    float angulo_inicial = giroscopio.get_z();
-    giroscopio.last_time = prevT;
+    imu.update();
+    float angulo_inicial = imu.getAngleZ();
+    // giroscopio.last_time = prevT;
     float posicao_x = retornar_posicao_x_do_cone();
     float posicaoY = 1000;
     float giro_volante = 0;
@@ -162,7 +174,8 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     while(posicao_x==NAOENCONTRADO) {
         atualizar_tempo();
         andar_reto(velocidade_rpm);
-        float anguloAtual = giroscopio.get_z();
+        imu.update();
+        float anguloAtual = imu.getAngleZ();
         volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
         posicao_x = retornar_posicao_x_do_cone();
     }

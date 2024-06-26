@@ -7,7 +7,7 @@
 #include "Tempo.h"
 #include "Volante.h"
 #include "Giroscopio.h"
-
+#include<MPU6050_light.h>
 //* Este arquivo contém a declaração da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
 enum Direcao{
@@ -17,6 +17,7 @@ enum Direcao{
 class Robo {
     public:
         Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
+        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, MPU6050& imu); // Construtor da classe Robo
         void andarAteCone(float distanciaAteParar,int anguloCone);
         void resetar_encoder();
         void ler_visao();
@@ -35,7 +36,7 @@ class Robo {
         MotorDC& motor_direito; // Referência ao objeto motor_esquerdo da classe MotorDC
         Volante& volante; // Referência ao objeto volante da classe Volante
         Giroscopio& giroscopio; // Referência ao objeto giroscopio da classe Giroscopio
-
+        MPU6050& imu;
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     private:
