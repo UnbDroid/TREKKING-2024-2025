@@ -86,26 +86,24 @@ void Robo::virar_robo(Direcao direcao, int angulo){
     int giro_volante = 0;
     // giroscopio.primeira_leitura = true;
     imu.update();
-    float angulo_inicial = imu.getAngleZ();
-    float angulo_final = angulo_inicial + angulo;
+    // float angulo_inicial = imu.getAngleZ();
+    float angulo_final = imu.getAngleZ() + angulo;
     imu.update();
-    float angulo_atual = imu.getAngleZ();
+    // float angulo_atual = imu.getAngleZ();
     int velocidade_rpm = 87*direcao; // Velocidade de referência
     // giroscopio.last_time = prevT;
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
-    while (angulo_atual < (angulo_final) or angulo_atual > (angulo_final)) {
-        imu.update();
-        angulo_atual = imu.getAngleZ();
-        Serial.print(angulo_atual);
+    while (imu.getAngleZ() < (angulo_final-3) or imu.getAngleZ() > (angulo_final+3)) {
+        Serial.print(imu.getAngleZ());
         Serial.print(" ");
         Serial.println(angulo_final);
         atualizar_tempo();
-        if ((angulo_final - angulo_atual) > 0) {
-            if ((angulo_final - angulo_atual) > 10) {
+        if ((angulo_final - imu.getAngleZ()) > 0) {
+            if ((angulo_final - imu.getAngleZ()) > 10) {
                 giro_volante = 35;
             }
-        } else if ((angulo_final - angulo_atual) < 0) {
-            if ((angulo_final - angulo_atual) < -10) {
+        } else if ((angulo_final - imu.getAngleZ()) < 0) {
+            if ((angulo_final - imu.getAngleZ()) < -10) {
                 giro_volante = -35;
             }
         }
@@ -117,6 +115,8 @@ void Robo::virar_robo(Direcao direcao, int angulo){
             motor_esquerdo.andar_reto(velocidade_rpm - 5);
             motor_direito.andar_reto(velocidade_rpm);
         }
+        imu.update();
+        // angulo_atual = imu.getAngleZ();
     }
     
     volante.resetar_volante();

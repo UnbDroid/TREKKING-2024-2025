@@ -11,12 +11,12 @@
 // #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 // // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 // Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);
- 
+ #define INT_MPU 
  
 MPU6050 imu(Wire);
 unsigned long timer = 0;
-MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
-MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
+MotorDC motor_dc_esquerdo(ENCA_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+MotorDC motor_dc_direito(ENCA_Direito,PWM_Direito, IN1_Direito, IN2_Direito);
 Volante volante(SERVO);
 Giroscopio giroscopio;
 Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, imu);
@@ -57,6 +57,7 @@ void setup() {
   
 //   display.setTextSize(2);          
 robo.virar_robo(frente,90);
+robo.andar_reto_cm(500);
 }
  
 void loop() {
