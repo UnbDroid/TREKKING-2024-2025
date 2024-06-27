@@ -27,12 +27,12 @@ sess_options = onnxruntime.SessionOptions()
 
 sess_options.intra_op_num_threads = 0
 
-sess = onnxruntime.InferenceSession("V4_128.onnx", sess_options)
+sess = onnxruntime.InferenceSession("V6_128.onnx", sess_options)
 
 cap = cv2.VideoCapture(2)
 
 # Carregue o modelo YOLO
-model = YOLO("V4_128.onnx")
+model = YOLO("V6_128.onnx")
 
 # Dicionário para rastrear IDs e histórico de posições
 track_history = defaultdict(lambda: [])
@@ -62,7 +62,7 @@ while True:
             results = model.track(
                 img,
                 persist=True,
-                conf=0.6,
+                conf=0.8,
                 imgsz=128,
                 iou=0.3,
                 max_det=2,

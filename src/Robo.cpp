@@ -71,12 +71,15 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
         atualizar_tempo();
         andar_reto(velocidade_rpm);
         imu.update();
+        // Serial.print(motor_esquerdo.posi);
+        // Serial.print(" ");
+        // Serial.println(motor_direito.posi);
         float yaw = imu.getAngleZ();
         int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
         volante.virar_volante(giro_volante);
-        Serial.print(angulo_inicial);
-        Serial.print(" ");
-        Serial.println(yaw);
+        // Serial.print(motor_esquerdo.comprimento_roda);
+        // Serial.print(" ");
+        // Serial.println(((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda);
     }
     andar_reto(0);
     volante.definir_angulo_base();
@@ -94,9 +97,9 @@ void Robo::virar_robo(Direcao direcao, int angulo){
     // giroscopio.last_time = prevT;
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
     while (imu.getAngleZ() < (angulo_final-3) or imu.getAngleZ() > (angulo_final+3)) {
-        Serial.print(imu.getAngleZ());
-        Serial.print(" ");
-        Serial.println(angulo_final);
+        // Serial.print(imu.getAngleZ());
+        // Serial.print(" ");
+        // Serial.println(angulo_final);
         atualizar_tempo();
         if ((angulo_final - imu.getAngleZ()) > 0) {
             if ((angulo_final - imu.getAngleZ()) > 10) {
@@ -110,9 +113,9 @@ void Robo::virar_robo(Direcao direcao, int angulo){
         volante.virar_volante(giro_volante * direcao);
         if (giro_volante > 0) {
             motor_esquerdo.andar_reto(velocidade_rpm);
-            motor_direito.andar_reto(velocidade_rpm - 5);
+            motor_direito.andar_reto(velocidade_rpm - 25);
         } else {
-            motor_esquerdo.andar_reto(velocidade_rpm - 5);
+            motor_esquerdo.andar_reto(velocidade_rpm - 25);
             motor_direito.andar_reto(velocidade_rpm);
         }
         imu.update();
@@ -144,13 +147,13 @@ float Robo::getAnguloCone(){
     double soma = primeiro + segundo;
     double hipotenusa = pow(soma, 0.5);
     double anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
-    Serial.print(primeiro);
-    Serial.print(" ");
-    Serial.print(segundo);
-    Serial.print(" ");
-    Serial.print(hipotenusa);
-    Serial.print(" ");
-    Serial.println(anguloCone);
+    // Serial.print(primeiro);
+    // Serial.print(" ");
+    // Serial.print(segundo);
+    // Serial.print(" ");
+    // Serial.print(hipotenusa);
+    // Serial.print(" ");
+    // Serial.println(anguloCone);
     return anguloCone;
 }
 
@@ -192,7 +195,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         } else if (giro_volante < 10 && giro_volante > 5) {
             giro_volante = 10;
         } else if (giro_volante > -10 && giro_volante < -5) {
-            giro_volante = -10;
+            giro_volante = -15;
         } else if (giro_volante <= 5 && giro_volante >= -5) {
             giro_volante = 0;
         }
@@ -215,10 +218,6 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
             motor_direito.andar_reto(velocidade_rpm);
         }
         
-
-        
-
-        
         // if (giro_volante > 35) {
         //     giro_volante = 35;
         // } else if (giro_volante < -35) {
@@ -233,7 +232,10 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         //     motor_direito.andar_reto(velocidade_rpm);
         // }
         // angulo_inicial = giroscopio.get_z();
+    // Serial.println("to andando ");
     }
+    motor_direito.andar_reto(0);
+    motor_esquerdo.andar_reto(0);
     volante.resetar_volante();
     // angulo_inicial = giroscopio.get_z();
     // while(retornar_posicao_y_do_cone()>distanciaAteParar){
@@ -241,7 +243,6 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     //     andar_reto(velocidade_rpm);
     //     volante.virar_volante((int)(round((angulo_inicial - giroscopio.get_z())*0.5)*5));
     // }
-    motor_direito.andar_reto(0);
-    motor_esquerdo.andar_reto(0);
+    
     delay(500);
 }

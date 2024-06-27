@@ -19,7 +19,7 @@ class MotorDC{
         volatile double posi; // posição do motor em ticks do encoder
         double rps = 0; // velocidade ATUAL do motor em rotações por segundo
         int encoder_volta; // valor de encoder referente a uma volta completa da roda
-        double comprimento_roda = 2 * M_PI * raio_roda_cm; //TODO: medir o raio da roda real
+        double comprimento_roda = 2 * M_PI * 6.272; //TODO: medir o raio da roda real
 
     private:
         int ENCA; // Cabo amarelo
@@ -34,7 +34,6 @@ class MotorDC{
         float kd; // constante derivativa do controle PID
         int rpm_referencia; // velocidade desejada do motor, velocidade que ele buscará alcançar
         double rpm_max = 87; // velocidade máxima do motor (apenas por curiosidade, usar caso seja necessário)
-        double raio_roda_cm = 6; // raio da roda em cm
         float eprev = 0;
         float eintegral = 0; // erro acumulado pro cálculo do ki
         int dir = 1; // 1 para frente, -1 para trás (pelo menos essa é a ideia)

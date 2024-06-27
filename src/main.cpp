@@ -45,19 +45,33 @@ double dt;
 void setup() {
   Serial.begin(115200);                          // Ensure serial monitor set to this value also             
 
+  while (!Serial)
+  {
+    delayMicroseconds(1);
+  }
+  
+
   Wire.begin();
   imu.begin();
+  // Serial.println("Antes de calibrar");
+  // imu.calcGyroOffsets();
   Serial.println("Antes de calibrar");
-  imu.calcGyroOffsets();
-  Serial.println("Depois de calibrar");                          // This does the calibration;
+  imu.calcOffsets();
+  Serial.println("Antes de calibrar");
+  delay(500);                          // This does the calibration;
   ligar_robo();  
 //   display.println(F("Calculating gyro offset, do not move MPU6050"));
 //   display.display();        
   
   
-//   display.setTextSize(2);          
-robo.virar_robo(frente,90);
-robo.andar_reto_cm(500);
+//   display.setTextSize(2); 
+  robo.andar_reto_cm(104);
+  robo.virar_robo(frente,-90);
+  robo.andar_reto_cm(500);
+  robo.virar_robo(frente,90);
+  robo.virar_robo(frente,-90);
+  robo.alinhar_com_cone(40);
+
 }
  
 void loop() {
