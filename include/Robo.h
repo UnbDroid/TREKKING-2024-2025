@@ -28,6 +28,7 @@ class Robo {
         void virar_robo(Direcao direcao, int angulo);
         void alinhar_com_cone(float distanciaAteParar);
         float getAnguloCone();
+        
         //! Pode ser que esses objetos deem erro por causa do construtor
         //! Eu tô confiando 100% no Copilot aqui, porque ele falou que tá tudo certo :D 
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -35,8 +36,8 @@ class Robo {
         MotorDC& motor_esquerdo; // Referência ao objeto motor_esquerdo da classe MotorDC
         MotorDC& motor_direito; // Referência ao objeto motor_esquerdo da classe MotorDC
         Volante& volante; // Referência ao objeto volante da classe Volante
-        Giroscopio& giroscopio; // Referência ao objeto giroscopio da classe Giroscopio
         MPU6050& imu;
+        
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     private:
