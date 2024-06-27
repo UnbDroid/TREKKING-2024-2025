@@ -73,13 +73,26 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
     float angulo_inicial = imu.getAngleZ();
     int enc_inicial_esquerdo = motor_esquerdo.posi;
     int enc_inicial_direito = motor_direito.posi;
-    while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
-        atualizar_tempo();
-        andar_reto(velocidade_rpm);
-        imu.update();
-        float yaw = imu.getAngleZ();
-        int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
-        volante.virar_volante(giro_volante);
+    int rpm_referencia = velocidade_rpm;
+    if (distancia_cm < 0) {
+        rpm_referencia = (-1*rpm_referencia);
+        while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda > distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda > distancia_cm) {
+            atualizar_tempo();
+            andar_reto(rpm_referencia);
+            imu.update();
+            float yaw = imu.getAngleZ();
+            int giro_volante = (int)(round(angulo_inicial - yaw)*-2.5);
+            volante.virar_volante(giro_volante);
+        }
+    } else {
+        while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
+            atualizar_tempo();
+            andar_reto(velocidade_rpm);
+            imu.update();
+            float yaw = imu.getAngleZ();
+            int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
+            volante.virar_volante(giro_volante);
+        }
     }
     andar_reto(0);
     volante.definir_angulo_base();

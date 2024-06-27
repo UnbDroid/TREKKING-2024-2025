@@ -35,10 +35,12 @@ void interrupcao_encoder_direito() {
 }
 
 void ligar_robo() {
+  Serial.println("Calibrando IMU");
   Wire.begin();
   imu.begin();
   imu.calcOffsets();
-  delay(500);
+  Serial.println("Terminei de Calibrar");
+  delay(5000);
   volante.setup();
   motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
   motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);
@@ -52,10 +54,10 @@ void setup() {
 
     Serial.begin(115200);
     
-    while (!Serial)
-    {
-      delayMicroseconds(1);
-    }
+    // while (!Serial)
+    // {
+    //   delayMicroseconds(1);
+    // }
 
     ligar_robo();        
 
@@ -63,12 +65,14 @@ void setup() {
   
   //! Caminho do robô ------------------------------------------
 
-    robo.andar_reto_cm(104);
-    robo.virar_robo(frente,-90);
-    robo.andar_reto_cm(500);
-    robo.virar_robo(frente,90);
-    robo.virar_robo(frente,-90);
-    robo.alinhar_com_cone(40);
+    // robo.andar_reto_cm(144);
+    // robo.virar_robo(frente, 90);
+    // robo.alinhar_com_cone(60);
+    robo.andar_reto_cm(-180);
+    // robo.virar_robo(frente,180);
+    // robo.alinhar_com_cone(55);
+    // robo.virar_robo(frente,90);
+    // robo.alinhar_com_cone(40);
 
   //!-----------------------------------------------------------
 

@@ -12,7 +12,7 @@ class MotorDC{
         MotorDC(const int ENCA, const int PWM, const int IN1, const int IN2); // Construtor da classe MotorDC
 
         void congirurar (int ticks_por_volta, float kp, float ki, float kd); // Função para configurar o motor
-        void ligar_motor(int dir, int pwmVal);
+        void ligar_motor(int direcao, int pwmVal);
         void ler_encoder();
         void resetar_encoder();
         void andar_reto(int velocidade_rpm);

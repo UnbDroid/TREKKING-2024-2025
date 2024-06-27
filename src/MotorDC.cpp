@@ -31,9 +31,10 @@ void MotorDC::congirurar(int ticks_por_volta, float kp, float ki, float kd)
 }
 
 // Função para ligar o motor e definir a direção e a velocidade
-void MotorDC::ligar_motor(int dir, int pwmVal)
+void MotorDC::ligar_motor(int direcao, int pwmVal)
 {
-  this -> dir = dir;
+
+  dir = direcao;
   analogWrite(PWM, pwmVal); // (pino do pwm, valor do pwm (máximo = 255))
   if (dir == 1)
   { // 1 para frente
@@ -75,10 +76,6 @@ void MotorDC::resetar_encoder()
 
 void MotorDC::andar_reto(int velocidade_rpm)
 {
-  //!
-  //! Ainda não testada
-  //!
-  // TODO: Testar a função
 
   rpm_referencia = velocidade_rpm; // Velocidade de referência
 
