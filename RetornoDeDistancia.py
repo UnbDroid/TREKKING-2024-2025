@@ -55,12 +55,14 @@ deixar_rastro = True
 while True:
     # Capture a imagem do vídeo
     success, img = cap.read()
+    print("Li a camera")
 
     if success:
         # Processamento com YOLO
         if seguir:
             results = model.track(
                 img,
+                verbose=False,
                 persist=True,
                 conf=0.8,
                 imgsz=128,
@@ -70,12 +72,15 @@ while True:
                 save_txt=False,
             )
         else:
-            results = model(img)
+            results = model(img, verbose=False)
+            
+        print("Fiz o processamento")
 
         # Processamento dos resultados
         for result in results:
             # Visualização dos resultados na imagem
             img = result.plot()
+            print("Fiz o plot")
 
             # Rastreamento e estimativa de distância
             if seguir and deixar_rastro:
@@ -83,6 +88,7 @@ while True:
                     # Obter caixas e IDs de rastreamento
                     boxes = result.boxes.xywh.cpu()
                     track_ids = result.boxes.id.int().cpu().tolist()
+                    print("Obtive as caixas e IDs")
 
                     # Traçar rastreamento
                     for box, track_id in zip(boxes, track_ids):
@@ -92,10 +98,12 @@ while True:
                         # Limitar histórico de rastreamento
                         if len(track) > 4:
                             track.pop(0)
+                            
+                        print("Fiz o rastreamento")
 
                         # Estimar distância usando largura do objeto e razão de triângulos similares
                         distance = (known_object_width * focal_length) / w
-                        print(f"Distância estimada para o objeto: {distance:.2f} cm")
+                        # print(f"Distância estimada para o objeto: {distance:.2f} cm")
 
                         # Calcular a posição do objeto em relação ao centro da tela
                         center_x = (x)/ img.shape[1]
@@ -107,24 +115,29 @@ while True:
                             center_y - 0.5
                         )  # Centro da tela na coordenada y é 0.8
                         # angulo_cone = angulo(offset_x,distance)
-                        print(
-                            f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})"
-                        )
+                        # print(
+                            # f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})"
+                        # )
+                        
+                        print(f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})")
                         
                         sys.stdout.flush()
                         
+                        print("Estou indo mandar")
+                        
                         # Enviar posição do objeto para o Arduino via serial
-                        # print("estou indo mandar")
                         arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
-                        # print("mandei via serial")
+                        print("Mandei via serial")
 
                 except Exception as e:
-                    print(f"Erro no rastreamento: {e}")
                     sys.stdout.flush()
+                    print(f"Erro no rastreamento: {e}")
 
     # Exibir imagem com resultados
     # img = cv2.resize(img,(96,96))
     cv2.imshow("Tela", img)
+
+    print("Exibi a tela")
 
     # Tecla 'q' para sair
     k = cv2.waitKey(1)

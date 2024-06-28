@@ -40,7 +40,7 @@ void ligar_robo() {
   imu.begin();
   imu.calcOffsets();
   Serial.println("Terminei de Calibrar");
-  delay(5000);
+  // delay(5000);
   volante.setup();
   motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
   motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);
@@ -54,21 +54,31 @@ void setup() {
 
     Serial.begin(115200);
     
-    // while (!Serial)
-    // {
-    //   delayMicroseconds(1);
-    // }
+
+    while (!Serial)
+    {
+      volante.virar_volante(30);
+      volante.virar_volante(-33);
+    }
 
     ligar_robo();        
 
   //! ----------------------------------------------------------
-  
+    // pinMode(22, OUTPUT);
   //! Caminho do robô ------------------------------------------
-
+  // volante.virar_volante(30);
+  //     volante.virar_volante(-33);
     // robo.andar_reto_cm(144);
     // robo.virar_robo(frente, 90);
-    // robo.alinhar_com_cone(60);
-    robo.andar_reto_cm(-180);
+    Serial.println("Começando a andar");
+    robo.alinhar_com_cone(20);
+    // Serial.println(leituraVisao[0]);
+    // robo.virar_robo(frente, leituraVisao[0]);
+    // robo.andar_reto_cm(leituraVisao[1
+    // float * leituraVisao = robo.getAnguloCone();
+    // Serial.println(leituraVisao[0]);
+    // robo.virar_robo(frente, leituraVisao[0]);
+    // robo.andar_reto_cm(leituraVisao[1]);
     // robo.virar_robo(frente,180);
     // robo.alinhar_com_cone(55);
     // robo.virar_robo(frente,90);
@@ -81,6 +91,10 @@ void setup() {
 void loop() {
   
   //! Usar somente para testes
-  //! Deverá permanecer vazio durante as rodadas oficiais
-
+  //! Deverá permanecer vazio durante as rodadas oficiais[
+  // digitalWrite(22, HIGH);
+  // delay(1000);
+  // digitalWrite(22, LOW);
+  // delay(1000);
+  
 }

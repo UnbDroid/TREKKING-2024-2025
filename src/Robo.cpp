@@ -27,8 +27,10 @@ void Robo::resetar_encoder() {
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
 
+    Serial.
     if (Serial.available() > 0) {
         String input = Serial.readStringUntil('\n');
+        Serial.println(input);
         int commaIndex = input.indexOf(',');
         if (commaIndex != -1) {
             String float1Str = input.substring(0, commaIndex);
@@ -42,8 +44,10 @@ void Robo::ler_visao() {
 
 // Função para retornar a posição x do cone
 float Robo::retornar_posicao_x_do_cone() { 
-
-    ler_visao();
+    // unsigned long time =micros();
+    // while(micros()-time<1000000){
+        ler_visao();
+    // }       
     return cone_posicao_x;
 
 }
@@ -148,8 +152,9 @@ void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
 
 }
 
-float Robo::getAnguloCone(){
-    
+float * Robo::getAnguloCone(){
+    float camera[2];
+    float* ponteiro = camera;
     float catetoOposto = retornar_posicao_x_do_cone()*100;
     float catetoAdjacente = (float)retornar_posicao_y_do_cone();
     double primeiro = pow(catetoAdjacente,2);
@@ -157,7 +162,9 @@ float Robo::getAnguloCone(){
     double soma = primeiro + segundo;
     double hipotenusa = pow(soma, 0.5);
     double anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
-    return anguloCone;
+    camera[0]=anguloCone;
+    camera[1]=catetoAdjacente;
+    return ponteiro;
 
 }
 
