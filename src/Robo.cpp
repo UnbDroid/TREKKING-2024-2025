@@ -27,10 +27,15 @@ void Robo::resetar_encoder() {
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
 
-    Serial.
+    while (Serial.available() > 0) {
+        Serial.read();
+    }
+
+    while (!Serial.available()) {
+    }
+
     if (Serial.available() > 0) {
         String input = Serial.readStringUntil('\n');
-        Serial.println(input);
         int commaIndex = input.indexOf(',');
         if (commaIndex != -1) {
             String float1Str = input.substring(0, commaIndex);

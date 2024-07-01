@@ -10,7 +10,7 @@ import time
 
 #! Coisas da Comunicação Serial --------------------------------------------------
 
-arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
+# arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
 
 #! -------------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ sess_options.intra_op_num_threads = 0
 
 sess = onnxruntime.InferenceSession("V6_128.onnx", sess_options)
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 # Carregue o modelo YOLO
 model = YOLO("V6_128.onnx")
@@ -56,13 +56,14 @@ while True:
     # Capture a imagem do vídeo
     success, img = cap.read()
     print("Li a camera")
+    # img = cv2.resize(img, (128, 128))
 
     if success:
         # Processamento com YOLO
         if seguir:
             results = model.track(
                 img,
-                verbose=False,
+                # verbose=False,
                 persist=True,
                 conf=0.8,
                 imgsz=128,
@@ -72,14 +73,14 @@ while True:
                 save_txt=False,
             )
         else:
-            results = model(img, verbose=False)
+            results = model(img) #, verbose=False)
             
         print("Fiz o processamento")
 
         # Processamento dos resultados
         for result in results:
             # Visualização dos resultados na imagem
-            img = result.plot()
+            # img = result.plot()
             print("Fiz o plot")
 
             # Rastreamento e estimativa de distância
@@ -126,7 +127,7 @@ while True:
                         print("Estou indo mandar")
                         
                         # Enviar posição do objeto para o Arduino via serial
-                        arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
+                        # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
                         print("Mandei via serial")
 
                 except Exception as e:
@@ -135,7 +136,7 @@ while True:
 
     # Exibir imagem com resultados
     # img = cv2.resize(img,(96,96))
-    cv2.imshow("Tela", img)
+    # cv2.imshow("Tela", img)
 
     print("Exibi a tela")
 
@@ -147,5 +148,5 @@ while True:
 # Liberar recursos
 cap.release()
 cv2.destroyAllWindows()
-arduino.close()  # Fecha a comunicação serial
+# arduino.close()  # Fecha a comunicação serial
 print("Desligando...")

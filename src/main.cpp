@@ -57,9 +57,11 @@ void setup() {
 
     while (!Serial)
     {
-      volante.virar_volante(30);
-      volante.virar_volante(-33);
+      // volante.virar_volante(30);
+      // volante.virar_volante(-33);
     }
+
+    Serial.setTimeout(100);
 
     ligar_robo();        
 
@@ -70,7 +72,7 @@ void setup() {
   //     volante.virar_volante(-33);
     // robo.andar_reto_cm(144);
     // robo.virar_robo(frente, 90);
-    Serial.println("Começando a andar");
+    // Serial.println("Começando a andar");
     robo.alinhar_com_cone(20);
     // Serial.println(leituraVisao[0]);
     // robo.virar_robo(frente, leituraVisao[0]);
