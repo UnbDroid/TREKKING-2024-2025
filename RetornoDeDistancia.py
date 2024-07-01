@@ -32,7 +32,7 @@ sess = onnxruntime.InferenceSession("V6_128.onnx", sess_options)
 cap = cv2.VideoCapture(0)
 
 # Carregue o modelo YOLO
-model = YOLO("V6_128.onnx")
+model = YOLO("V6_128.onnx", task='detect')
 
 # Dicionário para rastrear IDs e histórico de posições
 track_history = defaultdict(lambda: [])
@@ -55,6 +55,7 @@ deixar_rastro = True
 while True:
     # Capture a imagem do vídeo
     success, img = cap.read()
+    img = cv2.resize(img, (128, 128))
     print("Li a camera")
     # img = cv2.resize(img, (128, 128))
 
@@ -71,6 +72,7 @@ while True:
                 max_det=2,
                 stream_buffer=True,
                 save_txt=False,
+                stream=True,
             )
         else:
             results = model(img) #, verbose=False)
@@ -80,7 +82,7 @@ while True:
         # Processamento dos resultados
         for result in results:
             # Visualização dos resultados na imagem
-            # img = result.plot()
+            img = result.plot()
             print("Fiz o plot")
 
             # Rastreamento e estimativa de distância
@@ -101,20 +103,19 @@ while True:
                             track.pop(0)
                             
                         print("Fiz o rastreamento")
-
+                        
                         # Estimar distância usando largura do objeto e razão de triângulos similares
                         distance = (known_object_width * focal_length) / w
+                        distance -= 17
                         # print(f"Distância estimada para o objeto: {distance:.2f} cm")
 
                         # Calcular a posição do objeto em relação ao centro da tela
                         center_x = (x)/ img.shape[1]
-                        center_y = (y)/ img.shape[0]
+                        
                         offset_x = (
                             center_x - 0.5
                         )  # Centro da tela na coordenada x é 0.68
-                        offset_y = (
-                            center_y - 0.5
-                        )  # Centro da tela na coordenada y é 0.8
+                         # Centro da tela na coordenada y é 0.8
                         # angulo_cone = angulo(offset_x,distance)
                         # print(
                             # f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})"
@@ -136,7 +137,7 @@ while True:
 
     # Exibir imagem com resultados
     # img = cv2.resize(img,(96,96))
-    # cv2.imshow("Tela", img)
+    cv2.imshow("Tela", img)
 
     print("Exibi a tela")
 
