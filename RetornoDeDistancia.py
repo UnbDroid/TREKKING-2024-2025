@@ -16,7 +16,7 @@ import time
 
 
 # Parâmetros da câmera (preencha com os valores da sua câmera)
-focal_length = 640  # Substitua com a distância focal da sua câmera (em pixels)
+focal_length = 136  # Substitua com a distância focal da sua câmera (em pixels)
 known_object_width = (
     28  # Substitua com a largura real do objeto em centímetros (ou outra unidade)
 )
@@ -29,7 +29,15 @@ sess_options.intra_op_num_threads = 0
 
 sess = onnxruntime.InferenceSession("V6_128.onnx", sess_options)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
+
+#132
+
+# cap.open(2+cv2.CAP_DSHOW)
+# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 128)
+# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 128) 
+# cap.set(cv2.CAP_PROP_FOCUS,60)
+# time.sleep(.1)
 
 # Carregue o modelo YOLO
 model = YOLO("V6_128.onnx", task='detect')
@@ -56,7 +64,7 @@ while True:
     # Capture a imagem do vídeo
     success, img = cap.read()
     img = cv2.resize(img, (128, 128))
-    print("Li a camera")
+    # print("Li a camera")
     # img = cv2.resize(img, (128, 128))
 
     if success:
@@ -77,13 +85,13 @@ while True:
         else:
             results = model(img) #, verbose=False)
             
-        print("Fiz o processamento")
+        # print("Fiz o processamento")
 
         # Processamento dos resultados
         for result in results:
             # Visualização dos resultados na imagem
             img = result.plot()
-            print("Fiz o plot")
+            # print("Fiz o plot")
 
             # Rastreamento e estimativa de distância
             if seguir and deixar_rastro:
@@ -102,11 +110,11 @@ while True:
                         if len(track) > 4:
                             track.pop(0)
                             
-                        print("Fiz o rastreamento")
+                        # print("Fiz o rastreamento")
                         
                         # Estimar distância usando largura do objeto e razão de triângulos similares
                         distance = (known_object_width * focal_length) / w
-                        distance -= 17
+                        # distance -= 17
                         # print(f"Distância estimada para o objeto: {distance:.2f} cm")
 
                         # Calcular a posição do objeto em relação ao centro da tela
@@ -123,13 +131,14 @@ while True:
                         
                         print(f"Posição do objeto em relação ao centro da tela: (x={offset_x:.2f}, distance={float(distance):.2f})")
                         
+                        
                         sys.stdout.flush()
                         
-                        print("Estou indo mandar")
+                        # print("Estou indo mandar")
                         
                         # Enviar posição do objeto para o Arduino via serial
                         # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
-                        print("Mandei via serial")
+                        # print("Mandei via serial")
 
                 except Exception as e:
                     sys.stdout.flush()

@@ -66,6 +66,9 @@ void setup() {
 
   //* Caminho do robô ------------------------------------------
   
+    robo.andar_reto_cm(550);
+    robo.alinhar_com_cone(60);
+    robo.virar_robo(tras, 120);
     robo.alinhar_com_cone(60);
 
   //* ----------------------------------------------------------

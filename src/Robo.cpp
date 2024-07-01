@@ -31,7 +31,7 @@ void Robo::ler_visao() {
         Serial.read();
     }
 
-    while (Serial.available() < ) {
+    while (Serial.available() < 1) {
     }
 
     if (Serial.available() > 0) {
