@@ -31,7 +31,7 @@ void Robo::ler_visao() {
         Serial.read();
     }
 
-    while (!Serial.available()) {
+    while (Serial.available() < ) {
     }
 
     if (Serial.available() > 0) {
@@ -157,7 +157,7 @@ void Robo::andarAteCone(float distanciaAteParar,int anguloCone){
 
 }
 
-float * Robo::getAnguloCone(){
+float Robo::getAnguloCone(){
     float camera[2];
     float* ponteiro = camera;
     float catetoOposto = retornar_posicao_x_do_cone()*100;
@@ -169,7 +169,7 @@ float * Robo::getAnguloCone(){
     double anguloCone=asin(catetoOposto/hipotenusa)*180/PI;
     camera[0]=anguloCone;
     camera[1]=catetoAdjacente;
-    return ponteiro;
+    return anguloCone;
 
 }
 
@@ -200,21 +200,22 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
-        giro_volante = (int)(round(posicao_x*100));
+        float giroVolante = getAnguloCone();
+        // giro_volante = (int)(round(posicao_x*100));
     
-        if (giro_volante > 35) {
-            giro_volante = 35;
-        } else if (giro_volante < -35) {
-            giro_volante = -35;
-        } else if (giro_volante < 10 && giro_volante > 5) {
-            giro_volante = 10;
-        } else if (giro_volante > -10 && giro_volante < -5) {
-            giro_volante = -15;
-        } else if (giro_volante <= 5 && giro_volante >= -5) {
-            giro_volante = 0;
-        }
+        // if (giro_volante > 35) {
+        //     giro_volante = 10;
+        // } else if (giro_volante < -35) {
+        //     giro_volante = -10;
+        // } else if (giro_volante < 10 && giro_volante > 5) {
+        //     giro_volante = 4;
+        // } else if (giro_volante > -10 && giro_volante < -5) {
+        //     giro_volante = -4;
+        // } else if (giro_volante <= 5 && giro_volante >= -5) {
+        //     giro_volante = 0;
+        // }
 
-        volante.virar_volante(giro_volante);
+        volante.virar_volante(giroVolante);
 
         if (cone_posicao_x > 0.05 or cone_posicao_x < -0.05) {
             velocidade_rpm = 50;
