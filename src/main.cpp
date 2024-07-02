@@ -13,8 +13,8 @@
 //! Criação dos objetos -----------------------------------------------------------------
 
   MPU6050 imu(Wire);
-  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
-  MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
+  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+  MotorDC motor_dc_direito(ENCA_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
   Volante volante(SERVO);
   Giroscopio giroscopio;
   Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, imu);
@@ -41,6 +41,15 @@ void ligar_robo() {
   Wire.begin();
   imu.begin();
   imu.calcOffsets();
+  float ang_inicial=imu.getAngleZ();
+  delay(500);
+  float ang_atual=imu.getAngleZ();
+  while (ang_atual-ang_inicial > 0.01 || ang_atual-ang_inicial < -0.01) {
+    imu.calcOffsets();
+    ang_inicial=imu.getAngleZ();
+    delay(500);
+    ang_atual = imu.getAngleZ();
+  }
   volante.setup();
   motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
   motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);

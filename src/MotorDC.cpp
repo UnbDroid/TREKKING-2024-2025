@@ -9,15 +9,13 @@
 // MotorDC* MotorDC::instance = nullptr;/
 
 // Construtor da classe MotorDC
-MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2)
+MotorDC::MotorDC(const int ENCA, const int PWM, const int IN1, const int IN2)
 {
   this->ENCA = ENCA;
-  this->ENCB = ENCB;
   this->PWM = PWM;
   this->IN1 = IN1;
   this->IN2 = IN2;
   pinMode(ENCA, INPUT);
-  pinMode(ENCB, INPUT);
   pinMode(PWM, OUTPUT);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -58,12 +56,11 @@ void MotorDC::ligar_motor(int direcao, int pwmVal)
 // Função para ler o encoder do motor
 void MotorDC::ler_encoder()
 {
-  volatile double b = digitalRead(ENCB);
-  if (b > 0)
+  if (dir == 1)
   { // Se ler pulso positivo do encoder, sentido horario
     posi++;
   }
-  else
+  else if (dir == -1)
   { // Se ler pulso negativo do encoder, sentido anti-horario
     posi--;
   }

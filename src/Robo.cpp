@@ -104,6 +104,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
             andar_reto(velocidade_rpm);
             imu.update();
             float yaw = imu.getAngleZ();
+            Serial.println(imu.getAngleZ());
             int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
             volante.virar_volante(giro_volante);
         }
