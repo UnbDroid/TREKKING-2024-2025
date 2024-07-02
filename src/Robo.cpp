@@ -88,6 +88,11 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda > distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda > distancia_cm) {
             atualizar_tempo();
             andar_reto(rpm_referencia);
+            Serial.print(motor_esquerdo.posi);
+            Serial.print(" ");
+            Serial.print(motor_direito.posi);
+            Serial.print(" ");
+            Serial.println(imu.getAngleZ());
             imu.update();
             float yaw = imu.getAngleZ();
             int giro_volante = (int)(round(angulo_inicial - yaw)*-2.5);
@@ -216,7 +221,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         // }
 
         
-        if(posicao_x>0.04|| posicao_x<-0.04){
+        if (posicao_x > 0.04 || posicao_x < -0.04) {
             volante.virar_volante(giroVolante);
         }
         if (cone_posicao_x > 0.05 or cone_posicao_x < -0.05) {

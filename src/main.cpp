@@ -13,8 +13,8 @@
 //! Criação dos objetos -----------------------------------------------------------------
 
   MPU6050 imu(Wire);
-  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
-  MotorDC motor_dc_direito(ENCA_Direito,PWM_Direito, IN1_Direito, IN2_Direito);
+  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+  MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
   Volante volante(SERVO);
   Giroscopio giroscopio;
   Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, imu);
@@ -67,9 +67,9 @@ void setup() {
   //* Caminho do robô ------------------------------------------
   
     robo.andar_reto_cm(550);
-    robo.alinhar_com_cone(60);
-    robo.virar_robo(tras, 120);
-    robo.alinhar_com_cone(60);
+    // robo.alinhar_com_cone(60);
+    // robo.virar_robo(tras, 120);
+    // robo.alinhar_com_cone(60);
 
   //* ----------------------------------------------------------
 
