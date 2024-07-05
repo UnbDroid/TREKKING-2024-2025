@@ -38,9 +38,9 @@ void interrupcao_encoder_direito() {
 
 void ligar_robo() {
   Wire.begin();
-  Serial.println("Wire begin");
+  // Serial.println("Wire begin");
   imu.begin();
-  Serial.println("IMU begin");
+  // Serial.println("IMU begin");
   imu.calcOffsets();
   float ang_inicial=imu.getAngleZ();
   float ang_atual=imu.getAngleZ();
@@ -57,7 +57,7 @@ void ligar_robo() {
   attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
   attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   pinMode(LED, OUTPUT);
-  Serial.println("Robô ligado");
+  // Serial.println("Robô ligado");
 }
 
 void setup() { 
@@ -65,7 +65,6 @@ void setup() {
   //! FAVOR NÃO COLOCAR FUNÇÕES DE TESTE FORA DA ÁREA DE TESTES
 
   //* Funções de Setup -----------------------------------------
-    Serial1.begin(115200);
     Serial.begin(115200);
     
     Serial.setTimeout(100);
@@ -81,7 +80,8 @@ void setup() {
 
   //* Caminho do robô ------------------------------------------
     
-    robo.alinhar_com_cone(50);
+    // robo.alinhar_com_cone(50);
+    robo.andar_reto_cm(1000,80); 
     // robo.virar_robo(tras, 120);
 
     // Serial.println("Setup finalizado");

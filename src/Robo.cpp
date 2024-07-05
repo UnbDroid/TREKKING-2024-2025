@@ -82,7 +82,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda > distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda > distancia_cm) {
             atualizar_tempo();
             andar_reto(rpm_referencia);
-            if (millis() - tempo > 50) {
+            if (millis() - tempo > 10) {
                 imu.update();
                 tempo = millis();
             }
@@ -91,15 +91,19 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
             volante.virar_volante(giro_volante);
         }
     } else {
+        int erroTotal,erroAtual =0;
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
             atualizar_tempo();
             andar_reto(rpm_referencia);
-            if (millis() - tempo > 50) {
+            if (millis() - tempo > 10) {
                 imu.update();
                 tempo = millis();
             }
             float yaw = imu.getAngleZ();
-            int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
+            float ki = 0.7;
+            erroAtual = angulo_inicial-yaw;
+            erroTotal += erroAtual;
+            int giro_volante = (int)(round(erroAtual)*2.8+erroTotal*ki*dt);
             volante.virar_volante(giro_volante);
             Serial.print(motor_esquerdo.rps*60);
             Serial.print(" ");
@@ -211,7 +215,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 andar_reto(velocidade_rpm);
                 imu.update();
                 float anguloAtual = imu.getAngleZ();
-                volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
+                volante.virar_volante((int)(round(angulo_inicial - anguloAtual)*2));
             }
         }
         else{
