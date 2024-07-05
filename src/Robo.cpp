@@ -145,6 +145,11 @@ void Robo::virar_robo(Direcao direcao, int angulo){
             imu.update();
             tempo = millis();
         }
+        Serial.print(motor_esquerdo.rps*60);
+        Serial.print(" ");
+        Serial.print(motor_direito.rps*60);
+        Serial.print(" ");
+        Serial.println(imu.getAngleZ());
     }
     
     volante.resetar_volante();
@@ -192,70 +197,56 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     // }
     atualizar_tempo();
     imu.update();
-    float angulo_inicial = imu.getAngleZ();
     float posicao_x = retornar_posicao_x_do_cone();
     float giro_volante = 0;
     int velocidade_rpm = 80; // Velocidade de referência
-    while(posicao_x==NAOENCONTRADO) {
-        atualizar_tempo();
-        andar_reto(velocidade_rpm);
-        imu.update();
-        float anguloAtual = imu.getAngleZ();
-        volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
-        posicao_x = retornar_posicao_x_do_cone();
-        if (posicao_x != NAOENCONTRADO) {
-            if (posicao_x > 0.04) {
-                volante.virar_volante(5);
-            } else if (posicao_x < -0.04) {
-                volante.virar_volante(-5);
-            }
-            andar_reto_cm(20);
-            break;
-        }
-    }
 
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
-        float giroVolante = getAnguloCone();
-        giro_volante = (int)(round(posicao_x*100));
-    
-        if (giro_volante > 35) {
-            giro_volante = 10;
-        } else if (giro_volante < -35) {
-            giro_volante = -10;
-        } else if (giro_volante < 10 && giro_volante > 5) {
-            giro_volante = 4;
-        } else if (giro_volante > -10 && giro_volante < -5) {
-            giro_volante = -4;
-        } else if (giro_volante <= 4 && giro_volante >= -4) {
-            giro_volante = 0;
-        }
-
-        // Serial.println("Virei o volante");
-
-
-
-        
-        if (posicao_x > 0.04 || posicao_x < -0.04) {
-            volante.virar_volante(giroVolante);
-        }
-        if (cone_posicao_x > 0.05 or cone_posicao_x < -0.05) {
-            velocidade_rpm = 50;
-            digitalWrite(LED, HIGH);
-            if (cone_posicao_x > 0.05) {
-                motor_esquerdo.andar_reto(velocidade_rpm);
-                motor_direito.andar_reto(velocidade_rpm - 10);
+        if(posicao_x==NAOENCONTRADO){
+            float angulo_inicial = imu.getAngleZ();
+            while(retornar_posicao_x_do_cone()==NAOENCONTRADO) {
+                atualizar_tempo();
+                andar_reto(velocidade_rpm);
+                imu.update();
+                float anguloAtual = imu.getAngleZ();
+                volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
             }
-            else {
-                motor_esquerdo.andar_reto(velocidade_rpm - 10);
+        }
+        else{
+            // float giroVolante = getAnguloCone();
+            giro_volante = (int)(round((18*posicao_x)/0.3));
+            if (giro_volante > 18) {
+                giro_volante = 18;
+            } else if (giro_volante < -18) {
+                giro_volante = -18;
+            } else if (giro_volante < 5 && giro_volante > -5) {
+                giro_volante = 0;
+            }
+
+            if (giro_volante < -5) {giro_volante -= 2;}
+            
+            volante.virar_volante(giro_volante);
+
+            if (posicao_x > 0.05 or posicao_x < -0.05) {
+                velocidade_rpm = 50;
+                digitalWrite(LED, HIGH);
+                if (posicao_x > 0.05) {
+                    motor_esquerdo.andar_reto(velocidade_rpm);
+                    motor_direito.andar_reto(velocidade_rpm - 5);
+                }
+                else {
+                    motor_esquerdo.andar_reto(velocidade_rpm - 5);
+                    motor_direito.andar_reto(velocidade_rpm);
+                }
+            } else {
+                velocidade_rpm = 80;
+                motor_esquerdo.andar_reto(velocidade_rpm);
                 motor_direito.andar_reto(velocidade_rpm);
             }
-        } else {
-            velocidade_rpm = 80;
-            motor_esquerdo.andar_reto(velocidade_rpm);
-            motor_direito.andar_reto(velocidade_rpm);
         }
+        
     }
 
     motor_direito.andar_reto(0);
