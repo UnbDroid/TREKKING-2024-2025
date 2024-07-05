@@ -103,7 +103,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
             float ki = 0.7;
             erroAtual = angulo_inicial-yaw;
             erroTotal += erroAtual;
-            int giro_volante = (int)(round(erroAtual)*2.8+erroTotal*ki*dt);
+            int giro_volante = (int)(round(erroAtual)*3+erroTotal*ki*dt);
             volante.virar_volante(giro_volante);
             Serial.print(motor_esquerdo.rps*60);
             Serial.print(" ");
@@ -210,12 +210,17 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         posicao_x = retornar_posicao_x_do_cone();
         if(posicao_x==NAOENCONTRADO){
             float angulo_inicial = imu.getAngleZ();
+            int erroTotal,erroAtual =0;
             while(retornar_posicao_x_do_cone()==NAOENCONTRADO) {
                 atualizar_tempo();
                 andar_reto(velocidade_rpm);
                 imu.update();
-                float anguloAtual = imu.getAngleZ();
-                volante.virar_volante((int)(round(angulo_inicial - anguloAtual)*2));
+                float yaw = imu.getAngleZ();
+                float ki = 0.7;
+                erroAtual = angulo_inicial-yaw;
+                erroTotal += erroAtual;
+                int giro_volante = (int)(round(erroAtual)*3+erroTotal*ki*dt);
+                volante.virar_volante(giro_volante);
             }
         }
         else{
