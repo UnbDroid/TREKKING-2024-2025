@@ -1,12 +1,13 @@
 #include "MotorDC.h"
 #include "Volante.h"
-#include "Giroscopio.h"
+// #include "Giroscopio.h"
 #include "Robo.h"
 #include "Pinos.h"
 #include "Arduino.h"
 #include "Wire.h"
 #include "Tempo.h"
 #define NAOENCONTRADO 400
+
 //* Este arquivo contém a implementação da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
 
@@ -27,21 +28,19 @@ void Robo::resetar_encoder() {
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
 
-    while (Serial.available() > 0) {
-        Serial.read();
-    }
-
-    while (Serial.available() < 1) {
-    }
-
     if (Serial.available() > 0) {
         String input = Serial.readStringUntil('\n');
-        int commaIndex = input.indexOf(',');
-        if (commaIndex != -1) {
-            String float1Str = input.substring(0, commaIndex);
-            String float2Str = input.substring(commaIndex + 1);
-            cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
-            cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
+        if (input == "Nada") {
+            cone_posicao_x = NAOENCONTRADO;
+            return;
+        } else {
+            int commaIndex = input.indexOf(',');
+            if (commaIndex != -1) {
+                String float1Str = input.substring(0, commaIndex);
+                String float2Str = input.substring(commaIndex + 1);
+                cone_posicao_x = float1Str.toFloat(); // cone_posicao_x recebe o valor da posição x do cone
+                cone_posicao_y = float2Str.toFloat(); // cone_posicao_y recebe o valor da posição y do cone
+            }
         }
     }
 
@@ -49,51 +48,44 @@ void Robo::ler_visao() {
 
 // Função para retornar a posição x do cone
 float Robo::retornar_posicao_x_do_cone() { 
-    // unsigned long time =micros();
-    // while(micros()-time<1000000){
-        ler_visao();
-    // }       
+    ler_visao();
     return cone_posicao_x;
-
 }
 
 // Função para retornar a posição y do cone
 float Robo::retornar_posicao_y_do_cone() {
-
     ler_visao();
     return cone_posicao_y;
-
 }
 
 // Função para fazer o robô andar reto indefinidamente
 void Robo::andar_reto(int velocidade_rpm)
 {
-
     motor_esquerdo.andar_reto(velocidade_rpm);
     motor_direito.andar_reto(velocidade_rpm);
-
 }
 
 // Função para fazer o robô andar reto por uma distância específica
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 
     atualizar_tempo();
+    long tempo = millis();
     imu.update();
+    // Serial.println("antes do angulo");
     float angulo_inicial = imu.getAngleZ();
     int enc_inicial_esquerdo = motor_esquerdo.posi;
     int enc_inicial_direito = motor_direito.posi;
     int rpm_referencia = velocidade_rpm;
+    // Serial.println("antes do while");
     if (distancia_cm < 0) {
         rpm_referencia = (-1*rpm_referencia);
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda > distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda > distancia_cm) {
             atualizar_tempo();
             andar_reto(rpm_referencia);
-            Serial.print(motor_esquerdo.posi);
-            Serial.print(" ");
-            Serial.print(motor_direito.posi);
-            Serial.print(" ");
-            Serial.println(imu.getAngleZ());
-            imu.update();
+            if (millis() - tempo > 50) {
+                imu.update();
+                tempo = millis();
+            }
             float yaw = imu.getAngleZ();
             int giro_volante = (int)(round(angulo_inicial - yaw)*-2.5);
             volante.virar_volante(giro_volante);
@@ -101,12 +93,19 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
     } else {
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
             atualizar_tempo();
-            andar_reto(velocidade_rpm);
-            imu.update();
+            andar_reto(rpm_referencia);
+            if (millis() - tempo > 50) {
+                imu.update();
+                tempo = millis();
+            }
             float yaw = imu.getAngleZ();
-            Serial.println(imu.getAngleZ());
             int giro_volante = (int)(round(angulo_inicial - yaw)*2.5);
             volante.virar_volante(giro_volante);
+            Serial.print(motor_esquerdo.rps*60);
+            Serial.print(" ");
+            Serial.print(motor_direito.rps*60);
+            Serial.print(" ");
+            Serial.println(imu.getAngleZ());
         }
     }
     andar_reto(0);
@@ -117,9 +116,9 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 void Robo::virar_robo(Direcao direcao, int angulo){
 
     int giro_volante = 0;
+    long tempo = millis();
     imu.update();
     float angulo_final = imu.getAngleZ() + angulo;
-    imu.update();
     int velocidade_rpm = 87*direcao; // Velocidade de referência
 
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
@@ -142,7 +141,10 @@ void Robo::virar_robo(Direcao direcao, int angulo){
             motor_esquerdo.andar_reto(velocidade_rpm - 25);
             motor_direito.andar_reto(velocidade_rpm);
         }
-        imu.update();
+        if (millis() - tempo > 50) {
+            imu.update();
+            tempo = millis();
+        }
     }
     
     volante.resetar_volante();
@@ -182,18 +184,18 @@ float Robo::getAnguloCone(){
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone(float distanciaAteParar) {
 
-    unsigned long tempoDeEspera = millis();
-    while (!Serial.available() && (millis()-tempoDeEspera)<500) {
-    }
-    if (millis()>tempoDeEspera) {
-        cone_posicao_x=NAOENCONTRADO;
-    }
+    // unsigned long tempoDeEspera = millis();
+    // while (!Serial.available() && (millis()-tempoDeEspera)<500) {
+    // }
+    // if (millis()>tempoDeEspera) {
+    //     cone_posicao_x=NAOENCONTRADO;
+    // }
     atualizar_tempo();
     imu.update();
     float angulo_inicial = imu.getAngleZ();
     float posicao_x = retornar_posicao_x_do_cone();
     float giro_volante = 0;
-    int velocidade_rpm = 85; // Velocidade de referência
+    int velocidade_rpm = 80; // Velocidade de referência
     while(posicao_x==NAOENCONTRADO) {
         atualizar_tempo();
         andar_reto(velocidade_rpm);
@@ -201,25 +203,38 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         float anguloAtual = imu.getAngleZ();
         volante.virar_volante((int)(round((angulo_inicial - anguloAtual)*0.5)*5));
         posicao_x = retornar_posicao_x_do_cone();
+        if (posicao_x != NAOENCONTRADO) {
+            if (posicao_x > 0.04) {
+                volante.virar_volante(5);
+            } else if (posicao_x < -0.04) {
+                volante.virar_volante(-5);
+            }
+            andar_reto_cm(20);
+            break;
+        }
     }
 
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
         float giroVolante = getAnguloCone();
-        // giro_volante = (int)(round(posicao_x*100));
+        giro_volante = (int)(round(posicao_x*100));
     
-        // if (giro_volante > 35) {
-        //     giro_volante = 10;
-        // } else if (giro_volante < -35) {
-        //     giro_volante = -10;
-        // } else if (giro_volante < 10 && giro_volante > 5) {
-        //     giro_volante = 4;
-        // } else if (giro_volante > -10 && giro_volante < -5) {
-        //     giro_volante = -4;
-        // } else if (giro_volante <= 5 && giro_volante >= -5) {
-        //     giro_volante = 0;
-        // }
+        if (giro_volante > 35) {
+            giro_volante = 10;
+        } else if (giro_volante < -35) {
+            giro_volante = -10;
+        } else if (giro_volante < 10 && giro_volante > 5) {
+            giro_volante = 4;
+        } else if (giro_volante > -10 && giro_volante < -5) {
+            giro_volante = -4;
+        } else if (giro_volante <= 4 && giro_volante >= -4) {
+            giro_volante = 0;
+        }
+
+        // Serial.println("Virei o volante");
+
+
 
         
         if (posicao_x > 0.04 || posicao_x < -0.04) {
@@ -227,6 +242,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         }
         if (cone_posicao_x > 0.05 or cone_posicao_x < -0.05) {
             velocidade_rpm = 50;
+            digitalWrite(LED, HIGH);
             if (cone_posicao_x > 0.05) {
                 motor_esquerdo.andar_reto(velocidade_rpm);
                 motor_direito.andar_reto(velocidade_rpm - 10);
@@ -236,7 +252,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 motor_direito.andar_reto(velocidade_rpm);
             }
         } else {
-            velocidade_rpm = 85;
+            velocidade_rpm = 80;
             motor_esquerdo.andar_reto(velocidade_rpm);
             motor_direito.andar_reto(velocidade_rpm);
         }

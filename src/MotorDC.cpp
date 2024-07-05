@@ -56,14 +56,7 @@ void MotorDC::ligar_motor(int direcao, int pwmVal)
 // Função para ler o encoder do motor
 void MotorDC::ler_encoder()
 {
-  if (dir == 1)
-  { // Se ler pulso positivo do encoder, sentido horario
-    posi++;
-  }
-  else if (dir == -1)
-  { // Se ler pulso negativo do encoder, sentido anti-horario
-    posi--;
-  }
+  posi += dir;
 }
 
 // Função para resetar o encoder do motor

@@ -10,7 +10,7 @@ import time
 
 #! Coisas da Comunicação Serial --------------------------------------------------
 
-# arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
+arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1, dsrdtr=True)
 
 #! -------------------------------------------------------------------------------
 
@@ -137,16 +137,17 @@ while True:
                         # print("Estou indo mandar")
                         
                         # Enviar posição do objeto para o Arduino via serial
-                        # arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
+                        arduino.write(f"{offset_x:.2f},{distance:.2f}\n".encode('utf-8'))
                         # print("Mandei via serial")
 
                 except Exception as e:
                     sys.stdout.flush()
                     print(f"Erro no rastreamento: {e}")
+                    arduino.write("Nada\n".encode('utf-8'))
 
     # Exibir imagem com resultados
     # img = cv2.resize(img,(96,96))
-    cv2.imshow("Tela", img)
+    # cv2.imshow("Tela", img)
 
     print("Exibi a tela")
 
@@ -158,5 +159,5 @@ while True:
 # Liberar recursos
 cap.release()
 cv2.destroyAllWindows()
-# arduino.close()  # Fecha a comunicação serial
+arduino.close()  # Fecha a comunicação serial
 print("Desligando...")
