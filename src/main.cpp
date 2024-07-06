@@ -35,15 +35,19 @@ void interrupcao_encoder_esquerdo() {
 void interrupcao_encoder_direito() {
   motor_dc_direito.ler_encoder();
 }
-
+void interrupcaoImu(){
+  imu.update();
+}
 void ligar_robo() {
   Wire.begin();
-  // Serial.println("Wire begin");
+  Serial.println("Wire begin");
   imu.begin();
-  // Serial.println("IMU begin");
+  Serial.println("IMU begin");
+
   imu.calcOffsets();
   float ang_inicial=imu.getAngleZ();
   float ang_atual=imu.getAngleZ();
+
   while ((ang_atual-ang_inicial) > 0.01 || (ang_atual-ang_inicial) < -0.01) {
     imu.calcOffsets();
     ang_inicial=imu.getAngleZ();
@@ -54,8 +58,10 @@ void ligar_robo() {
   volante.setup();
   motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
   motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);
+
   attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
   attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
+  // attachInterrupt(digitalPinToInterrupt(2),interrupcaoImu,CHANGE);
   pinMode(LED, OUTPUT);
   // Serial.println("Robô ligado");
 }
@@ -68,9 +74,8 @@ void setup() {
     Serial.begin(115200);
     
     Serial.setTimeout(100);
-    Serial.println("aqui");
+    
     ligar_robo();
-    Serial.println("terminei");
 
     // while (Serial.available() < 1) {}
 
@@ -78,23 +83,11 @@ void setup() {
 
   //* Caminho do robô ------------------------------------------
     
-    // robo.virar_robo(frente, -45);
-    robo.alinhar_com_cone(70);
-
+    robo.andar_reto_cm(200);
+    // robo.alinhar_com_cone(50);
     // delay(1000);
-
-    // volante.virar_volante(35);
-    // delay(1000);
-    // volante.virar_volante(0);
-    // delay(1000);
-    // volante.virar_volante(-35);
-    // delay(1000);
-    // volante.virar_volante(0);
-    // delay(1000);
-
-
-    // // robo.virar_robo(tras,90);
-    // // robo.andar_reto_cm(100);
+    // robo.virar_robo(tras,-20);
+    // delay(5000);
     // robo.alinhar_com_cone(50);
 
   //* ----------------------------------------------------------
@@ -108,14 +101,14 @@ void setup() {
  
 void loop() {
 
-  volante.virar_volante(35);
-  delay(1000);
-  volante.virar_volante(0);
-  delay(1000);
-  volante.virar_volante(-35);
-  delay(1000);
-  volante.virar_volante(0);
-  delay(1000);
+  // volante.virar_volante(35);
+  // delay(1000);
+  // volante.virar_volante(0);
+  // delay(1000);
+  // volante.virar_volante(-35);
+  // delay(1000);
+  // volante.virar_volante(0);
+  // delay(1000);
   
   //! Usar somente para testes
   //! Deverá permanecer vazio durante as rod  adas oficiais

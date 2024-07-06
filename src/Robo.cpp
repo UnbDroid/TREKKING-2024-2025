@@ -76,6 +76,7 @@ void Robo::andar_reto(int velocidade_rpm)
 // Função para fazer o robô andar reto por uma distância específica
 void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 
+    resetar_encoder();
     atualizar_tempo();
     long tempo = millis();
     imu.update();
@@ -120,7 +121,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
             Serial.println(imu.getAngleZ());
         }
     }
-    andar_reto(0);
+    resetar_encoder();
     volante.definir_angulo_base();
 
 }
@@ -129,7 +130,7 @@ void Robo::virar_robo(Direcao direcao, int angulo){
 
     int giro_volante = 0;
     resetar_encoder();
-    long tempo = millis();
+    unsigned long tempo = millis();
     imu.update();
     float angulo_final = imu.getAngleZ() + angulo;
     int velocidade_rpm = 87*direcao; // Velocidade de referência
@@ -150,22 +151,22 @@ void Robo::virar_robo(Direcao direcao, int angulo){
         volante.virar_volante(giro_volante * direcao);
         if (giro_volante > 0) {
             if (direcao == tras) {
-                motor_esquerdo.andar_reto(velocidade_rpm);
-                motor_direito.andar_reto(velocidade_rpm + 25);
+                motor_esquerdo.andar_reto(velocidade_rpm+50);
+                motor_direito.andar_reto(velocidade_rpm);
             } else {
                 motor_esquerdo.andar_reto(velocidade_rpm);
                 motor_direito.andar_reto(velocidade_rpm - 25);
             }
         } else {
             if (direcao == tras) {
-                motor_esquerdo.andar_reto(velocidade_rpm + 25);
-                motor_direito.andar_reto(velocidade_rpm);
+                motor_esquerdo.andar_reto(velocidade_rpm);
+                motor_direito.andar_reto(velocidade_rpm+50);
             } else {
                 motor_esquerdo.andar_reto(velocidade_rpm - 25);
                 motor_direito.andar_reto(velocidade_rpm);
             }
         }
-        if (millis() - tempo > 50) {
+        if (millis() - tempo > 20) {
             imu.update();
             tempo = millis();
         }
@@ -179,6 +180,8 @@ void Robo::virar_robo(Direcao direcao, int angulo){
     volante.resetar_volante();
     motor_direito.andar_reto(0);
     motor_esquerdo.andar_reto(0);
+
+    resetar_encoder();
 
 }
 
@@ -216,6 +219,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     while (Serial.available() > 0) {
         char flush = Serial.read();
     }
+    resetar_encoder();
     atualizar_tempo();
     imu.update();
     cone_posicao_x=0;
@@ -294,8 +298,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         
     }
 
-    motor_direito.andar_reto(0);
-    motor_esquerdo.andar_reto(0);
+    resetar_encoder();
     volante.resetar_volante();
     
     delay(500);
