@@ -65,6 +65,8 @@ void MotorDC::resetar_encoder()
   posi = 0;
   eprev = 0;
   eintegral = 0;
+  voltas = 0;
+  voltas_anterior = 0;
 }
 
 void MotorDC::andar_reto(int velocidade_rpm)

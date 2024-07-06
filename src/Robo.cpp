@@ -82,7 +82,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda > distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda > distancia_cm) {
             atualizar_tempo();
             andar_reto(rpm_referencia);
-            if (millis() - tempo > 10) {
+            if (millis() - tempo > 30) {
                 imu.update();
                 tempo = millis();
             }
@@ -95,7 +95,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
         while (((motor_esquerdo.posi - enc_inicial_esquerdo)/motor_esquerdo.encoder_volta)*motor_esquerdo.comprimento_roda < distancia_cm && ((motor_direito.posi - enc_inicial_direito)/motor_direito.encoder_volta)*motor_direito.comprimento_roda < distancia_cm) {
             atualizar_tempo();
             andar_reto(rpm_referencia);
-            if (millis() - tempo > 10) {
+            if (millis() - tempo > 30) {
                 imu.update();
                 tempo = millis();
             }
@@ -120,10 +120,14 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 void Robo::virar_robo(Direcao direcao, int angulo){
 
     int giro_volante = 0;
+    while (motor_esquerdo.rps != 0 || motor_direito.rps != 0) {
+        andar_reto(0);
+    }
     long tempo = millis();
     imu.update();
     float angulo_final = imu.getAngleZ() + angulo;
     int velocidade_rpm = 87*direcao; // Velocidade de referência
+
 
     // Enquanto o robô não atingir o ângulo desejado, ele vira o volante e anda pra frente
     while (imu.getAngleZ() < (angulo_final-3) or imu.getAngleZ() > (angulo_final+3)) {
@@ -139,11 +143,21 @@ void Robo::virar_robo(Direcao direcao, int angulo){
         }
         volante.virar_volante(giro_volante * direcao);
         if (giro_volante > 0) {
-            motor_esquerdo.andar_reto(velocidade_rpm);
-            motor_direito.andar_reto(velocidade_rpm - 25);
+            if (direcao == tras) {
+                motor_esquerdo.andar_reto(velocidade_rpm);
+                motor_direito.andar_reto(velocidade_rpm + 25);
+            } else {
+                motor_esquerdo.andar_reto(velocidade_rpm);
+                motor_direito.andar_reto(velocidade_rpm - 25);
+            }
         } else {
-            motor_esquerdo.andar_reto(velocidade_rpm - 25);
-            motor_direito.andar_reto(velocidade_rpm);
+            if (direcao == tras) {
+                motor_esquerdo.andar_reto(velocidade_rpm + 25);
+                motor_direito.andar_reto(velocidade_rpm);
+            } else {
+                motor_esquerdo.andar_reto(velocidade_rpm - 25);
+                motor_direito.andar_reto(velocidade_rpm);
+            }
         }
         if (millis() - tempo > 50) {
             imu.update();
@@ -201,10 +215,16 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     // }
     atualizar_tempo();
     imu.update();
+    cone_posicao_x=0;
+    cone_posicao_y=10000;
+    while(Serial.available()>0){
+      Serial.read();
+      retornar_posicao_y_do_cone();
+    }
     float posicao_x = retornar_posicao_x_do_cone();
     float giro_volante = 0;
     int velocidade_rpm = 80; // Velocidade de referência
-
+    
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();

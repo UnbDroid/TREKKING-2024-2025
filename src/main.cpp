@@ -80,9 +80,26 @@ void setup() {
 
   //* Caminho do robô ------------------------------------------
     
-    // robo.alinhar_com_cone(50);
-    robo.andar_reto_cm(1000,80); 
-    // robo.virar_robo(tras, 120);
+    robo.andar_reto_cm(300,80); 
+    robo.virar_robo(frente, 15);
+    robo.alinhar_com_cone(50);
+    delay(1000);
+    motor_dc_direito.resetar_encoder();
+    motor_dc_esquerdo.resetar_encoder();
+    delay(500);
+    robo.virar_robo(tras,75);
+    delay(1000);
+    motor_dc_direito.resetar_encoder();
+    motor_dc_esquerdo.resetar_encoder();
+    delay(500);
+    robo.andar_reto_cm(100);
+    motor_dc_direito.resetar_encoder();
+    motor_dc_esquerdo.resetar_encoder();
+    delay(500);
+    // while(Serial.available()>0){
+    //   Serial.read();
+    // }
+    robo.alinhar_com_cone(70);
 
     // Serial.println("Setup finalizado");
 
@@ -97,14 +114,14 @@ void setup() {
  
 void loop() {
 
-  // volante.virar_volante(35);
-  // delay(1000);
-  // volante.virar_volante(0);
-  // delay(1000);
-  // volante.virar_volante(-35);
-  // delay(1000);
-  // volante.virar_volante(0);
-  // delay(1000);
+  volante.virar_volante(35);
+  delay(1000);
+  volante.virar_volante(0);
+  delay(1000);
+  volante.virar_volante(-35);
+  delay(1000);
+  volante.virar_volante(0);
+  delay(1000);
   
   //! Usar somente para testes
   //! Deverá permanecer vazio durante as rod  adas oficiais
