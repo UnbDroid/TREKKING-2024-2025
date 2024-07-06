@@ -231,7 +231,11 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
             imu.update();
             long tempo = millis();
             float angulo_inicial = imu.getAngleZ();
-            int erroTotal,erroAtual =0;
+            int erroAtual =0;
+            int erroTotal =0;   
+            // Serial.print("Inicio: ");
+            // Serial.print(erroTotal);
+            atualizar_tempo();
             while (retornar_posicao_y_do_cone()==NAOENCONTRADO) {
                 atualizar_tempo();
                 andar_reto(velocidade_rpm);
@@ -243,7 +247,17 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 float ki = 0.7;
                 erroAtual = angulo_inicial-yaw;
                 erroTotal += erroAtual;
-                int giro_volante = (int)(round(erroAtual)*3+erroTotal*ki*dt);
+                int giro_volante = (int)(round(erroAtual)*3 +erroTotal*ki*dt);
+                Serial.print("Giro ");
+                Serial.print(giro_volante);
+                // Serial.print(" ErroA ");
+                // Serial.print(erroAtual);
+                Serial.print(" ErroT ");
+                Serial.print(erroTotal);
+                Serial.print(' Yaw ');
+                Serial.println(yaw);
+
+
                 volante.virar_volante(giro_volante);
             }
         } else {

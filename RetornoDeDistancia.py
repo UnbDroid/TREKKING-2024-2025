@@ -29,7 +29,7 @@ sess_options.intra_op_num_threads = 0
 
 sess = onnxruntime.InferenceSession("V6_128.onnx", sess_options)
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 #132
 

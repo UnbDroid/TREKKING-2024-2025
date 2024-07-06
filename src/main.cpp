@@ -68,8 +68,9 @@ void setup() {
     Serial.begin(115200);
     
     Serial.setTimeout(100);
-    
+    Serial.println("aqui");
     ligar_robo();
+    Serial.println("terminei");
 
     // while (Serial.available() < 1) {}
 
@@ -77,11 +78,24 @@ void setup() {
 
   //* Caminho do robô ------------------------------------------
     
-    robo.virar_robo(frente, -45);
+    // robo.virar_robo(frente, -45);
     robo.alinhar_com_cone(70);
-    robo.virar_robo(tras,90);
-    robo.andar_reto_cm(100);
-    robo.alinhar_com_cone(50);
+
+    // delay(1000);
+
+    // volante.virar_volante(35);
+    // delay(1000);
+    // volante.virar_volante(0);
+    // delay(1000);
+    // volante.virar_volante(-35);
+    // delay(1000);
+    // volante.virar_volante(0);
+    // delay(1000);
+
+
+    // // robo.virar_robo(tras,90);
+    // // robo.andar_reto_cm(100);
+    // robo.alinhar_com_cone(50);
 
   //* ----------------------------------------------------------
 
