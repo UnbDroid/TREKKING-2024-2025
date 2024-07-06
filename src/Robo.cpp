@@ -6,7 +6,7 @@
 #include "Arduino.h"
 #include "Wire.h"
 #include "Tempo.h"
-#define NAOENCONTRADO 400
+#define NAOENCONTRADO 10000
 
 //* Este arquivo contém a implementação da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
@@ -20,6 +20,11 @@ Robo::Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, MP
 // Função para zerar os valores dos encoderes
 void Robo::resetar_encoder() {
 
+    while (motor_esquerdo.rps != 0 or motor_direito.rps != 0) {
+        atualizar_tempo();
+        motor_esquerdo.andar_reto(0);
+        motor_direito.andar_reto(0);
+    }
     motor_esquerdo.resetar_encoder();
     motor_direito.resetar_encoder();
 
@@ -28,10 +33,13 @@ void Robo::resetar_encoder() {
 //Função responsável por ler e armazenar a posição do cone na visão recebida pela comunicação serial
 void Robo::ler_visao() {
 
+    while (Serial.available() < 1) {}
+
     if (Serial.available() > 0) {
         String input = Serial.readStringUntil('\n');
         if (input == "Nada") {
-            cone_posicao_x = NAOENCONTRADO;
+            cone_posicao_x = 0;
+            cone_posicao_y = NAOENCONTRADO;
             return;
         } else {
             int commaIndex = input.indexOf(',');
@@ -120,9 +128,7 @@ void Robo::andar_reto_cm (int distancia_cm, int velocidade_rpm) {
 void Robo::virar_robo(Direcao direcao, int angulo){
 
     int giro_volante = 0;
-    while (motor_esquerdo.rps != 0 || motor_direito.rps != 0) {
-        andar_reto(0);
-    }
+    resetar_encoder();
     long tempo = millis();
     imu.update();
     float angulo_final = imu.getAngleZ() + angulo;
@@ -207,34 +213,32 @@ float Robo::getAnguloCone(){
 // Função para fazer o robô alinhar com um cone (faz o mesmo que virar_robo, mas usando a visão do robô como referência para alinhar com o cone)
 void Robo::alinhar_com_cone(float distanciaAteParar) {
 
-    // unsigned long tempoDeEspera = millis();
-    // while (!Serial.available() && (millis()-tempoDeEspera)<500) {
-    // }
-    // if (millis()>tempoDeEspera) {
-    //     cone_posicao_x=NAOENCONTRADO;
-    // }
+    while (Serial.available() > 0) {
+        char flush = Serial.read();
+    }
     atualizar_tempo();
     imu.update();
     cone_posicao_x=0;
-    cone_posicao_y=10000;
-    while(Serial.available()>0){
-      Serial.read();
-      retornar_posicao_y_do_cone();
-    }
-    float posicao_x = retornar_posicao_x_do_cone();
+    cone_posicao_y=NAOENCONTRADO;
+    float posicao_x = 0;
     float giro_volante = 0;
     int velocidade_rpm = 80; // Velocidade de referência
     
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
-        if(posicao_x==NAOENCONTRADO){
+        if (cone_posicao_y==NAOENCONTRADO) {
+            imu.update();
+            long tempo = millis();
             float angulo_inicial = imu.getAngleZ();
             int erroTotal,erroAtual =0;
-            while(retornar_posicao_x_do_cone()==NAOENCONTRADO) {
+            while (retornar_posicao_y_do_cone()==NAOENCONTRADO) {
                 atualizar_tempo();
                 andar_reto(velocidade_rpm);
-                imu.update();
+                if (millis() - tempo > 30) {
+                    imu.update();
+                    tempo = millis();
+                }
                 float yaw = imu.getAngleZ();
                 float ki = 0.7;
                 erroAtual = angulo_inicial-yaw;
@@ -242,8 +246,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 int giro_volante = (int)(round(erroAtual)*3+erroTotal*ki*dt);
                 volante.virar_volante(giro_volante);
             }
-        }
-        else{
+        } else {
             // float giroVolante = getAnguloCone();
             giro_volante = (int)(round((18*posicao_x)/0.3));
             if (giro_volante > 18) {
@@ -260,7 +263,6 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
 
             if (posicao_x > 0.05 or posicao_x < -0.05) {
                 velocidade_rpm = 50;
-                digitalWrite(LED, HIGH);
                 if (posicao_x > 0.05) {
                     motor_esquerdo.andar_reto(velocidade_rpm);
                     motor_direito.andar_reto(velocidade_rpm - 5);

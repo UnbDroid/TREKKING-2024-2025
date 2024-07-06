@@ -26,7 +26,7 @@ class Robo {
         float retornar_posicao_x_do_cone();
         float retornar_posicao_y_do_cone();
         void andar_reto(int velocidade_rpm);
-        void andar_reto_cm(int distancia_cm, int velocidade_rpm = 87);
+        void andar_reto_cm(int distancia_cm, int velocidade_rpm = 80);
         void virar_robo(Direcao direcao, int angulo);
         void alinhar_com_cone(float distanciaAteParar);
         float getAnguloCone();
@@ -43,8 +43,8 @@ class Robo {
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     private:
-        float cone_posicao_x = 0.0; // Posição do cone no eixo x
-        float cone_posicao_y = 400.0; // Posição do cone no eixo y
+        float cone_posicao_x = 0; // Posição do cone no eixo x
+        float cone_posicao_y = 10000; // Posição do cone no eixo y
         float angulo_atual_x = 0.0; // Ângulo atual do robô no eixo x
         float angulo_atual_y = 0.0; // Ângulo atual do robô no eixo y
         float angulo_atual_z = 0.0; // Ângulo atual do robô no eixo z

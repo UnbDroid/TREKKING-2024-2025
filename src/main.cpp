@@ -71,37 +71,17 @@ void setup() {
     
     ligar_robo();
 
-    // Serial.println("Liguei");
-    // Serial1.println("Aperte qualquer tecla para continuar");
-
     // while (Serial.available() < 1) {}
 
   //* ----------------------------------------------------------
 
   //* Caminho do robô ------------------------------------------
     
-    robo.andar_reto_cm(300,80); 
-    robo.virar_robo(frente, 15);
-    robo.alinhar_com_cone(50);
-    delay(1000);
-    motor_dc_direito.resetar_encoder();
-    motor_dc_esquerdo.resetar_encoder();
-    delay(500);
-    robo.virar_robo(tras,75);
-    delay(1000);
-    motor_dc_direito.resetar_encoder();
-    motor_dc_esquerdo.resetar_encoder();
-    delay(500);
-    robo.andar_reto_cm(100);
-    motor_dc_direito.resetar_encoder();
-    motor_dc_esquerdo.resetar_encoder();
-    delay(500);
-    // while(Serial.available()>0){
-    //   Serial.read();
-    // }
+    robo.virar_robo(frente, -45);
     robo.alinhar_com_cone(70);
-
-    // Serial.println("Setup finalizado");
+    robo.virar_robo(tras,90);
+    robo.andar_reto_cm(100);
+    robo.alinhar_com_cone(50);
 
   //* ----------------------------------------------------------
 
