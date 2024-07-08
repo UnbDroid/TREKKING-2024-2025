@@ -40,6 +40,7 @@ void interrupcaoImu(){
 }
 void ligar_robo() {
   Wire.begin();
+  Wire.setWireTimeout(5000);
   Serial.println("Wire begin");
   imu.begin();
   Serial.println("IMU begin");
@@ -82,11 +83,13 @@ void setup() {
   //* ----------------------------------------------------------
 
   //* Caminho do robô ------------------------------------------
-    
-    robo.andar_reto_cm(200);
+    // robo.virar_robo(frente,90);
+    volante.resetar_volante(0);
+    // robo.andar_reto_cm(200);
+
     // robo.alinhar_com_cone(50);
-    // delay(1000);
-    // robo.virar_robo(tras,-20);
+    delay(1000);
+    // // robo.virar_robo(tras,-20);
     // delay(5000);
     // robo.alinhar_com_cone(50);
 
@@ -100,7 +103,6 @@ void setup() {
 }
  
 void loop() {
-
   // volante.virar_volante(35);
   // delay(1000);
   // volante.virar_volante(0);
