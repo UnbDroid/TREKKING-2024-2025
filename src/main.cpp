@@ -83,8 +83,9 @@ void setup() {
   //* ----------------------------------------------------------
 
   //* Caminho do robô ------------------------------------------
-    // robo.virar_robo(frente,90);
-    volante.resetar_volante(0);
+    robo.virar_robo(frente,3600);
+
+    // volante.resetar_volante(0);
     // robo.andar_reto_cm(200);
 
     // robo.alinhar_com_cone(50);
