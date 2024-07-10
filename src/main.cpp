@@ -62,9 +62,7 @@ void ligar_robo() {
 
   attachInterrupt(digitalPinToInterrupt(ENCA_Esquerdo), interrupcao_encoder_esquerdo, RISING);
   attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
-  // attachInterrupt(digitalPinToInterrupt(2),interrupcaoImu,CHANGE);
   pinMode(LED, OUTPUT);
-  // Serial.println("Robô ligado");
 }
 
 void setup() { 
