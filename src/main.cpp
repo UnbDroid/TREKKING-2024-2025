@@ -44,7 +44,7 @@ void ligar_robo() {
   Serial.println("Wire begin");
   imu.begin();
   Serial.println("IMU begin");
-
+  
   imu.calcOffsets();
   float ang_inicial=imu.getAngleZ();
   float ang_atual=imu.getAngleZ();
