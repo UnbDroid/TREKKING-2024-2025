@@ -95,23 +95,21 @@ void setup() {
     // Serial.println("vou andar");
     // robo.andar_reto_cm(200);
 
-    robo.alinhar_com_cone(55);
-    digitalWrite(LED,HIGH);
-    // delay(10000);
-    // digitalWrite(LED,LOW);
-    // robo.virar_robo(tras,60);
-    // robo.resetar_encoder();
-    // // // robo.virar_robo(tras,-20);
-    // delay(3000);
-    // robo.alinhar_com_cone(120);
-    // digitalWrite(LED,HIGH);
-    // delay(2000);
-    // digitalWrite(LED,LOW);
-    // robo.virar_robo(tras,-180);
-    // robo.resetar_encoder();
-    // delay(3000);
-    // robo.alinhar_com_cone(120);
-    // digitalWrite(LED,HIGH);
+
+    robo.andar_reto_cm(1550);
+    digitalWrite(LED, HIGH);
+    robo.resetar_encoder();
+    delay(2000);
+    digitalWrite(LED, LOW);
+    robo.virar_robo(tras,-115);
+    robo.resetar_encoder();
+    delay(2000);
+    robo.andar_reto_cm(700);
+    robo.virar_robo(frente, 90);
+    digitalWrite(LED, HIGH);
+    robo.resetar_encoder();
+    delay(2000);
+    robo.andar_reto_cm(50);
     
   //* ----------------------------------------------------------
 
