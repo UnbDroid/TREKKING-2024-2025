@@ -147,7 +147,7 @@ while True:
 
     # Exibir imagem com resultados
     # img = cv2.resize(img,(96,96))
-    # cv2.imshow("Tela", img)
+    cv2.imshow("Tela", img)
 
     print("Exibi a tela")
 

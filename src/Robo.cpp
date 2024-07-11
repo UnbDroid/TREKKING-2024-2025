@@ -228,7 +228,8 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     float giro_volante = 0;
     int velocidade_rpm = 80; // Velocidade de referência
     
-    while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
+
+    while (retornar_posicao_y_do_cone()>distanciaAteParar){ //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
         if (cone_posicao_y==NAOENCONTRADO){
@@ -264,7 +265,6 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 // Serial.print(' Yaw ');
                 // Serial.println(yaw);
 
-
                 volante.virar_volante(giro_volante);
 
             }
@@ -273,11 +273,11 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
             delay(1); 
         } else {
             // float giroVolante = getAnguloCone();
-            giro_volante = (int)(round((23*posicao_x)/0.3));
-            if (giro_volante > 23) {
-                giro_volante = 23;
-            } else if (giro_volante < -23) {
-                giro_volante = -23;
+            giro_volante = (int)(round((30*posicao_x)/0.3));
+            if (giro_volante > 30) {
+                giro_volante = 30;
+            } else if (giro_volante < -30) {
+                giro_volante = -30;
             } else if (giro_volante < 5 && giro_volante > -5) {
                 giro_volante = 0;
             }
@@ -287,14 +287,14 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
             volante.virar_volante(giro_volante);
 
             if (posicao_x > 0.15 or posicao_x < -0.15) {
-                velocidade_rpm = 70;
+                velocidade_rpm = 80;
                 //Testar aumentar a velocidade e testar aumentar o giro do volante
                 if (posicao_x > 0.15) {
                     motor_esquerdo.andar_reto(velocidade_rpm);
-                    motor_direito.andar_reto(velocidade_rpm - 5);
+                    motor_direito.andar_reto(velocidade_rpm);
                 }
                 else {
-                    motor_esquerdo.andar_reto(velocidade_rpm - 5);
+                    motor_esquerdo.andar_reto(velocidade_rpm);
                     motor_direito.andar_reto(velocidade_rpm);
                 }
             } else {
@@ -313,13 +313,13 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                         imu.update();
                         tempo = millis();
                     }
-                    ler_visao();
                     float yaw = imu.getAngleZ();
                     float ki = 0.7;
                     erroAtual = angulo_inicial-yaw;
                     erroTotal += erroAtual;
                     int giro_volante = (int)(round(erroAtual)*3 +erroTotal*ki*dt);
                     volante.virar_volante(giro_volante);
+                    ler_visao();
                 }
             }
         }

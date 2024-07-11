@@ -13,8 +13,8 @@
 //! Criação dos objetos -----------------------------------------------------------------
 
   MPU6050 imu(Wire);
-  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
-  MotorDC motor_dc_direito(ENCA_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
+  MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
+  MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
   Volante volante(SERVO);
   Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, imu);
 
@@ -95,7 +95,7 @@ void setup() {
     // Serial.println("vou andar");
     // robo.andar_reto_cm(200);
 
-    robo.alinhar_com_cone(110);
+    robo.alinhar_com_cone(55);
     digitalWrite(LED,HIGH);
     // delay(10000);
     // digitalWrite(LED,LOW);
