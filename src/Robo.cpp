@@ -297,31 +297,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                     motor_esquerdo.andar_reto(velocidade_rpm);
                     motor_direito.andar_reto(velocidade_rpm);
                 }
-            } else {
-                imu.update();
-                long tempo = millis();
-                float angulo_inicial = imu.getAngleZ();
-                int erroAtual =0;
-                int erroTotal =0;
-                atualizar_tempo();
-                while (cone_posicao_x < 0.05 && cone_posicao_x > -0.05 && cone_posicao_y > distanciaAteParar){
-                    atualizar_tempo();
-                    velocidade_rpm = 80;
-                    motor_esquerdo.andar_reto(velocidade_rpm);
-                    motor_direito.andar_reto(velocidade_rpm);
-                    if (millis() - tempo > 30) {
-                        imu.update();
-                        tempo = millis();
-                    }
-                    float yaw = imu.getAngleZ();
-                    float ki = 0.7;
-                    erroAtual = angulo_inicial-yaw;
-                    erroTotal += erroAtual;
-                    int giro_volante = (int)(round(erroAtual)*3 +erroTotal*ki*dt);
-                    volante.virar_volante(giro_volante);
-                    ler_visao();
-                }
-            }
+            } 
         }
         
     }
