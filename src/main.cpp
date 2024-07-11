@@ -79,9 +79,9 @@ void setup() {
     
     while (!Serial) {}
 
-    // while (Serial.available() > 0) {
-    //   char flush = Serial.read();
-    // }
+    while (Serial.available() > 0) {
+      char flush = Serial.read();
+    }
 
     digitalWrite(LED, HIGH);
     while (Serial.available() < 1) {}
@@ -96,20 +96,26 @@ void setup() {
     // robo.andar_reto_cm(200);
 
 
-    robo.andar_reto_cm(1550);
+    robo.andar_reto_cm(100);
+
     digitalWrite(LED, HIGH);
     robo.resetar_encoder();
     delay(2000);
     digitalWrite(LED, LOW);
-    robo.virar_robo(tras,-115);
-    robo.resetar_encoder();
+    robo.alinhar_com_cone(80);
     delay(2000);
-    robo.andar_reto_cm(700);
-    robo.virar_robo(frente, 90);
     digitalWrite(LED, HIGH);
-    robo.resetar_encoder();
-    delay(2000);
-    robo.andar_reto_cm(50);
+    // robo.resetar_encoder();
+    // digitalWrite(LED, LOW);
+    // robo.virar_robo(tras,-115);
+    // robo.resetar_encoder();
+    // delay(2000);
+    // robo.andar_reto_cm(700);
+    // robo.virar_robo(frente, 90);
+    // digitalWrite(LED, HIGH);
+    // robo.resetar_encoder();
+    // delay(2000);
+    // robo.andar_reto_cm(50);
     
   //* ----------------------------------------------------------
 
