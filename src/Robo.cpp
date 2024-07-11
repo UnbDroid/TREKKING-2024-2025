@@ -231,7 +231,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
     while (retornar_posicao_y_do_cone()>distanciaAteParar) { //! 0.05 é a tolerância, mas pode e deve ser ajustada
         atualizar_tempo();
         posicao_x = retornar_posicao_x_do_cone();
-        if (cone_posicao_y==NAOENCONTRADO) {
+        if (cone_posicao_y==NAOENCONTRADO){
             imu.update();
             long tempo = millis();
             float angulo_inicial = imu.getAngleZ();
@@ -252,14 +252,14 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 erroAtual = angulo_inicial-yaw;
                 erroTotal += erroAtual;
                 int giro_volante = (int)(round(erroAtual)*3 +erroTotal*ki*dt);
-                Serial.print("Giro ");
-                Serial.print(giro_volante);
-                // Serial.print(" ErroA ");
-                // Serial.print(erroAtual);
-                Serial.print(" ErroT ");
-                Serial.print(erroTotal);
-                Serial.print(' Yaw ');
-                Serial.println(yaw);
+                // Serial.print("Giro ");
+                // Serial.print(giro_volante);
+                // // Serial.print(" ErroA ");
+                // // Serial.print(erroAtual);
+                // Serial.print(" ErroT ");
+                // Serial.print(erroTotal);
+                // Serial.print(' Yaw ');
+                // Serial.println(yaw);
 
 
                 volante.virar_volante(giro_volante);
@@ -275,13 +275,13 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 giro_volante = 0;
             }
 
-            if (giro_volante < -5) {giro_volante -= 2;}
+            // if (giro_volante < -5) {giro_volante -= 2;}
             
             volante.virar_volante(giro_volante);
 
-            if (posicao_x > 0.05 or posicao_x < -0.05) {
+            if (posicao_x > 0.15 or posicao_x < -0.15) {
                 velocidade_rpm = 50;
-                if (posicao_x > 0.05) {
+                if (posicao_x > 0.15) {
                     motor_esquerdo.andar_reto(velocidade_rpm);
                     motor_direito.andar_reto(velocidade_rpm - 5);
                 }

@@ -70,34 +70,23 @@ void setup() {
   //! FAVOR NÃO COLOCAR FUNÇÕES DE TESTE FORA DA ÁREA DE TESTES
 
   //* Funções de Setup -----------------------------------------
+    
     Serial.begin(115200);
     
     Serial.setTimeout(100);
-    Serial.println("Primeiro Ligar");
-    digitalWrite(LED,HIGH);
+    
     ligar_robo();
-    delay(2000);
-    digitalWrite(LED,LOW);
-    delay(3000);
-    Serial.println("Segundo Ligar");
-    digitalWrite(LED,HIGH);
     
     while (!Serial) {}
-    delay(2000);
-    digitalWrite(LED,LOW);
-    delay(3000);
-    digitalWrite(LED,HIGH);
-    while (Serial.available() > 0) {
-      char flush = Serial.read();
-    }
-    delay(2000);
-    digitalWrite(LED,LOW);
-    delay(3000);
+
+    // while (Serial.available() > 0) {
+    //   char flush = Serial.read();
+    // }
+
     digitalWrite(LED, HIGH);
     while (Serial.available() < 1) {}
-    delay(2000);
     digitalWrite(LED, LOW);
-    Serial.println("terminei tudo");
+  
   //* ----------------------------------------------------------
 
   //* Caminho do robô ------------------------------------------
@@ -106,12 +95,24 @@ void setup() {
     // Serial.println("vou andar");
     // robo.andar_reto_cm(200);
 
-    robo.alinhar_com_cone(50);
-    // delay(1000);
+    robo.alinhar_com_cone(120);
+    digitalWrite(LED,HIGH);
+    delay(10000);
+    digitalWrite(LED,LOW);
+    robo.virar_robo(tras,60);
+    robo.resetar_encoder();
     // // robo.virar_robo(tras,-20);
-    // delay(5000);
-    // robo.alinhar_com_cone(50);
-
+    delay(3000);
+    robo.alinhar_com_cone(120);
+    digitalWrite(LED,HIGH);
+    delay(2000);
+    digitalWrite(LED,LOW);
+    robo.virar_robo(tras,-180);
+    robo.resetar_encoder();
+    delay(3000);
+    robo.alinhar_com_cone(120);
+    digitalWrite(LED,HIGH);
+    
   //* ----------------------------------------------------------
 
   //! Funções de Teste -----------------------------------------
