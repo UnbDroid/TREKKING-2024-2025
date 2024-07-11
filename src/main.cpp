@@ -73,21 +73,41 @@ void setup() {
     Serial.begin(115200);
     
     Serial.setTimeout(100);
-    
+    Serial.println("Primeiro Ligar");
+    digitalWrite(LED,HIGH);
     ligar_robo();
-
-    // while (Serial.available() < 1) {}
-
+    delay(2000);
+    digitalWrite(LED,LOW);
+    delay(3000);
+    Serial.println("Segundo Ligar");
+    digitalWrite(LED,HIGH);
+    
+    while (!Serial) {}
+    delay(2000);
+    digitalWrite(LED,LOW);
+    delay(3000);
+    digitalWrite(LED,HIGH);
+    while (Serial.available() > 0) {
+      char flush = Serial.read();
+    }
+    delay(2000);
+    digitalWrite(LED,LOW);
+    delay(3000);
+    digitalWrite(LED, HIGH);
+    while (Serial.available() < 1) {}
+    delay(2000);
+    digitalWrite(LED, LOW);
+    Serial.println("terminei tudo");
   //* ----------------------------------------------------------
 
   //* Caminho do robô ------------------------------------------
-    robo.virar_robo(frente,3600);
+    // robo.virar_robo(frente,3600);
 
-    // volante.resetar_volante(0);
+    // Serial.println("vou andar");
     // robo.andar_reto_cm(200);
 
-    // robo.alinhar_com_cone(50);
-    delay(1000);
+    robo.alinhar_com_cone(50);
+    // delay(1000);
     // // robo.virar_robo(tras,-20);
     // delay(5000);
     // robo.alinhar_com_cone(50);
@@ -102,11 +122,11 @@ void setup() {
 }
  
 void loop() {
-  // volante.virar_volante(35);
+  // volante.virar_volante(20);
   // delay(1000);
   // volante.virar_volante(0);
   // delay(1000);
-  // volante.virar_volante(-35);
+  // volante.virar_volante(-20);
   // delay(1000);
   // volante.virar_volante(0);
   // delay(1000);
