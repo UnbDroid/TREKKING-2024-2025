@@ -93,9 +93,9 @@ void setup() {
     // robo.virar_robo(frente,3600);
 
     // Serial.println("vou andar");
-    robo.andar_reto_cm(200);
+    robo.andar_reto_cm(1000);
 
-    robo.alinhar_com_cone(55);
+    // robo.alinhar_com_cone(55);
     digitalWrite(LED,HIGH);
     // delay(10000);
     // digitalWrite(LED,LOW);
