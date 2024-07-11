@@ -9,7 +9,7 @@
 // MotorDC* MotorDC::instance = nullptr;/
 
 // Construtor da classe MotorDC
-MotorDC::MotorDC(const int ENCA, const int PWM, const int IN1, const int IN2)
+MotorDC::MotorDC(const int ENCA, const int ENCB, const int PWM, const int IN1, const int IN2)
 {
   this->ENCA = ENCA;
   this->ENCB = ENCB;
@@ -57,7 +57,7 @@ void MotorDC::ligar_motor(int direcao, int pwmVal)
 // Função para ler o encoder do motor
 void MotorDC::ler_encoder()
 {
-  fabs(rps*60)<1?posi+=dir:(rps*60)>1?posi++:posi--;
+  posi += dir;
 }
 
 // Função para resetar o encoder do motor
