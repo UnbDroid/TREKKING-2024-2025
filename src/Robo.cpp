@@ -325,6 +325,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
                 contAchouCone++;
             }
         }
+        posicao_x = retornar_posicao_x_do_cone();
         giro_volante = (int)(round((22*posicao_x)/0.4));
         if (giro_volante > 22) {
             giro_volante = 22;
