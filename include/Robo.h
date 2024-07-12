@@ -6,6 +6,10 @@
 #include "MotorDC.h"
 #include "Tempo.h"
 #include "Volante.h"
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
+#include<SPI.h>
 // #include "Giroscopio.h"
 #include<MPU6050_light.h>
 //* Este arquivo contém a declaração da classe Robo, que é responsável por
@@ -19,7 +23,8 @@ enum Direcao{
 class Robo {
     public:
         // Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
-        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, MPU6050& imu); // Construtor da classe Robo
+        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, MPU6050& imu);
+        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Adafruit_BNO055&bno); // Construtor da classe Robo
         void andarAteCone(float distanciaAteParar,int anguloCone);
         void resetar_encoder();
         void ler_visao();
@@ -28,6 +33,7 @@ class Robo {
         void andar_reto(int velocidade_rpm);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 80);
         void virar_robo(Direcao direcao, int angulo);
+        void virar_robo(Direcao direcao, int angulo,int flag);
         void alinhar_com_cone(float distanciaAteParar);
         float getAnguloCone();
         
@@ -39,6 +45,7 @@ class Robo {
         MotorDC& motor_direito; // Referência ao objeto motor_esquerdo da classe MotorDC
         Volante& volante; // Referência ao objeto volante da classe Volante
         MPU6050& imu;
+        Adafruit_BNO055& bno;
         
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
