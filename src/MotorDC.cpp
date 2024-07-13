@@ -30,7 +30,10 @@ void MotorDC::congirurar(int ticks_por_volta, float kp, float ki, float kd)
   this -> ki = ki;
   this -> kd = kd;
 }
-
+void MotorDC::parar(){
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, HIGH);
+}
 // Função para ligar o motor e definir a direção e a velocidade
 void MotorDC::ligar_motor(int direcao, int pwmVal)
 {
@@ -57,21 +60,21 @@ void MotorDC::ligar_motor(int direcao, int pwmVal)
 // Função para ler o encoder do motor
 void MotorDC::ler_encoder()
 {
-  posi += dir;
+  fabs(rps*60)<1?posi+=dir:(rps*60)>1?posi++:posi--;  
 }
 
 // Função para resetar o encoder do motor
 void MotorDC::resetar_encoder()
 {
-  posi = 0;
   eprev = 0;
   eintegral = 0;
   voltas = 0;
-  voltas_anterior = 0;
 }
 
 void MotorDC::andar_reto(int velocidade_rpm)
 {
+
+  // atualizar_tempo();
 
   rpm_referencia = velocidade_rpm; // Velocidade de referência
 
@@ -89,9 +92,9 @@ void MotorDC::andar_reto(int velocidade_rpm)
 
   float p = kp * e;
 
-  eintegral += e * dt;
+  eintegral += e;
 
-  float i = ki * eintegral;
+  float i = ki * eintegral*dt;
 
   float d = kd * ((e - eprev) / dt);
 

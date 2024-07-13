@@ -12,6 +12,7 @@
 #include<SPI.h>
 // #include "Giroscopio.h"
 #include<MPU6050_light.h>
+#include<SoftwareSerial.h>
 //* Este arquivo contém a declaração da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
 
@@ -31,6 +32,7 @@ class Robo {
         float retornar_posicao_x_do_cone();
         float retornar_posicao_y_do_cone();
         void andar_reto(int velocidade_rpm);
+        void andar_reto_cm(int distancia_cm, int velocidade_rpm = 80, int flag=0);
         void andar_reto_cm(int distancia_cm, int velocidade_rpm = 80);
         void virar_robo(Direcao direcao, int angulo);
         void virar_robo(Direcao direcao, int angulo,int flag);
@@ -46,6 +48,8 @@ class Robo {
         Volante& volante; // Referência ao objeto volante da classe Volante
         MPU6050& imu;
         Adafruit_BNO055& bno;
+        
+
         
         //! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
