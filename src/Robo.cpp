@@ -420,7 +420,7 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         }
 
         if (cone_posicao_x > -0.05 && cone_posicao_x < 0.05) {
-            motor_esquerdo.ligar_motor(1, 180);
+            motor_esquerdo.ligar_motor(1, 170);
             motor_direito.ligar_motor(1, 180);
         } else {
             motor_esquerdo.ligar_motor(1, 100);
