@@ -335,8 +335,16 @@ void Robo::alinhar_com_cone(float distanciaAteParar) {
         if(giro_volante<0){
             giro_volante = giro_volante*1.7;
         }
-        else{
-            giro_volante = giro_volante*0.7;
+        else if (cone_posicao_x > -0.05 && cone_posicao_x < 0.05) {
+            giro_volante = 0;
+        }
+
+        if (cone_posicao_x > -0.05 && cone_posicao_x < 0.05) {
+            motor_esquerdo.ligar_motor(1, 160);
+            motor_direito.ligar_motor(1, 170);
+        } else {
+            motor_esquerdo.ligar_motor(1, 100);
+            motor_direito.ligar_motor(1, 100);
         }
         volante.virar_volante(giro_volante);
         andar_reto(velocidade_rpm);

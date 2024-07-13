@@ -64,7 +64,16 @@ void ligar_robo() {
   attachInterrupt(digitalPinToInterrupt(ENCA_Direito), interrupcao_encoder_direito, RISING);
   pinMode(LED, OUTPUT);
 }
-
+void irConeEGirar(Direcao direcao, int giro){
+    robo.alinhar_com_cone(60);
+    digitalWrite(LED,HIGH);
+    motor_dc_direito.parar();
+    motor_dc_esquerdo.parar();
+    delay(7000);
+    digitalWrite(LED,LOW);
+    robo.virar_robo(direcao, giro, 1);
+    resetarImu();
+}
 void setup() { 
 
   //! FAVOR NÃO COLOCAR FUNÇÕES DE TESTE FORA DA ÁREA DE TESTES
@@ -93,22 +102,60 @@ void setup() {
     // robo.virar_robo(frente,3600);
 
     // Serial.println("vou andar");
-    // robo.andar_reto_cm(200);
+    // robo.andar_reto_cm(200,80,0);
+    // motor_dc_direito.parar();
+    // motor_dc_esquerdo.parar();
+    irConeEGirar(frente,35);
+    // robo.alinhar_com_cone(60);
+    // digitalWrite(LED,HIGH);
+    // motor_dc_direito.parar();
+    // motor_dc_esquerdo.parar();
+    // delay(7000);
+    // digitalWrite(LED,LOW);
+    // robo.virar_robo(frente, 45, 1);
+    // delay(1000);
+    // resetarImu();
+    irConeEGirar(frente,110);
+    // robo.alinhar_com_cone(60);
+    // digitalWrite(LED,HIGH);
+    // motor_dc_direito.parar();
+    // motor_dc_esquerdo.parar();
+    // delay(7000);
+    // digitalWrite(LED,LOW);
+    // robo.virar_robo(frente, 90, 1);
+    // delay(1000);
+    // resetarImu();
+    irConeEGirar(frente,-100);
+    irConeEGirar(frente,-180);
+    // irConeEGirar(frente,-140);
+    // bno.getEvent(&leituraBno);
+    // angulo_inicial=leituraBno.orientation.x;
+    
+    // while(angulo_inicial==0 || angulo_inicial==360){
+    //     sensors_event_t leituraBno;
+    //     bno.getEvent(&leituraBno);
+    //     angulo_inicial=leituraBno.orientation.x;
+    // };
+    // robo.alinhar_com_cone(60);
+    // digitalWrite(LED,HIGH);
+    // motor_dc_direito.parar();
+    // motor_dc_esquerdo.parar();
+    // delay(7000);
+    // digitalWrite(LED,LOW);
+    // robo.virar_robo(frente, -90, 1);
+    // delay(1000);
+    // resetarImu();
+    // robo.alinhar_com_cone(60);
+    // digitalWrite(LED,HIGH);
+    // motor_dc_direito.parar();
+    // motor_dc_esquerdo.parar();
+    // delay(7000);
+    // digitalWrite(LED,LOW);
 
-
-    robo.andar_reto_cm(100);
-
-    digitalWrite(LED, HIGH);
-    robo.resetar_encoder();
-    delay(2000);
-    digitalWrite(LED, LOW);
-    robo.alinhar_com_cone(80);
-    delay(2000);
-    digitalWrite(LED, HIGH);
-    // robo.resetar_encoder();
-    // digitalWrite(LED, LOW);
-    // robo.virar_robo(tras,-115);
-    // robo.resetar_encoder();
+    // robo.andar_reto_cm(380);143.31 233.50
+    
+    // robo.virar_robo(frente,-355,1);
+    // digitalWrite(LED,HIGH);
     // delay(2000);
     // robo.andar_reto_cm(700);
     // robo.virar_robo(frente, 90);
