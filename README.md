@@ -19,7 +19,7 @@ Projeto de robô autônomo off-road desenvolvido pela equipe Droid para a compet
 - Para visão: Python3.8+, RaspiOS Lite arm64-2024-03-15, torch=2.3.0, torchvision=0.xx.0
 
 ## Como Usar
-1. Clone o repositório.
+1. Clone o repositório em seu computador.
 2. Caso não tenha feito ainda, instale o Visual Studio Code, e posteriormente o PlatformIO.
 3. Acesse o código principal do Arduino nas pastas `src`, `include` e `lib`.
 4. Envie o modelo desejado e o arquivo RetornoDeDistancia.py para o Raspberry Pi por meio do comando scp.
