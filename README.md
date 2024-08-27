@@ -1,7 +1,7 @@
 # TREKKING2K24
 
 ## Descrição
-Projeto de controle e automação desenvolvido pela equipe UnbDroid para a competição **TREKKING 2024**.
+Projeto de robô autônomo off-road desenvolvido pela equipe Droid para a competição **TREKKING 2024**, na Robocore Experience 2024, na CPXP SP.
 
 ## Estrutura do Projeto
 - **include/**: Arquivos de cabeçalho (.h). Declaração das classes, suas principais informações (variáveis e funções) e também armazenamento de informações relevantes, tais como a pinagem dos componentes. As classes são: **MotorDC**, que diz respeito a cada motor individualmente, **Volante**, que diz respeito ao servo motor que controla a direção do eixo de direção das rodas dianteiras, **Tempo**, que contém variáveis que gravam o tempo total percorrido, e o tempo entre cada iteração do código, **Robo**, que trata do robô como um todo, juntando as outras classes em uma maior, contendo as funções principais do robô em si. **Pinos.h** contém a pinagem adequada de cada componente do robô, e caso deseje usar em outros pinos, as variáveis devem ser alteradas de acordo.
@@ -20,7 +20,15 @@ Projeto de controle e automação desenvolvido pela equipe UnbDroid para a compe
 
 ## Como Usar
 1. Clone o repositório.
-2. Instale as dependências com PlatformIO.
+2. Caso não tenha feito ainda, instale o Visual Studio Code, e posteriormente o PlatformIO.
 3. Acesse o código principal do Arduino nas pastas `src`, `include` e `lib`.
 4. Envie o modelo desejado e o arquivo RetornoDeDistancia.py para o Raspberry Pi por meio do comando scp.
-5. Execute o código da visão rodando o arquivo RetornoDeDistancia.py.
+5. Na Raspberry Pi, entre na pasta onde está o modelo.
+6. **Caso não tenha feito ainda (após primeira instalação não precisa repetir)**, execute o comando ```python3 -m venv venv_visao```, para criar a venv.
+7. Após isso, execute o comando ```source "/caminho/ate/venv_visao/bin/activate"``` para ativar a venv (substitua o caminho pelo real).
+8. **Caso não tenha feito ainda (após primeira instalação não precisa repetir)**, instale as dependências necessárias para rodar o código da visão:
+```
+pip install torch=2.3.0 torchvision=0.xx.0
+pip install ultralytics
+```
+9. Execute o código da visão com o comando ```python3 RetornoDeDistancia.py```.
