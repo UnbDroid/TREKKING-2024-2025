@@ -15,11 +15,12 @@ Projeto de controle e automação desenvolvido pela equipe UnbDroid para a compe
 - **convert_onnx.py**: Arquivo criado para converter modelos para ONNX (pode ser modificado para NCNN também, basta trocar onde está escrito "onnx" e colocar "ncnn").
 
 ## Requisitos
-- Visual Studio Code com  a extensão PlatformIO
-- Python 3.8+
-- Bibliotecas Servo e MPU6050_light
+- Para enviar código pra o Arduino: Visual Studio Code com a extensão PlatformIO, Bibliotecas Servo e MPU6050_light
+- Para visão: Python3.8+, RaspiOS Lite arm64-2024-03-15, torch=2.3.0, torchvision=0.xx.0
 
 ## Como Usar
 1. Clone o repositório.
 2. Instale as dependências com PlatformIO.
-3. Execute o código principal do Arduino na pasta `src`. Execute o código da Visão rodando o arquivo RetornoDeDistancia.py.
+3. Acesse o código principal do Arduino nas pastas `src`, `include` e `lib`.
+4. Envie o modelo desejado e o arquivo RetornoDeDistancia.py para o Raspberry Pi por meio do comando scp.
+5. Execute o código da visão rodando o arquivo RetornoDeDistancia.py.
