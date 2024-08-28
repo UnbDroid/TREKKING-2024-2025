@@ -16,7 +16,7 @@ Projeto de robô autônomo off-road desenvolvido pela equipe Droid para a compet
 
 ## Requisitos
 - Para enviar código pra o Arduino: Visual Studio Code com a extensão PlatformIO, Bibliotecas Servo e MPU6050_light
-- Para visão: Python3.8+, RaspiOS Lite arm64-2024-03-15, torch=2.3.0, torchvision=0.xx.0
+- Para visão: Python3.8+, RaspiOS Lite arm64-2024-03-15, torch=2.3.0, torchvision=0.18.0
 
 ## Como Usar
 1. Clone o repositório em seu computador.
@@ -28,7 +28,7 @@ Projeto de robô autônomo off-road desenvolvido pela equipe Droid para a compet
 7. Após isso, execute o comando ```source "/caminho/ate/venv_visao/bin/activate"``` para ativar a venv (substitua o caminho pelo real).
 8. **Caso não tenha feito ainda (após primeira instalação não precisa repetir)**, instale as dependências necessárias para rodar o código da visão:
 ```
-pip install torch=2.3.0 torchvision=0.xx.0
+pip install torch=2.3.0 torchvision=0.18.0
 pip install ultralytics
 ```
 9. Execute o código da visão com o comando ```python3 RetornoDeDistancia.py```.
