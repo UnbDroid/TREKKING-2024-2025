@@ -5,8 +5,8 @@
 
 //* Este arquivo contém a declaração das variáveis de tempo utilizadas no projeto
 
-extern long T;
-extern long prevT;
+extern unsigned long T;
+extern unsigned long prevT;
 extern double dt;
 
 void atualizar_tempo();
