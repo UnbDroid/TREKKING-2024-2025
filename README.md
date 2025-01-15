@@ -16,7 +16,7 @@ Projeto de robô autônomo off-road desenvolvido pela equipe Droid para a compet
 
 ## Requisitos
 - Para enviar código pra o Arduino: Visual Studio Code com a extensão PlatformIO, Bibliotecas Servo e MPU6050_light
-- Para visão: Python3.8+, RaspiOS Lite arm64-2024-03-15, torch=2.3.0, torchvision=0.18.0
+- Para visão: Python3.8+
 
 ## Como Usar
 1. Clone o repositório em seu computador.
