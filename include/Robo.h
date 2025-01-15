@@ -5,14 +5,13 @@
 #include "Pinos.h"
 #include "MotorDC.h"
 #include "Tempo.h"
-#include "Volante.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
-#include<SPI.h>
+#include <SPI.h>
 // #include "Giroscopio.h"
-#include<MPU6050_light.h>
-#include<SoftwareSerial.h>
+// #include<MPU6050_light.h>
+// #include<SoftwareSerial.h>
 //* Este arquivo contém a declaração da classe Robo, que é responsável por
 //* controlar o robô e ter os comandos básicos de movimentação
 
@@ -24,8 +23,8 @@ enum Direcao{
 class Robo {
     public:
         // Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Giroscopio& giroscopio); // Construtor da classe Robo
-        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, MPU6050& imu);
-        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Volante& volante, Adafruit_BNO055&bno); // Construtor da classe Robo
+        // Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, MPU6050& imu);
+        Robo(MotorDC& motor_esquerdo, MotorDC& motor_direito, Adafruit_BNO055&bno); // Construtor da classe Robo
         void andarAteCone(float distanciaAteParar,int anguloCone);
         void resetar_encoder();
         void ler_visao();
@@ -45,8 +44,7 @@ class Robo {
 
         MotorDC& motor_esquerdo; // Referência ao objeto motor_esquerdo da classe MotorDC
         MotorDC& motor_direito; // Referência ao objeto motor_esquerdo da classe MotorDC
-        Volante& volante; // Referência ao objeto volante da classe Volante
-        MPU6050& imu;
+        // MPU6050& imu;
         Adafruit_BNO055& bno;
         
 

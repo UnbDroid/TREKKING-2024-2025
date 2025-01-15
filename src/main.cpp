@@ -2,16 +2,14 @@
 
   #include "Arduino.h"
   #include <Wire.h>
-  #include <MPU6050_light.h>
-  #include "Volante.h"
   #include "MotorDC.h"
   #include "Pinos.h"
   #include "Robo.h"
-  #include<SPI.h>
+  #include <SPI.h>
   #include <Adafruit_Sensor.h>
   #include <Adafruit_BNO055.h>
   #include <utility/imumaths.h>
-  #include<SoftwareSerial.h>
+  #include <SoftwareSerial.h>
 
 //! -------------------------------------------------------------------------------------
 
@@ -21,8 +19,7 @@
   Adafruit_BNO055 bno = Adafruit_BNO055(55);
   MotorDC motor_dc_esquerdo(ENCA_Esquerdo, ENCB_Esquerdo, PWM_Esquerdo, IN1_Esquerdo, IN2_Esquerdo);
   MotorDC motor_dc_direito(ENCA_Direito, ENCB_Direito, PWM_Direito, IN1_Direito, IN2_Direito);
-  Volante volante(SERVO);
-  Robo robo(motor_dc_esquerdo, motor_dc_direito, volante, bno);
+  Robo robo(motor_dc_esquerdo, motor_dc_direito, bno);
 
 //! -------------------------------------------------------------------------------------
 
@@ -54,7 +51,7 @@ void resetarImu(){
 
 void ligar_robo() {
   Wire.begin();
-  Wire.setWireTimeout(5000);
+  // Wire.setWireTimeout(5000);
   Serial.println("Wire begin");
   // imu.begin();
   Serial.println("IMU begin");
@@ -76,7 +73,6 @@ void ligar_robo() {
   //   ang_atual = imu.getAngleZ();
   //   // Serial.println("Calibrei");
   // }
-  volante.setup();
   motor_dc_esquerdo.congirurar(2100, 1.8, 1.3, 0);
   motor_dc_direito.congirurar(2100, 3.0, 2.0, 0);
 
@@ -198,13 +194,6 @@ void setup() {
 }
  
 void loop() {
-  // volante.virar_volante(20);
-  // delay(1000);
-  // volante.virar_volante(0);
-  // delay(1000);
-  // volante.virar_volante(-20);
-  // delay(1000);
-  // volante.virar_volante(0);
   // delay(1000);
   
   //! Usar somente para testes
