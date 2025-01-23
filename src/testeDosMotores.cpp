@@ -1,6 +1,5 @@
 #include <Arduino.h>
 
-
 #define RPWM_ESQUERDO_FRENTE 1
 #define LPWM_ESQUERDO_FRENTE 3
 #define L_EN_ESQUERDO_FRENTE 23
@@ -26,6 +25,7 @@
 #define L_EN_DIREITO_FRENTE 26 
 #define CANAL_RPWM_DIREITO_FRENTE 6
 #define CANAL_LPWM_DIREITO_FRENTE 7
+
 
 void setup() {
   // Configuração dos pinos de saída
@@ -72,19 +72,19 @@ void setup() {
 }
 
 void loop() {
-  ledcWrite(CANAL_RPWM_DIREITO_FRENTE,110);
+  ledcWrite(CANAL_RPWM_DIREITO_FRENTE,255);
   ledcWrite(CANAL_LPWM_DIREITO_FRENTE,0);
   digitalWrite(L_EN_DIREITO_FRENTE,1);
 
-  ledcWrite(CANAL_RPWM_DIREITO_TRAS,110);
+  ledcWrite(CANAL_RPWM_DIREITO_TRAS,255);
   ledcWrite(CANAL_LPWM_DIREITO_TRAS,0);
   digitalWrite(L_EN_DIREITO_TRAS,1);
 
-  ledcWrite(CANAL_RPWM_ESQUERDO_FRENTE,110);
+  ledcWrite(CANAL_RPWM_ESQUERDO_FRENTE,255);
   ledcWrite(CANAL_LPWM_ESQUERDO_FRENTE,0);
   digitalWrite(L_EN_ESQUERDO_FRENTE,1);
 
-  ledcWrite(CANAL_RPWM_ESQUERDO_TRAS,110);
+  ledcWrite(CANAL_RPWM_ESQUERDO_TRAS,255);
   ledcWrite(CANAL_LPWM_ESQUERDO_TRAS,0);
   digitalWrite(L_EN_ESQUERDO_TRAS,1);
 
