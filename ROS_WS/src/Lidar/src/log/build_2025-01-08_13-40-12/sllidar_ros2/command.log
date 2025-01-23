@@ -1,2 +1,0 @@
-Invoking command in '/home/arthur/Projects/Lidar/src/build/sllidar_ros2': /usr/bin/cmake /home/arthur/Projects/Lidar/src/sllidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/arthur/Projects/Lidar/src/install/sllidar_ros2
-Invoked command in '/home/arthur/Projects/Lidar/src/build/sllidar_ros2' returned '1': /usr/bin/cmake /home/arthur/Projects/Lidar/src/sllidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/arthur/Projects/Lidar/src/install/sllidar_ros2
