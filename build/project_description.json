@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "ESP",
-    "project_version":    "3c2e39e-dirty",
+    "project_version":    "2419ff5-dirty",
     "project_path":       "/home/caldo/Projetos/TREKKING-2024-2025",
     "idf_path":           "/home/caldo/esp/esp-idf",
     "build_dir":          "/home/caldo/Projetos/TREKKING-2024-2025/build",

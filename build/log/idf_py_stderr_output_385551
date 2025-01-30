@@ -1,0 +1,367 @@
+[0;33m--- esp-idf-monitor 1.5.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc1f: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:135
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc04: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:113
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0a: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:116
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc06: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:114
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0c: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:117
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_system/port/panic_handler.c:247
+[0m
+[0;33m--- 0x4008cc0e: _xt_context_save at /home/caldo/esp/esp-idf/components/xtensa/xtensa_context.S:118
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400819e9: panicHandler at /home/caldo/esp/esp-idf/components/esp_syste
