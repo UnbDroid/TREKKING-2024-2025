@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <iostream>
 #include "PinConfig.h"
+#include "esp_task_wdt.h"
 
 
 gpio_config_t config_output = {
@@ -30,4 +32,6 @@ void pin_configuration() {
     gpio_config(&config_output);
     gpio_config(&config_enca);
     gpio_config(&config_encb);
+    std::cout << "Pinos configurados" << std::endl;
+    esp_task_wdt_reset();
 }
