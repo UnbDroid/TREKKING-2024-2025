@@ -1,0 +1,15 @@
+Command: make -j 6 flash
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:21:5: warning: missing initializer for member 'ledc_timer_config_t::deconfigure' [-Wmissing-field-initializers]
+   21 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::sleep_mode' [-Wmissing-field-initializers]
+   30 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::flags' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:21:5: warning: missing initializer for member 'ledc_timer_config_t::deconfigure' [-Wmissing-field-initializers]
+   21 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::sleep_mode' [-Wmissing-field-initializers]
+   30 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::flags' [-Wmissing-field-initializers]
