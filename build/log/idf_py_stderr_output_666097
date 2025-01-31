@@ -1,0 +1,89 @@
+[0;33m--- esp-idf-monitor 1.5.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d8453: gpio_set_level at /home/caldo/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:238 (discriminator 2)
+0x400d7a16: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:40
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d84d9: gpio_ll_set_level at /home/caldo/esp/esp-idf/components/hal/esp32/include/hal/gpio_ll.h:509
+ (inlined by) gpio_set_level at /home/caldo/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:239
+0x400d7a16: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:40
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d7a0a: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:39
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d7a16: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:40
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d8436: gpio_set_level at /home/caldo/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:238 (discriminator 2)
+0x400d7a0f: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:39
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d7a16: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:40
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d7a0a: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:39
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d84c7: gpio_ll_set_level at /home/caldo/esp/esp-idf/components/hal/esp32/include/hal/gpio_ll.h:507
+ (inlined by) gpio_set_level at /home/caldo/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:239
+0x400d7a1d: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:41
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d7a16: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:40
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos/app_startup.c:208
+0x4008641d: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9d76: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da138: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f29: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d8445: gpio_set_level at /home/caldo/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:238 (discriminator 2)
+0x400d7a16: MotorDC::ligar_motor(int, int) at /home/caldo/Projetos/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:40
+0x400d79ad: app_main at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:44 (discriminator 1)
+0x4011536f: main_task at /home/caldo/esp/esp-idf/components/freertos

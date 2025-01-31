@@ -77,7 +77,7 @@ void pin_configuration() {
     configure_pins_output(OUTPUT_DIREITO_FRENTE);
     configure_pins_output(OUTPUT_DIREITO_TRAS);
     setup_timer_ledc(19,0,0);
-    // configure_pins_input(ENCA_GERAL);
+    configure_pins_input(ENCA_GERAL);
     // configure_pins_input(ENCB_GERAL);
     // gpio_config(&config_enca);
     // gpio_config(&config_encb);

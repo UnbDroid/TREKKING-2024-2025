@@ -1,0 +1,1284 @@
+[0;33m--- esp-idf-monitor 1.5.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/esp_system/panic.c:454
+0x40085b0d: esp_system_abort at /home/caldo/esp/esp-idf/components/esp_system/port/esp_system_chip.c:92
+0x4008bb4d: abort at /home/caldo/esp/esp-idf/components/newlib/abort.c:38
+0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4008643b: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:143
+[0m
+[0;33m--- 0x400819ad: panic_abort at /home/caldo/esp/esp-idf/components/es

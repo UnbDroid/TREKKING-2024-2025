@@ -1,0 +1,82 @@
+[0;33m--- esp-idf-monitor 1.5.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400d9dc6: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da188: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f31: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d5995: uart_tx_char at /home/caldo/esp/esp-idf/components/esp_driver_uart/src/uart_vfs.c:168
+0x400d605f: uart_write at /home/caldo/esp/esp-idf/components/esp_driver_uart/src/uart_vfs.c:223
+0x400d6f0e: esp_vfs_write at /home/caldo/esp/esp-idf/components/vfs/vfs.c:945 (discriminator 4)
+0x4000bd83: _write_r in ROM
+0x4000182a: write in ROM
+0x400d6941: console_write at /home/caldo/esp/esp-idf/components/esp_vfs_console/vfs_console.c:71
+0x400d6f0e: esp_vfs_write at /home/caldo/esp/esp-idf/components/vfs/vfs.c:945 (discriminator 4)
+0x4000bd83: _write_r in ROM
+0x4000117d: __swrite in ROM
+0x400592fe: __sflush_r in ROM
+0x4005937a: _fflush_r in ROM
+0x40058ca4: __swbuf_r in ROM
+0x400fb88a: __sputc_r at /builds/idf/crosstool-NG/.build/src/newlib-git-9a0d3915/newlib/libc/include/stdio.h:699
+ (inlined by) _putc_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/putc.c:88
+0x400fb8b5: putc at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/putc.c:108 (discriminator 1)
+0x400dc41d: __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::syncputc(int) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ext/stdio_sync_filebuf.h:236
+ (inlined by) __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::overflow(int) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ext/stdio_sync_filebuf.h:183
+0x40113339: std::basic_streambuf<char, std::char_traits<char> >::sputc(char) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/streambuf:441 (discriminator 1)
+0x400e3fd9: std::ostream::put(char) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/bits/ostream.tcc:168 (discriminator 1)
+0x400e40a5: std::basic_ostream<char, std::char_traits<char> >& std::endl<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ostream:742 (discriminator 1)
+0x400d7987: std::ostream::operator<<(std::ostream& (*)(std::ostream&)) at /home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0/ostream:121
+ (inlined by) encoder_task(void*) at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:36
+0x40086511: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9dc6: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da188: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f31: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d5998: uart_ll_get_txfifo_len at /home/caldo/esp/esp-idf/components/hal/esp32/include/hal/uart_ll.h:428
+ (inlined by) uart_tx_char at /home/caldo/esp/esp-idf/components/esp_driver_uart/src/uart_vfs.c:170
+0x400d605f: uart_write at /home/caldo/esp/esp-idf/components/esp_driver_uart/src/uart_vfs.c:223
+0x400d6f0e: esp_vfs_write at /home/caldo/esp/esp-idf/components/vfs/vfs.c:945 (discriminator 4)
+0x4000bd83: _write_r in ROM
+0x4000182a: write in ROM
+0x400d6941: console_write at /home/caldo/esp/esp-idf/components/esp_vfs_console/vfs_console.c:71
+0x400d6f0e: esp_vfs_write at /home/caldo/esp/esp-idf/components/vfs/vfs.c:945 (discriminator 4)
+0x4000bd83: _write_r in ROM
+0x4000117d: __swrite in ROM
+0x400592fe: __sflush_r in ROM
+0x4005937a: _fflush_r in ROM
+0x40058ca4: __swbuf_r in ROM
+0x400fb88a: __sputc_r at /builds/idf/crosstool-NG/.build/src/newlib-git-9a0d3915/newlib/libc/include/stdio.h:699
+ (inlined by) _putc_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/putc.c:88
+0x400fb8b5: putc at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/putc.c:108 (discriminator 1)
+0x400dc41d: __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::syncputc(int) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ext/stdio_sync_filebuf.h:236
+ (inlined by) __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::overflow(int) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ext/stdio_sync_filebuf.h:183
+0x40113339: std::basic_streambuf<char, std::char_traits<char> >::sputc(char) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/streambuf:441 (discriminator 1)
+0x400e3fd9: std::ostream::put(char) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/bits/ostream.tcc:168 (discriminator 1)
+0x400e40a5: std::basic_ostream<char, std::char_traits<char> >& std::endl<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ostream:742 (discriminator 1)
+0x400d7987: std::ostream::operator<<(std::ostream& (*)(std::ostream&)) at /home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0/ostream:121
+ (inlined by) encoder_task(void*) at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:36
+0x40086511: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9dc6: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da188: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f31: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400e4355: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/build/build-cc-gcc-final/xtensa-esp-elf/esp32/no-rtti/libstdc++-v3/include/ostream:673
+0x400d797e: encoder_task(void*) at /home/caldo/Projetos/TREKKING-2024-2025/main/main.cpp:36
+0x40086511: vPortTaskWrapper at /home/caldo/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400d9dc6: task_wdt_timeout_handling at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+0x400da188: task_wdt_isr at /home/caldo/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+0x40082f31: _xt_lowint1 at /home/caldo/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+0x400d5995: uart_tx_char at /home/caldo/esp/esp-idf/components/esp_driver_uart/src/uart_vfs.c:168
+0x400d605f: uart_write at /home/caldo/esp/esp-idf/components/esp_driver_uart/src/uart_vfs.c:223
+0x400d6f0e: esp_vfs_write at /home/caldo/esp/esp-idf/components/vfs/vfs.c:945 (discriminator 4)
+0x4000bd83: _write_r in ROM
+0x4000182a: write in ROM
+0x400d6941: console_write at /home/caldo/esp/esp-idf/components/esp_vfs_console/vfs_console.c:71
+0x400d6f0e: esp_vfs_write at /home/caldo/esp/esp-idf/components/vfs/vfs.c:945 (discriminator 4)
+0x4000bd83: _write_r in ROM
+0x4000117d: __swrite in ROM
+0x400592fe: __sflush_r in ROM
+0x4005937a: _fflush_r in ROM
+0x40058ca4: __swbuf_r in ROM
+0x400fb88a: __sputc_r at /builds/idf/crosstool-NG/.build/src/newlib-git-9a0d3915/newlib/libc/include/
