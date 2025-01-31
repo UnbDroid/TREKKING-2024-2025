@@ -1,0 +1,17 @@
+Command: make -j 6 all
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:21:5: warning: missing initializer for member 'ledc_timer_config_t::deconfigure' [-Wmissing-field-initializers]
+   21 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::gpio_num' [-Wmissing-field-initializers]
+   30 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::intr_type' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::duty' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::hpoint' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::sleep_mode' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: warning: missing initializer for member 'ledc_channel_config_t::flags' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:30:5: error: designator order for field 'ledc_channel_config_t::intr_type' does not match declaration order in 'ledc_channel_config_t'
+make[2]: *** [esp-idf/PinConfig/CMakeFiles/__idf_PinConfig.dir/build.make:76: esp-idf/PinConfig/CMakeFiles/__idf_PinConfig.dir/PinConfig.cpp.obj] Error 1
+make[1]: *** [CMakeFiles/Makefile2:5813: esp-idf/PinConfig/CMakeFiles/__idf_PinConfig.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:136: all] Error 2
