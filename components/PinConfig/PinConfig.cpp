@@ -14,7 +14,7 @@
 
 
 
-void setup_timer_ledc(int gpio_num, int timer,int channel){
+void configure_pwm(int gpio_num, int timer,int channel){
 
   ledc_timer_config_t ledc_timer = {
         .speed_mode       = LEDC_MODE,
@@ -64,7 +64,7 @@ void pin_configuration() {
     configure_pins_output(OUTPUT_ESQUERDO_TRAS);
     configure_pins_output(OUTPUT_DIREITO_FRENTE);
     configure_pins_output(OUTPUT_DIREITO_TRAS);
-    setup_timer_ledc(19,0,0);
+    configure_pwm(19,0,0);
     // configure_pins_input(ENCA_GERAL);
     // configure_pins_input(ENCB_GERAL);
     // gpio_config(&config_enca);

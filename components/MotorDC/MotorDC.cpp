@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "MotorDC.h"
 #include "driver/gpio.h"
-
+#include "PinConfig.h"
 MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM)
 {
     this->ENCA = ENCA;
@@ -9,6 +9,10 @@ MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM
     this->L_EN = L_EN;
     this->L_PWM = L_PWM;
     this->R_PWM = R_PWM;
+    configure_pins_output((1ULL<<L_PWM)|(1ULL<<R_PWM));
+    configure_pwm(L_PWM,0,0);
+    configure_pwm(R_PWM,0,1);
+
 }
 
 void MotorDC::parar()

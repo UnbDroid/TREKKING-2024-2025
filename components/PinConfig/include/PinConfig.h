@@ -41,7 +41,9 @@
 
 // Configuração GPIO dos pinos { --------------------------------------------------------------------------------
 void pin_configuration();
-
+void configure_pins_output(unsigned long long bit_mask);
+void configure_pins_input(unsigned long long bit_mask);
+void configure_pwm(int gpio_num, int timer,int channel);
 // -------------------------------------------------------------------------------- } Configuração GPIO dos pinos
 
 // Configuração LEDC { --------------------------------------------------------------------------------
