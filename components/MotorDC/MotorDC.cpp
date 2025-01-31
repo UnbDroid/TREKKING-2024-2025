@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include "MotorDC.h"
+#include <iostream>
 #include "driver/gpio.h"
 #include "PinConfig.h"
+#include "driver/ledc.h"
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/queue.h>
+
 MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM)
 {
     this->ENCA = ENCA;
@@ -46,26 +52,42 @@ void MotorDC::ligar_motor(int direcao, int pwmVal)
     }
 }
 
-void MotorDC::ler_encoder()
+void MotorDC::read_encoder(void *arg)
 {
-    int enca = gpio_get_level((gpio_num_t) ENCA);
-    int encb = gpio_get_level((gpio_num_t) ENCB);
-    if (enca == 1 && encb == 0)
+    MotorDC *motor = (MotorDC *)arg;
+
+    if (gpio_get_level((gpio_num_t) motor->ENCA) == 1)
     {
-        this->posi++;
+        // if (gpio_get_level((gpio_num_t) motor->ENCB) == 1)
+        // {
+            motor->posi++;
+        // }
+        // else
+        // {
+        //     motor->posi--;
+        // }
     }
-    else if (enca == 0 && encb == 1)
-    {
-        this->posi--;
-    }
-    else if (enca == 0 && encb == 0)
-    {
-        this->posi--;
-    }
-    else if (enca == 1 && encb == 1)
-    {
-        this->posi++;
-    }
+    // else
+    // {
+    //     if (gpio_get_level((gpio_num_t) motor->ENCB) == 1)
+    //     {
+    //         motor->posi--;
+    //     }
+    //     else
+    //     {
+    //         motor->posi++;
+    //     }
+    // }
+
+    motor->voltas = motor->posi / motor->encoder_volta;
+
+    ESP_LOGW("MotorDC", "Posição: %f", motor->posi);
+}
+
+void MotorDC::set_encoder()
+{
+    gpio_install_isr_service(0);
+    gpio_isr_handler_add((gpio_num_t) this->ENCA, read_encoder, (void *)this); 
 }
 
 void MotorDC::resetar_encoder()

@@ -1,0 +1,2 @@
+source /home/arthur/Projects/DROID/TREKKING-2024-2025/build/bootloader/gdbinit/symbols
+source /home/arthur/Projects/DROID/TREKKING-2024-2025/build/bootloader/gdbinit/connect

@@ -1,0 +1,25 @@
+Command: make -j 6 flash
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp: In function 'void configure_pwm(int, int, int)':
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:25:5: warning: missing initializer for member 'ledc_timer_config_t::deconfigure' [-Wmissing-field-initializers]
+   25 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:34:5: warning: missing initializer for member 'ledc_channel_config_t::sleep_mode' [-Wmissing-field-initializers]
+   34 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:34:5: warning: missing initializer for member 'ledc_channel_config_t::flags' [-Wmissing-field-initializers]
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp: In static member function 'static void MotorDC::read_encoder(void*)':
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:63:20: warning: '++' expression of 'volatile'-qualified type is deprecated [-Wvolatile]
+   63 |             motor->posi++;
+      |             ~~~~~~~^~~~
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp: In static member function 'static void MotorDC::read_encoder(void*)':
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/MotorDC/MotorDC.cpp:63:20: warning: '++' expression of 'volatile'-qualified type is deprecated [-Wvolatile]
+   63 |             motor->posi++;
+      |             ~~~~~~~^~~~
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp: In function 'void configure_pwm(int, int, int)':
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:25:5: warning: missing initializer for member 'ledc_timer_config_t::deconfigure' [-Wmissing-field-initializers]
+   25 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:34:5: warning: missing initializer for member 'ledc_channel_config_t::sleep_mode' [-Wmissing-field-initializers]
+   34 |     };
+      |     ^
+/home/arthur/Projects/DROID/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp:34:5: warning: missing initializer for member 'ledc_channel_config_t::flags' [-Wmissing-field-initializers]

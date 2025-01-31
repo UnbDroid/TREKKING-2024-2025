@@ -1,13 +1,25 @@
 #ifndef _MOTORDC_H
 #define _MOTORDC_H
 
+#include "driver/gpio.h"
+#include "driver/ledc.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include <esp_log.h>
+#include "esp_err.h"
+#include "driver/gpio.h"
+#include "esp_intr_alloc.h"
+
 class MotorDC{
     public:
         MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM); // Construtor da classe MotorDC
         void parar();
         void congirurar (int ticks_por_volta, float kp, float ki, float kd); // Função para configurar o motor
         void ligar_motor(int direcao, int pwmVal);
-        void ler_encoder();
+        
+        static void IRAM_ATTR read_encoder(void *arg);
+        void set_encoder();
         void resetar_encoder();
         void andar_reto(int velocidade_rpm);
         volatile double posi; // posição do motor em ticks do encoder
