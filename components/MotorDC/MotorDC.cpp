@@ -7,6 +7,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/queue.h>
+#include <esp_timer.h>
 
 QueueHandle_t MotorDC::gpio_evt_queue = NULL;
 
@@ -66,12 +67,6 @@ void MotorDC::read_encoder(void *arg)
 
     xQueueSendFromISR(gpio_evt_queue, &this->posi, NULL);
 
-    if (this->ticks_per_turn != 0) {
-        this->turns = this->posi / this->ticks_per_turn;
-    } else {
-        this->turns = 0;
-    }
-
 }
 
 void MotorDC::reset_encoder()
@@ -81,23 +76,32 @@ void MotorDC::reset_encoder()
 
 void MotorDC::go_forward(int velocidade_rpm)
 {
+
+    if (this->ticks_per_turn != 0) {
+        this->turns = this->posi / this->ticks_per_turn;
+    } else {
+        this->turns = 0;
+    }
+
+    prev_time = time_now;
+    time_now = esp_timer_get_time();
+    double delta_time = (time_now - prev_time) / 1000000;
+
     this->reference_rpm = velocidade_rpm;
     this->rps = this->reference_rpm / 60;
     this->turns = this->posi / this->ticks_per_turn;
-    float err = this->rps - this->turns;
+    float turns_per_sec = (this->turns - this->prev_turns) / delta_time;
+    float err = this->rps - turns_per_sec;
     float p = err * this->kp;
     float i = this->integral_err * this->ki;
     float d = (err - this->prev_err) * this->kd;
     this->integral_err += err;
     this->prev_err = err;
     int pwm = p + i + d;
-    if (pwm > 255)
+    int dir = 1;
+    if (pwm < 0)
     {
-        pwm = 255;
+        dir = -1;
     }
-    else if (pwm < 0)
-    {
-        pwm = 0;
-    }
-    this->set_motor(1, pwm);
+    this->set_motor(dir, pwm);
 }

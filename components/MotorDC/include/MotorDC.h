@@ -33,6 +33,8 @@ class MotorDC{
         int L_EN;
         int L_PWM;
         int R_PWM;
+        uint32_t time_now = 0; // tempo atual
+        uint32_t prev_time = 0; // tempo anterior
         double turns = 0; // número de turns do motor
         double prev_turns = 0; // número de turns do motor no instante anterior, para cálculo do erro
         float kp; // constante proporcional do controle PID
