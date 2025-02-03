@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-g++")
+set(CMAKE_CXX_COMPILER "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-g++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "14.2.0")
@@ -21,15 +21,15 @@ set(CMAKE_CXX_SIMULATE_ID "")
 set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "GNU")
 set(CMAKE_CXX_SIMULATE_VERSION "")
 
-set(CMAKE_CXX_COMPILER_SYSROOT "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/../xtensa-esp-elf/usr")
-set(CMAKE_COMPILER_SYSROOT "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/../xtensa-esp-elf/usr")
+set(CMAKE_CXX_COMPILER_SYSROOT "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/../xtensa-esp-elf/usr")
+set(CMAKE_COMPILER_SYSROOT "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/../xtensa-esp-elf/usr")
 
 
-set(CMAKE_AR "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-ar")
-set(CMAKE_CXX_COMPILER_AR "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc-ar")
-set(CMAKE_RANLIB "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-ranlib")
-set(CMAKE_CXX_COMPILER_RANLIB "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc-ranlib")
-set(CMAKE_LINKER "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-ld")
+set(CMAKE_AR "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-ar")
+set(CMAKE_CXX_COMPILER_AR "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc-ar")
+set(CMAKE_RANLIB "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-ranlib")
+set(CMAKE_CXX_COMPILER_RANLIB "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc-ranlib")
+set(CMAKE_LINKER "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-ld")
 set(CMAKE_LINKER_LINK "")
 set(CMAKE_LINKER_LLD "")
 set(CMAKE_CXX_COMPILER_LINKER "NOTFOUND")
@@ -88,19 +88,19 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0/xtensa-esp-elf/esp32;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0/backward;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/include;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/include-fixed;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0/xtensa-esp-elf/esp32;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include/c++/14.2.0/backward;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/include;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/include-fixed;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc;c;nosys;c;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/esp32;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/lib/esp32;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/lib;/home/arthur/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/esp32;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/lib/esp32;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/lib/gcc;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/lib;/home/caldo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/xtensa-esp-elf/usr/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 set(CMAKE_CXX_COMPILER_CLANG_RESOURCE_DIR "")
 
 set(CMAKE_CXX_COMPILER_IMPORT_STD "")
 ### Imported target for C++23 standard library
-set(CMAKE_CXX23_COMPILER_IMPORT_STD_NOT_FOUND_MESSAGE "Unsupported generator: Unix Makefiles")
+set(CMAKE_CXX23_COMPILER_IMPORT_STD_NOT_FOUND_MESSAGE "Toolchain does not support discovering `import std` support")
 
 
 ### Imported target for C++26 standard library
-set(CMAKE_CXX26_COMPILER_IMPORT_STD_NOT_FOUND_MESSAGE "Unsupported generator: Unix Makefiles")
+set(CMAKE_CXX26_COMPILER_IMPORT_STD_NOT_FOUND_MESSAGE "Toolchain does not support discovering `import std` support")
 
 
 

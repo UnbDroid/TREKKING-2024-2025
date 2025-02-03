@@ -47,10 +47,4 @@ extern "C" void app_main(void)
         std::cout<<posicao<<std::endl;    /* code */
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
-    
-    
-    
-
-    // }
-    
 }
