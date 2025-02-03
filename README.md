@@ -1,34 +1,32 @@
-# TREKKING2K24
+# _Sample project_
 
-## Descrição
-Projeto de robô autônomo off-road desenvolvido pela equipe Droid para a competição **TREKKING 2024**, na Robocore Experience 2024, na CPXP SP.
+(See the README.md file in the upper level 'examples' directory for more information about examples.)
 
-## Estrutura do Projeto
-- **include/**: Arquivos de cabeçalho (.h). Declaração das classes, suas principais informações (variáveis e funções) e também armazenamento de informações relevantes, tais como a pinagem dos componentes. As classes são: **MotorDC**, que diz respeito a cada motor individualmente, **Volante**, que diz respeito ao servo motor que controla a direção do eixo de direção das rodas dianteiras, **Tempo**, que contém variáveis que gravam o tempo total percorrido, e o tempo entre cada iteração do código, **Robo**, que trata do robô como um todo, juntando as outras classes em uma maior, contendo as funções principais do robô em si. **Pinos.h** contém a pinagem adequada de cada componente do robô, e caso deseje usar em outros pinos, as variáveis devem ser alteradas de acordo.
-- **lib/**: Bibliotecas externas utilizadas, de forma principal o *Servo.h*, e o *MPU6050_light*.
-- **src/**: Código-fonte principal. Onde está a parte principal do código, com a descrição das funções das classes, criação dos objetos e desenvolvimento da lógica. Separados em aquivos referentes a cada classe, com *main.cpp* o código final, com a declaração dos objetos e a rota a ser percorrida.
-- **test/**: Scripts de teste e validação. Inutilizada.
-- **V6_128_ncnn_model/**: Modelo pré-treinado em *NCNN* (modelo de otimização ideal para uso na Raspberry Pi 4).
-- **V6_128.onnx**: Modelo pré-treinado em *ONNX* (outro modelo de otimização, usar apenas se a instalação do NCNN não funcionar, ou o desempenho não estiver bom).
-- **V6_128.pt**: Modelo pré-treinado base, na extensão padrão do *PyTorch*.
-- **RetornoDeDistancia.py**: Arquivo principal da visão. É esse que você irá rodar para começar o código da visão. Para rodar, abra a pasta do repositório, depois ative sua venv, e digite ```python3 RetornoDeDistancia.py```.
-- **convert_onnx.py**: Arquivo criado para converter modelos para ONNX (pode ser modificado para NCNN também, basta trocar onde está escrito "onnx" e colocar "ncnn").
+This is the simplest buildable example. The example is used by command `idf.py create-project`
+that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
 
-## Requisitos
-- Para enviar código pra o Arduino: Visual Studio Code com a extensão PlatformIO, Bibliotecas Servo e MPU6050_light
-- Para visão: Python3.8+
 
-## Como Usar
-1. Clone o repositório em seu computador.
-2. Caso não tenha feito ainda, instale o Visual Studio Code, e posteriormente o PlatformIO.
-3. Acesse o código principal do Arduino nas pastas `src`, `include` e `lib`.
-4. Envie o modelo desejado e o arquivo RetornoDeDistancia.py para o Raspberry Pi por meio do comando scp.
-5. Na Raspberry Pi, entre na pasta onde está o modelo.
-6. **Caso não tenha feito ainda (após primeira instalação não precisa repetir)**, execute o comando ```python3 -m venv venv_visao```, para criar a venv.
-7. Após isso, execute o comando ```source "/caminho/ate/venv_visao/bin/activate"``` para ativar a venv (substitua o caminho pelo real).
-8. **Caso não tenha feito ainda (após primeira instalação não precisa repetir)**, instale as dependências necessárias para rodar o código da visão:
+
+## How to use example
+We encourage the users to use the example as a template for the new projects.
+A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
+
+## Example folder contents
+
+The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+
+ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
+files that provide set of directives and instructions describing the project's source files and targets
+(executable, library, or both). 
+
+Below is short explanation of remaining files in the project folder.
+
 ```
-pip install torch=2.3.0 torchvision=0.18.0
-pip install ultralytics
+├── CMakeLists.txt
+├── main
+│   ├── CMakeLists.txt
+│   └── main.c
+└── README.md                  This is the file you are currently reading
 ```
-9. Execute o código da visão com o comando ```python3 RetornoDeDistancia.py```.
+Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
+They are not used or needed when building with CMake and idf.py.

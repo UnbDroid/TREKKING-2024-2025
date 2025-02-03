@@ -1,3 +1,12 @@
 {
-    "C_Cpp.errorSquiggles": "disabled"
+    "idf.port": "/dev/ttyUSB0",
+    "idf.flashType": "UART",
+    "idf.openOcdConfigs": [
+        "interface/ftdi/esp32_devkitj_v1.cfg",
+        "target/esp32.cfg"
+    ],
+    "files.associations": {
+        "ostream": "cpp",
+        "iostream": "cpp"
+    }
 }
