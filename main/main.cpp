@@ -6,45 +6,57 @@
 #include <freertos/queue.h>
 #include <MotorDC.h>
 #include <inttypes.h>
+#include <rtc_wdt.h>
+#include <esp_timer.h>
 
-#define LEDC_TIMER              LEDC_TIMER_0
-#define LEDC_MODE               LEDC_LOW_SPEED_MODE
-#define LEDC_OUTPUT_IO          OUTPUT_ESQUERDO_FRENTE // Define the output GPIO
-#define LEDC_CHANNEL            LEDC_CHANNEL_0
-#define LEDC_DUTY_RES           LEDC_TIMER_8_BIT // Set duty resolution to 13 bits
-#define LEDC_DUTY               (128) // Set duty to 50%. (2 ** 13) * 50% = 4096
-#define LEDC_FREQUENCY          (128) // Frequency in Hertz. Set frequency at 4 kH
+MotorDC left_front_motor(ENCA_ESQUERDO_FRENTE, ENCB_ESQUERDO_FRENTE, L_EN_ESQUERDO_FRENTE, L_PWM_ESQUERDO_FRENTE, R_PWM_ESQUERDO_FRENTE);
+MotorDC left_back_motor(ENCA_ESQUERDO_TRAS, ENCB_ESQUERDO_TRAS, L_EN_ESQUERDO_TRAS, L_PWM_ESQUERDO_TRAS, R_PWM_ESQUERDO_TRAS);
+MotorDC right_front_motor(ENCA_DIREITO_FRENTE, ENCB_DIREITO_FRENTE, L_EN_DIREITO_FRENTE, L_PWM_DIREITO_FRENTE, R_PWM_DIREITO_FRENTE);
+MotorDC right_back_motor(ENCA_DIREITO_TRAS, ENCB_DIREITO_TRAS, L_EN_DIREITO_TRAS, L_PWM_DIREITO_TRAS, R_PWM_DIREITO_TRAS);
 
-
-static QueueHandle_t gpio_evt_queue = NULL;
-
-uint32_t posicao = 0;
-
-void IRAM_ATTR gpio_isr_handler(void *arg)
+void read_encoder_left_front(void *arg)
 {
-    posicao += 1;
-    xQueueSendFromISR(gpio_evt_queue, &posicao, NULL);
+    left_front_motor.read_encoder(arg);
 }
 
-MotorDC motor1(ENCA_ESQUERDO_TRAS, ENCB_ESQUERDO_TRAS, L_EN_ESQUERDO_TRAS, L_PWM_ESQUERDO_TRAS, R_PWM_ESQUERDO_TRAS);
+void read_encoder_left_back(void *arg)
+{
+    left_back_motor.read_encoder(arg);
+}
 
+void read_encoder_right_front(void *arg)
+{
+    right_front_motor.read_encoder(arg);
+}
+
+void read_encoder_right_back(void *arg)
+{
+    right_back_motor.read_encoder(arg);
+}
+
+void robot_setup() {
+    pin_configuration();
+    gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
+    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_TRAS, read_encoder_left_front, (void *)ENCA_ESQUERDO_TRAS);
+    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_FRENTE, read_encoder_left_back, (void *)ENCA_ESQUERDO_FRENTE);
+    gpio_isr_handler_add((gpio_num_t) ENCA_DIREITO_FRENTE, read_encoder_right_front, (void *)ENCA_DIREITO_FRENTE);
+    gpio_isr_handler_add((gpio_num_t) ENCA_DIREITO_TRAS, read_encoder_right_back, (void *)ENCA_DIREITO_TRAS);
+}
 
 extern "C" void app_main(void)
 {
-    pin_configuration();
+    
+    robot_setup();
+
     ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, LEDC_DUTY);
     ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
 
-    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+    int sentido = 1;
+    int timer = 5000000;
 
-    gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-
-    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_TRAS, gpio_isr_handler, (void *)ENCA_ESQUERDO_TRAS);
-    
-    motor1.ligar_motor(1, 255);
-    while (1){
-        
-        std::cout<<posicao<<std::endl;    /* code */
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    while (1)
+    {
+        std::cout<<"Posição: "<<right_front_motor.posi<<std::endl;
+        right_front_motor.ligar_motor(sentido, 128);
     }
 }

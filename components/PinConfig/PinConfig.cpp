@@ -2,18 +2,7 @@
 #include <iostream>
 #include "PinConfig.h"
 #include "esp_task_wdt.h"
-
-#define LEDC_TIMER              LEDC_TIMER_0
-#define LEDC_MODE               LEDC_LOW_SPEED_MODE
-#define LEDC_OUTPUT_IO          22 // Define the output GPIO
-#define LEDC_CHANNEL            LEDC_CHANNEL_0
-#define LEDC_DUTY_RES           LEDC_TIMER_8_BIT // Set duty resolution to 13 bits
-#define LEDC_DUTY               (128) // Set duty to 50%. (2 ** 13) * 50% = 4096
-#define LEDC_FREQUENCY          (10000) // Frequency in Hertz. Set frequency at 4 kH
                                        //
-
-
-
 void configure_pwm(int gpio_num, int timer,int channel){
 
   ledc_timer_config_t ledc_timer = {
@@ -35,7 +24,8 @@ void configure_pwm(int gpio_num, int timer,int channel){
     ledc_timer_config(&ledc_timer);
     ledc_channel_config(&ledc_channel);
 }
-void configure_pins_input(unsigned long long bit_mask) 
+
+void configure_pins_input_enca(unsigned long long bit_mask) 
 {
     gpio_config_t config_output = {
     .pin_bit_mask = bit_mask,
@@ -47,7 +37,7 @@ void configure_pins_input(unsigned long long bit_mask)
     gpio_config(&config_output);
 }
 
-void configure_encb(unsigned long long bit_mask) 
+void configure_pins_input_encb(unsigned long long bit_mask) 
 {
     gpio_config_t config_output = {
     .pin_bit_mask = bit_mask,
@@ -55,7 +45,7 @@ void configure_encb(unsigned long long bit_mask)
     .pull_up_en = GPIO_PULLUP_ENABLE,
     .pull_down_en = GPIO_PULLDOWN_DISABLE,
     .intr_type = GPIO_INTR_DISABLE
-    };    
+    };
     gpio_config(&config_output);
 }
 
@@ -76,9 +66,10 @@ void pin_configuration() {
     configure_pins_output(OUTPUT_ESQUERDO_TRAS);
     configure_pins_output(OUTPUT_DIREITO_FRENTE);
     configure_pins_output(OUTPUT_DIREITO_TRAS);
-   // configure_pwm(19,0,0);
-    configure_pins_input(ENCA_GERAL);
-    // configure_pins_input(ENCB_GERAL);
+    configure_pwm(L_PWM_DIREITO_FRENTE,0,0);
+    configure_pwm(R_PWM_DIREITO_FRENTE,0,1);
+    configure_pins_input_enca(ENCA_GERAL);
+    configure_pins_input_encb(ENCB_GERAL);
     // gpio_config(&config_enca);
     // gpio_config(&config_encb);
     std::cout << "Pinos configurados" << std::endl;

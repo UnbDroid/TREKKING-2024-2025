@@ -17,12 +17,12 @@ class MotorDC{
         void parar();
         void congirurar (int ticks_por_volta, float kp, float ki, float kd); // Função para configurar o motor
         void ligar_motor(int direcao, int pwmVal);
-        
-        static void IRAM_ATTR read_encoder(void *arg);
+        static QueueHandle_t gpio_evt_queue;
+        void IRAM_ATTR read_encoder(void *arg);
         void set_encoder();
         void resetar_encoder();
         void andar_reto(int velocidade_rpm);
-        volatile double posi; // posição do motor em ticks do encoder
+        uint32_t posi = 0; // posição do motor em ticks do encoder
         double rps = 0; // velocidade ATUAL do motor em rotações por segundo
         int encoder_volta; // valor de encoder referente a uma volta completa da roda
         double comprimento_roda = 2 * 3.1415 * 6.272; //TODO: medir o raio da roda real
