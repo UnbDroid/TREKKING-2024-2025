@@ -3,23 +3,26 @@
 #include "PinConfig.h"
 #include "esp_task_wdt.h"
                                        //
-void configure_pwm(int gpio_num, int timer,ledc_channel_t channel){
+// filepath: /home/caldo/Projetos/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp
+void configure_pwm(int gpio_num, int timer, int channel) {
     ledc_timer_config_t ledc_timer = {
         .speed_mode       = LEDC_MODE,
         .duty_resolution  = LEDC_DUTY_RES,
         .timer_num        = (ledc_timer_t)timer,
-        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 4 kHz
+        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 10 kHz
         .clk_cfg          = LEDC_AUTO_CLK
     };
+
     ledc_channel_config_t ledc_channel = {
         .gpio_num       = gpio_num,
         .speed_mode     = LEDC_MODE,
-        .channel        = channel,
+        .channel        = (ledc_channel_t)channel,
         .intr_type      = LEDC_INTR_DISABLE,
         .timer_sel      = LEDC_TIMER,
         .duty           = 0, // Set duty to 0%
         .hpoint         = 0
     };
+
     ledc_timer_config(&ledc_timer);
     ledc_channel_config(&ledc_channel);
 }
