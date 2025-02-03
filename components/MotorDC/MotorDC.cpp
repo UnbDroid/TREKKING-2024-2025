@@ -7,17 +7,17 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/queue.h>
-#include <esp_timer.h>
 
 QueueHandle_t MotorDC::gpio_evt_queue = NULL;
 
-MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM)
+MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL)
 {
     this->ENCA = ENCA;
     this->ENCB = ENCB;
     this->L_EN = L_EN;
     this->L_PWM = L_PWM;
     this->R_PWM = R_PWM;
+    this->LEDC_CHANNEL = LEDC_CHANNEL;
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 }
 
@@ -40,15 +40,19 @@ void MotorDC::set_motor(int direcao, int pwmVal)
 {
     if (direcao == 1)
     {
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, pwmVal);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
-        gpio_set_level((gpio_num_t) this->L_PWM, pwmVal);
+        gpio_set_level((gpio_num_t) this->L_PWM, 1);
         gpio_set_level((gpio_num_t) this->R_PWM, 0);
     }
     else
     {
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, pwmVal);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
         gpio_set_level((gpio_num_t) this->L_PWM, 0);
-        gpio_set_level((gpio_num_t) this->R_PWM, pwmVal);
+        gpio_set_level((gpio_num_t) this->R_PWM, 1);
     }
 }
 

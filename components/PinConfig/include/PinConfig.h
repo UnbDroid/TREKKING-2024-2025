@@ -53,7 +53,10 @@ void pin_configuration();
 
 #define LEDC_TIMER              LEDC_TIMER_0
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
-#define LEDC_CHANNEL            LEDC_CHANNEL_0
+#define LEDC_CHANNEL_LEFT_FRONT LEDC_CHANNEL_0
+#define LEDC_CHANNEL_LEFT_BACK  LEDC_CHANNEL_1
+#define LEDC_CHANNEL_RIGHT_FRONT LEDC_CHANNEL_2
+#define LEDC_CHANNEL_RIGHT_BACK LEDC_CHANNEL_3
 #define LEDC_DUTY_RES           LEDC_TIMER_8_BIT // Set duty resolution to 13 bits
 #define LEDC_DUTY               (128) // Set duty to 50%. (2 ** 13) * 50% = 4096
 #define LEDC_FREQUENCY          (10000) // Frequency in Hertz. Set frequency at 4 kH

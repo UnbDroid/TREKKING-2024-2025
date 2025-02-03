@@ -3,7 +3,7 @@
 #include "PinConfig.h"
 #include "esp_task_wdt.h"
                                        //
-void configure_pwm(int gpio_num, int timer,int channel){
+void configure_pwm(int gpio_num, int timer,ledc_channel_t channel){
 
   ledc_timer_config_t ledc_timer = {
         .speed_mode       = LEDC_MODE,
@@ -15,7 +15,7 @@ void configure_pwm(int gpio_num, int timer,int channel){
   ledc_channel_config_t ledc_channel = {
         .gpio_num       = gpio_num,
         .speed_mode     = LEDC_MODE,
-        .channel        = (ledc_channel_t)channel,
+        .channel        = channel,
         .intr_type      = LEDC_INTR_DISABLE,
         .timer_sel      = LEDC_TIMER,
         .duty           = 0, // Set duty to 0%
@@ -66,8 +66,10 @@ void pin_configuration() {
     configure_pins_output(OUTPUT_LEFT_BACK);
     configure_pins_output(OUTPUT_RIGHT_FRONT);
     configure_pins_output(OUTPUT_RIGHT_BACK);
-    configure_pwm(L_PWM_RIGHT_FRONT,0,0);
-    configure_pwm(R_PWM_RIGHT_FRONT,0,1);
+    configure_pwm(R_PWM_LEFT_FRONT,0,LEDC_CHANNEL_LEFT_FRONT);
+    configure_pwm(L_PWM_LEFT_BACK,0,LEDC_CHANNEL_LEFT_BACK);
+    configure_pwm(L_PWM_RIGHT_FRONT,0,LEDC_CHANNEL_RIGHT_FRONT);
+    configure_pwm(R_PWM_RIGHT_BACK,0,LEDC_CHANNEL_RIGHT_BACK);
     configure_pins_input_enca(ENCA_GERAL);
     configure_pins_input_encb(ENCB_GERAL);
     // gpio_config(&config_enca);
