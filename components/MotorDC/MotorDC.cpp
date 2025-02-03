@@ -40,6 +40,7 @@ void MotorDC::set_motor(int direcao, int pwmVal)
 {
     if (direcao == 1)
     {
+        configure_pwm(this->L_PWM, 0, this->LEDC_CHANNEL);
         ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, pwmVal);
         ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
@@ -48,6 +49,7 @@ void MotorDC::set_motor(int direcao, int pwmVal)
     }
     else
     {
+        configure_pwm(this->R_PWM, 0, this->LEDC_CHANNEL);
         ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, pwmVal);
         ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         gpio_set_level((gpio_num_t) this->L_EN, 1);

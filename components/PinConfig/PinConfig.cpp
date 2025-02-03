@@ -4,15 +4,14 @@
 #include "esp_task_wdt.h"
                                        //
 void configure_pwm(int gpio_num, int timer,ledc_channel_t channel){
-
-  ledc_timer_config_t ledc_timer = {
+    ledc_timer_config_t ledc_timer = {
         .speed_mode       = LEDC_MODE,
         .duty_resolution  = LEDC_DUTY_RES,
         .timer_num        = (ledc_timer_t)timer,
         .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 4 kHz
         .clk_cfg          = LEDC_AUTO_CLK
     };
-  ledc_channel_config_t ledc_channel = {
+    ledc_channel_config_t ledc_channel = {
         .gpio_num       = gpio_num,
         .speed_mode     = LEDC_MODE,
         .channel        = channel,
