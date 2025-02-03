@@ -9,10 +9,10 @@
 #include <rtc_wdt.h>
 #include <esp_timer.h>
 
-MotorDC left_front_motor(ENCA_ESQUERDO_FRENTE, ENCB_ESQUERDO_FRENTE, L_EN_ESQUERDO_FRENTE, L_PWM_ESQUERDO_FRENTE, R_PWM_ESQUERDO_FRENTE);
-MotorDC left_back_motor(ENCA_ESQUERDO_TRAS, ENCB_ESQUERDO_TRAS, L_EN_ESQUERDO_TRAS, L_PWM_ESQUERDO_TRAS, R_PWM_ESQUERDO_TRAS);
-MotorDC right_front_motor(ENCA_DIREITO_FRENTE, ENCB_DIREITO_FRENTE, L_EN_DIREITO_FRENTE, L_PWM_DIREITO_FRENTE, R_PWM_DIREITO_FRENTE);
-MotorDC right_back_motor(ENCA_DIREITO_TRAS, ENCB_DIREITO_TRAS, L_EN_DIREITO_TRAS, L_PWM_DIREITO_TRAS, R_PWM_DIREITO_TRAS);
+MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_EN_LEFT_FRONT, L_PWM_LEFT_FRONT, R_PWM_LEFT_FRONT);
+MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_EN_LEFT_BACK, L_PWM_LEFT_BACK, R_PWM_LEFT_BACK);
+MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_EN_RIGHT_FRONT, L_PWM_RIGHT_FRONT, R_PWM_RIGHT_FRONT);
+MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_EN_RIGHT_BACK, L_PWM_RIGHT_BACK, R_PWM_RIGHT_BACK);
 
 void read_encoder_left_front(void *arg)
 {
@@ -37,10 +37,10 @@ void read_encoder_right_back(void *arg)
 void robot_setup() {
     pin_configuration();
     gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_FRENTE, read_encoder_left_front, (void *)ENCA_ESQUERDO_FRENTE);
-    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_TRAS, read_encoder_left_back, (void *)ENCA_ESQUERDO_TRAS);
-    gpio_isr_handler_add((gpio_num_t) ENCA_DIREITO_FRENTE, read_encoder_right_front, (void *)ENCA_DIREITO_FRENTE);
-    gpio_isr_handler_add((gpio_num_t) ENCA_DIREITO_TRAS, read_encoder_right_back, (void *)ENCA_DIREITO_TRAS);
+    gpio_isr_handler_add((gpio_num_t) ENCA_LEFT_FRONT, read_encoder_left_front, (void *)ENCA_LEFT_FRONT);
+    gpio_isr_handler_add((gpio_num_t) ENCA_LEFT_BACK, read_encoder_left_back, (void *)ENCA_LEFT_BACK);
+    gpio_isr_handler_add((gpio_num_t) ENCA_RIGHT_FRONT, read_encoder_right_front, (void *)ENCA_RIGHT_FRONT);
+    gpio_isr_handler_add((gpio_num_t) ENCA_RIGHT_BACK, read_encoder_right_back, (void *)ENCA_RIGHT_BACK);
 }
 
 extern "C" void app_main(void)

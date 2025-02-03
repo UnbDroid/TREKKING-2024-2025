@@ -62,12 +62,12 @@ void configure_pins_output(unsigned long long bit_mask)
 }
 
 void pin_configuration() {
-    configure_pins_output(OUTPUT_ESQUERDO_FRENTE);
-    configure_pins_output(OUTPUT_ESQUERDO_TRAS);
-    configure_pins_output(OUTPUT_DIREITO_FRENTE);
-    configure_pins_output(OUTPUT_DIREITO_TRAS);
-    configure_pwm(L_PWM_DIREITO_FRENTE,0,0);
-    configure_pwm(R_PWM_DIREITO_FRENTE,0,1);
+    configure_pins_output(OUTPUT_LEFT_FRONT);
+    configure_pins_output(OUTPUT_LEFT_BACK);
+    configure_pins_output(OUTPUT_RIGHT_FRONT);
+    configure_pins_output(OUTPUT_RIGHT_BACK);
+    configure_pwm(L_PWM_RIGHT_FRONT,0,0);
+    configure_pwm(R_PWM_RIGHT_FRONT,0,1);
     configure_pins_input_enca(ENCA_GERAL);
     configure_pins_input_encb(ENCB_GERAL);
     // gpio_config(&config_enca);
