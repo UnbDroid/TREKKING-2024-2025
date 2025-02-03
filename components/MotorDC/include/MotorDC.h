@@ -22,7 +22,7 @@ class MotorDC{
         void set_encoder();
         void resetar_encoder();
         void andar_reto(int velocidade_rpm);
-        uint32_t posi = 0; // posição do motor em ticks do encoder
+        int32_t posi = 0; // posição do motor em ticks do encoder
         double rps = 0; // velocidade ATUAL do motor em rotações por segundo
         int encoder_volta; // valor de encoder referente a uma volta completa da roda
         double comprimento_roda = 2 * 3.1415 * 6.272; //TODO: medir o raio da roda real

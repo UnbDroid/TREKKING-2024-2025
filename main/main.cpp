@@ -37,8 +37,8 @@ void read_encoder_right_back(void *arg)
 void robot_setup() {
     pin_configuration();
     gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_TRAS, read_encoder_left_front, (void *)ENCA_ESQUERDO_TRAS);
-    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_FRENTE, read_encoder_left_back, (void *)ENCA_ESQUERDO_FRENTE);
+    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_FRENTE, read_encoder_left_front, (void *)ENCA_ESQUERDO_FRENTE);
+    gpio_isr_handler_add((gpio_num_t) ENCA_ESQUERDO_TRAS, read_encoder_left_back, (void *)ENCA_ESQUERDO_TRAS);
     gpio_isr_handler_add((gpio_num_t) ENCA_DIREITO_FRENTE, read_encoder_right_front, (void *)ENCA_DIREITO_FRENTE);
     gpio_isr_handler_add((gpio_num_t) ENCA_DIREITO_TRAS, read_encoder_right_back, (void *)ENCA_DIREITO_TRAS);
 }
@@ -56,7 +56,9 @@ extern "C" void app_main(void)
 
     while (1)
     {
-        std::cout<<"Posição: "<<right_front_motor.posi<<std::endl;
+        std::cout<<"Posição da roda da direita da frente: "<<right_front_motor.posi<<"Posição da roda da esquerda de trás: "<<left_back_motor.posi<<std::endl;
         right_front_motor.ligar_motor(sentido, 128);
+        left_back_motor.ligar_motor(sentido, 128);
+        vTaskDelay(10/portTICK_PERIOD_MS);
     }
 }
