@@ -57,8 +57,8 @@ extern "C" void app_main(void)
     while (1)
     {
         std::cout<<"Posição da roda da direita da frente: "<<right_front_motor.posi<<"Posição da roda da esquerda de trás: "<<left_back_motor.posi<<std::endl;
-        right_front_motor.ligar_motor(sentido, 128);
-        left_back_motor.ligar_motor(sentido, 128);
+        right_front_motor.set_motor(sentido, 128);
+        left_back_motor.set_motor(sentido, 128);
         vTaskDelay(10/portTICK_PERIOD_MS);
     }
 }

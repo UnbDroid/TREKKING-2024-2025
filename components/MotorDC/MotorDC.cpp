@@ -20,22 +20,22 @@ MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 }
 
-void MotorDC::parar()
+void MotorDC::stop_motor()
 {
     gpio_set_level((gpio_num_t) this->L_EN, 0);
     gpio_set_level((gpio_num_t) this->L_PWM, 0);
     gpio_set_level((gpio_num_t) this->R_PWM, 0);
 }
 
-void MotorDC::congirurar(int ticks_por_volta, float kp, float ki, float kd)
+void MotorDC::configure_motor(int ticks_per_turn, float kp, float ki, float kd)
 {
-    this->encoder_volta = ticks_por_volta;
+    this->ticks_per_turn = ticks_per_turn;
     this->kp = kp;
     this->ki = ki;
     this->kd = kd;
 }
 
-void MotorDC::ligar_motor(int direcao, int pwmVal)
+void MotorDC::set_motor(int direcao, int pwmVal)
 {
     if (direcao == 1)
     {
@@ -66,30 +66,30 @@ void MotorDC::read_encoder(void *arg)
 
     xQueueSendFromISR(gpio_evt_queue, &this->posi, NULL);
 
-    if (this->encoder_volta != 0) {
-        this->voltas = this->posi / this->encoder_volta;
+    if (this->ticks_per_turn != 0) {
+        this->turns = this->posi / this->ticks_per_turn;
     } else {
-        this->voltas = 0;
+        this->turns = 0;
     }
 
 }
 
-void MotorDC::resetar_encoder()
+void MotorDC::reset_encoder()
 {
     this->posi = 0;
 }
 
-void MotorDC::andar_reto(int velocidade_rpm)
+void MotorDC::go_forward(int velocidade_rpm)
 {
-    this->rpm_referencia = velocidade_rpm;
-    this->rps = this->rpm_referencia / 60;
-    this->voltas = this->posi / this->encoder_volta;
-    float erro = this->rps - this->voltas;
-    float p = erro * this->kp;
-    float i = this->eintegral * this->ki;
-    float d = (erro - this->eprev) * this->kd;
-    this->eintegral += erro;
-    this->eprev = erro;
+    this->reference_rpm = velocidade_rpm;
+    this->rps = this->reference_rpm / 60;
+    this->turns = this->posi / this->ticks_per_turn;
+    float err = this->rps - this->turns;
+    float p = err * this->kp;
+    float i = this->integral_err * this->ki;
+    float d = (err - this->prev_err) * this->kd;
+    this->integral_err += err;
+    this->prev_err = err;
     int pwm = p + i + d;
     if (pwm > 255)
     {
@@ -99,5 +99,5 @@ void MotorDC::andar_reto(int velocidade_rpm)
     {
         pwm = 0;
     }
-    this->ligar_motor(1, pwm);
+    this->set_motor(1, pwm);
 }
