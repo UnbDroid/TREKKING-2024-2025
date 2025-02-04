@@ -14,7 +14,7 @@
 
 class MotorDC{
     public:
-        MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL); // Construtor da classe MotorDC
+        MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL_L, ledc_channel_t LEDC_CHANNEL_R); // Construtor da classe MotorDC
         void stop_motor();
         void configure_motor(int ticks_per_turn, float kp, float ki, float kd); // Função para configurar o motor
         void set_motor(int direcao, int pwmVal);
@@ -24,6 +24,7 @@ class MotorDC{
         void reset_encoder();
         void go_forward(int velocidade_rpm);
         int32_t posi = 0; // posição do motor em ticks do encoder
+        int32_t return_posi();
         double rps = 0; // velocidade ATUAL do motor em rotações por segundo
         int ticks_per_turn; // valor de encoder referente a uma volta completa da roda
         double wheel_lenght = 2 * 3.1415 * 6.272; //TODO: medir o raio da roda real
@@ -34,7 +35,8 @@ class MotorDC{
         int L_EN;
         int L_PWM;
         int R_PWM;
-        ledc_channel_t LEDC_CHANNEL;
+        ledc_channel_t LEDC_CHANNEL_L;
+        ledc_channel_t LEDC_CHANNEL_R;
         const uart_port_t uart_num = UART_NUM_2;
         uart_config_t uart_config = {
             .baud_rate = 115200,

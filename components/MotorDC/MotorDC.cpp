@@ -10,14 +10,15 @@
 
 QueueHandle_t MotorDC::gpio_evt_queue = NULL;
 
-MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL)
+MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL_L, ledc_channel_t LEDC_CHANNEL_R)
 {
     this->ENCA = ENCA;
     this->ENCB = ENCB;
     this->L_EN = L_EN;
     this->L_PWM = L_PWM;
     this->R_PWM = R_PWM;
-    this->LEDC_CHANNEL = LEDC_CHANNEL;
+    this->LEDC_CHANNEL_L = LEDC_CHANNEL_L;
+    this->LEDC_CHANNEL_R = LEDC_CHANNEL_R;
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 }
 
@@ -36,25 +37,28 @@ void MotorDC::configure_motor(int ticks_per_turn, float kp, float ki, float kd)
     this->kd = kd;
 }
 
+int32_t MotorDC::return_posi(){
+    return this->posi;
+}
+
 void MotorDC::set_motor(int direcao, int pwmVal)
 {
     if (direcao == 1)
     {
-        configure_pwm(this->L_PWM, 0, this->LEDC_CHANNEL);
-        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, pwmVal);
-        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_L, (uint32_t)(pwmVal));
+        ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
-        gpio_set_level((gpio_num_t) this->L_PWM, 1);
+        gpio_set_level((gpio_num_t) this->L_PWM, (uint32_t)(pwmVal));
         gpio_set_level((gpio_num_t) this->R_PWM, 0);
+        std::cout<<pwmVal<<std::endl;
     }
     else
     {
-        configure_pwm(this->R_PWM, 0, this->LEDC_CHANNEL);
-        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, pwmVal);
-        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, (uint32_t)(pwmVal));
+        ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
         gpio_set_level((gpio_num_t) this->L_PWM, 0);
-        gpio_set_level((gpio_num_t) this->R_PWM, 1);
+        gpio_set_level((gpio_num_t) this->R_PWM, (uint32_t)(pwmVal));
     }
 }
 
