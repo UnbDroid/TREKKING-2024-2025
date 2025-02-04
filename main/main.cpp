@@ -9,10 +9,10 @@
 #include <rtc_wdt.h>
 #include <esp_timer.h>
 
-MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_EN_LEFT_FRONT, L_PWM_LEFT_FRONT, R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L, LEDC_CHANNEL_LEFT_FRONT_R);
-MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_EN_LEFT_BACK, L_PWM_LEFT_BACK, R_PWM_LEFT_BACK, LEDC_CHANNEL_LEFT_BACK_L, LEDC_CHANNEL_LEFT_BACK_R);
-MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_EN_RIGHT_FRONT, L_PWM_RIGHT_FRONT, R_PWM_RIGHT_FRONT, LEDC_CHANNEL_RIGHT_FRONT_L, LEDC_CHANNEL_RIGHT_FRONT_R);
-MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_EN_RIGHT_BACK, L_PWM_RIGHT_BACK, R_PWM_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK_L, LEDC_CHANNEL_RIGHT_BACK_R);
+MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_EN_LEFT_FRONT, L_PWM_LEFT_FRONT, R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT);
+MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_EN_LEFT_BACK, L_PWM_LEFT_BACK, R_PWM_LEFT_BACK, LEDC_CHANNEL_LEFT_BACK);
+MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_EN_RIGHT_FRONT, L_PWM_RIGHT_FRONT, R_PWM_RIGHT_FRONT, LEDC_CHANNEL_RIGHT_FRONT);
+MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_EN_RIGHT_BACK, L_PWM_RIGHT_BACK, R_PWM_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK);
 
 void read_encoder_left_front(void *arg)
 {
@@ -51,10 +51,25 @@ extern "C" void app_main(void)
     for (int i = 0; i < 255; i++)
     {
         right_front_motor.set_motor(1, i);
-        std::cout<<right_front_motor.return_posi()<<std::endl;
+        left_back_motor.set_motor(1, i);
+        std::cout<<right_front_motor.return_posi()<<" "<<left_back_motor.return_posi()<<std::endl;
         vTaskDelay(50/portTICK_PERIOD_MS);
     }
 
     right_front_motor.stop_motor();
-    
+    left_back_motor.stop_motor();
+    vTaskDelay(3000/portTICK_PERIOD_MS);
+
+
+    for (int i = 0; i < 255; i++)
+    {
+        right_front_motor.set_motor(-1, i);
+        left_back_motor.set_motor(-1, i);
+        std::cout<<right_front_motor.return_posi()<<" "<<left_back_motor.return_posi()<<std::endl;
+        vTaskDelay(50/portTICK_PERIOD_MS);
+    }
+
+    right_front_motor.stop_motor();
+    left_back_motor.stop_motor();
+
 }

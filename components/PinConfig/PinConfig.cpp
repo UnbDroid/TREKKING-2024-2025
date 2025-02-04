@@ -67,14 +67,10 @@ void pin_configuration() {
     configure_pins_output(OUTPUT_LEFT_BACK);
     configure_pins_output(OUTPUT_RIGHT_FRONT);
     configure_pins_output(OUTPUT_RIGHT_BACK);
-    configure_pwm(L_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_L);
-    configure_pwm(R_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_R);
-    configure_pwm(L_PWM_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK_L);
-    configure_pwm(R_PWM_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK_R);
-    configure_pwm(L_PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_L);
-    configure_pwm(R_PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_R);
-    configure_pwm(L_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_L);
-    configure_pwm(R_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_R);
+    configure_pwm(L_EN_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT);
+    configure_pwm(L_EN_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK);
+    configure_pwm(L_EN_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT);
+    configure_pwm(L_EN_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK);
     configure_pins_input_enca(ENCA_GERAL);
     configure_pins_input_encb(ENCB_GERAL);
     // gpio_config(&config_enca);

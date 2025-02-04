@@ -19,8 +19,8 @@
 #define L_PWM_LEFT_BACK 19 //placeholders
 #define R_PWM_LEFT_BACK 21 //placeholders
 #define OUTPUT_LEFT_BACK ((1ULL<<L_EN_LEFT_BACK)| (1ULL<<R_PWM_LEFT_BACK)|(1ULL<<L_PWM_LEFT_BACK))
-#define ENCA_LEFT_BACK 17 //placeholders
-#define ENCB_LEFT_BACK 16 //placeholders
+#define ENCA_LEFT_BACK 16 //placeholders
+#define ENCB_LEFT_BACK 17 //placeholders
 
 #define L_EN_RIGHT_FRONT 26 //placeholders
 #define L_PWM_RIGHT_FRONT 14 //placeholders
@@ -29,7 +29,7 @@
 #define ENCA_RIGHT_FRONT 32 //placeholders
 #define ENCB_RIGHT_FRONT 33 //placeholders
 
-#define L_EN_RIGHT_BACK 27
+#define L_EN_RIGHT_BACK 35
 #define L_PWM_RIGHT_BACK 25
 #define R_PWM_RIGHT_BACK 26
 #define OUTPUT_RIGHT_BACK ((1ULL<<L_EN_RIGHT_BACK ) | (1ULL<<L_PWM_RIGHT_BACK) | (1ULL<<R_PWM_RIGHT_BACK))
@@ -53,14 +53,10 @@ void pin_configuration();
 
 #define LEDC_TIMER               LEDC_TIMER_0
 #define LEDC_MODE                LEDC_LOW_SPEED_MODE
-#define LEDC_CHANNEL_LEFT_FRONT_L  LEDC_CHANNEL_0
-#define LEDC_CHANNEL_LEFT_FRONT_R  LEDC_CHANNEL_1
-#define LEDC_CHANNEL_LEFT_BACK_L   LEDC_CHANNEL_2
-#define LEDC_CHANNEL_LEFT_BACK_R   LEDC_CHANNEL_3
-#define LEDC_CHANNEL_RIGHT_FRONT_L LEDC_CHANNEL_4
-#define LEDC_CHANNEL_RIGHT_FRONT_R LEDC_CHANNEL_5
-#define LEDC_CHANNEL_RIGHT_BACK_L  LEDC_CHANNEL_6
-#define LEDC_CHANNEL_RIGHT_BACK_R  LEDC_CHANNEL_7
+#define LEDC_CHANNEL_LEFT_FRONT  LEDC_CHANNEL_0
+#define LEDC_CHANNEL_LEFT_BACK   LEDC_CHANNEL_1
+#define LEDC_CHANNEL_RIGHT_FRONT LEDC_CHANNEL_2
+#define LEDC_CHANNEL_RIGHT_BACK  LEDC_CHANNEL_3
 #define LEDC_DUTY_RES            LEDC_TIMER_8_BIT // Set duty resolution to 13 bits
 #define LEDC_DUTY                (128) // Set duty to 50%. (2 ** 13) * 50% = 4096
 #define LEDC_FREQUENCY           (10000) // Frequency in Hertz. Set frequency at 4 kH
