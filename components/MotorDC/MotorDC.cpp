@@ -42,20 +42,24 @@ int32_t MotorDC::return_posi(){
 
 void MotorDC::set_motor(int direcao, int pwmVal)
 {
-    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
-    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
+    // ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
+    // ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
     if (direcao == 1)
     {
+        ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
+        ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
-        gpio_set_level((gpio_num_t) this->L_PWM, 1);
-        gpio_set_level((gpio_num_t) this->R_PWM, 0);
+        // gpio_set_level((gpio_num_t) this->L_PWM, 1);
+        // gpio_set_level((gpio_num_t) this->R_PWM, 0);
         std::cout<<pwmVal<<std::endl;
     }
     else
     {
+        ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL+1, (uint32_t)(pwmVal));
+        ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL+1);
         gpio_set_level((gpio_num_t) this->L_EN, 1);
-        gpio_set_level((gpio_num_t) this->L_PWM, 0);
-        gpio_set_level((gpio_num_t) this->R_PWM, 1);
+        // gpio_set_level((gpio_num_t) this->L_PWM, 0);
+        // gpio_set_level((gpio_num_t) this->R_PWM, 1);
         std::cout<<pwmVal<<std::endl;
     }
 }
@@ -70,8 +74,8 @@ void MotorDC::read_encoder(void *arg)
     }
     else
     {
-        this->posi--;
     }
+        this->posi--;
 
     xQueueSendFromISR(gpio_evt_queue, &this->posi, NULL);
 
