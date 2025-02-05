@@ -35,13 +35,13 @@
 #define ENCA_RIGHT_FRONT 32 // placeholders
 #define ENCB_RIGHT_FRONT 33 // placeholders
 
-#define L_EN_RIGHT_BACK 35
+#define L_EN_RIGHT_BACK 10
 #define L_PWM_RIGHT_BACK 25
 #define R_PWM_RIGHT_BACK 26
 #define OUTPUT_RIGHT_BACK                                                      \
   ((1ULL << L_EN_RIGHT_BACK) | (1ULL << L_PWM_RIGHT_BACK) |                    \
    (1ULL << R_PWM_RIGHT_BACK))
-#define ENCA_RIGHT_BACK 10 // placeholders
+#define ENCA_RIGHT_BACK 35 // placeholders
 #define ENCB_RIGHT_BACK 34 // placeholders
 
 #define ENCA_GERAL                                                             \
