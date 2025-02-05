@@ -13,8 +13,8 @@
 // MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_EN_LEFT_FRONT,
 //                         L_PWM_LEFT_FRONT, R_PWM_LEFT_FRONT,
 //                        LEDC_CHANNEL_LEFT_FRONT);
-MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_EN_LEFT_BACK, L_PWM_LEFT_BACK, R_PWM_LEFT_BACK, ledc_channel_t(2));
-MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_EN_RIGHT_FRONT, L_PWM_RIGHT_FRONT, R_PWM_RIGHT_FRONT, (ledc_channel_t)0);
+MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_PWM_LEFT_BACK, R_PWM_LEFT_BACK, ledc_channel_t(2));
+MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_PWM_RIGHT_FRONT, R_PWM_RIGHT_FRONT, (ledc_channel_t)0);
 // MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_EN_RIGHT_BACK,
 //                         L_PWM_RIGHT_BACK, R_PWM_RIGHT_BACK,
 //                        LEDC_CHANNEL_RIGHT_BACK);

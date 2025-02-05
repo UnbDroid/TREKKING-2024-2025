@@ -14,7 +14,7 @@
 
 class MotorDC{
     public:
-        MotorDC(const int ENCA, const int ENCB, const int L_EN, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL); // Construtor da classe MotorDC
+        MotorDC(const int ENCA, const int ENCB, const int L_PWM, const int R_PWM, ledc_channel_t LEDC_CHANNEL); // Construtor da classe MotorDC
         void stop_motor();
         void configure_motor(int ticks_per_turn, float kp, float ki, float kd); // Função para configurar o motor
         void set_motor(int direcao, int pwmVal);

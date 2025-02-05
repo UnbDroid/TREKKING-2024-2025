@@ -11,12 +11,11 @@
 
 QueueHandle_t MotorDC::gpio_evt_queue = NULL;
 
-MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN,
+MotorDC::MotorDC(const int ENCA, const int ENCB,
                  const int L_PWM, const int R_PWM,
                  ledc_channel_t LEDC_CHANNEL) {
   this->ENCA = ENCA;
   this->ENCB = ENCB;
-  this->L_EN = L_EN;
   this->L_PWM = L_PWM;
   this->R_PWM = R_PWM;
   this->LEDC_CHANNEL = LEDC_CHANNEL;
@@ -24,7 +23,6 @@ MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_EN,
 }
 
 void MotorDC::stop_motor() {
-  gpio_set_level((gpio_num_t)this->L_EN, 0);
   gpio_set_level((gpio_num_t)this->L_PWM, 0);
   gpio_set_level((gpio_num_t)this->R_PWM, 0);
 }
@@ -42,7 +40,6 @@ int32_t MotorDC::return_posi() { return this->posi; }
 void MotorDC::set_motor(int direcao, int pwmVal)
 
 {
-  gpio_set_level((gpio_num_t)this->L_EN, 1);
   if (direcao == 1) {
     ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
     ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
