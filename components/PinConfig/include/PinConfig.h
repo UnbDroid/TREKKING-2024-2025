@@ -1,6 +1,6 @@
 #ifndef __PIN_CONFIG_H__
 #define __PIN_CONFIG_H__
-#endif
+
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "esp_mac.h"
@@ -82,3 +82,5 @@ void configure_pwm(int gpio_num, int timer, int channel);
 
 // --------------------------------------------------------------------------------
 // } Configuração LEDC
+
+#endif
