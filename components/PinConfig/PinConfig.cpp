@@ -1,79 +1,70 @@
-#include <stdio.h>
-#include <iostream>
 #include "PinConfig.h"
 #include "esp_task_wdt.h"
-                                       //
-// filepath: /home/caldo/Projetos/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp
+#include <iostream>
+#include <stdio.h>
+//
+// filepath:
+// /home/caldo/Projetos/TREKKING-2024-2025/components/PinConfig/PinConfig.cpp
 void configure_pwm(int gpio_num, int timer, int channel) {
-    ledc_timer_config_t ledc_timer = {
-        .speed_mode       = LEDC_MODE,
-        .duty_resolution  = LEDC_DUTY_RES,
-        .timer_num        = (ledc_timer_t)timer,
-        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 10 kHz
-        .clk_cfg          = LEDC_AUTO_CLK
-    };
+  ledc_timer_config_t ledc_timer = {
+      .speed_mode = LEDC_MODE,
+      .duty_resolution = LEDC_DUTY_RES,
+      .timer_num = (ledc_timer_t)timer,
+      .freq_hz = LEDC_FREQUENCY, // Set output frequency at 10 kHz
+      .clk_cfg = LEDC_AUTO_CLK};
 
-    ledc_channel_config_t ledc_channel = {
-        .gpio_num       = gpio_num,
-        .speed_mode     = LEDC_MODE,
-        .channel        = (ledc_channel_t)channel,
-        .intr_type      = LEDC_INTR_DISABLE,
-        .timer_sel      = LEDC_TIMER,
-        .hpoint         = 0
-    };
+  ledc_channel_config_t ledc_channel = {.gpio_num = gpio_num,
+                                        .speed_mode = LEDC_MODE,
+                                        .channel = (ledc_channel_t)channel,
+                                        .intr_type = LEDC_INTR_DISABLE,
+                                        .timer_sel = LEDC_TIMER,
+                                        .hpoint = 0};
 
-    ledc_timer_config(&ledc_timer);
-    ledc_channel_config(&ledc_channel);
+  ledc_timer_config(&ledc_timer);
+  ledc_channel_config(&ledc_channel);
 }
 
-void configure_pins_input_enca(unsigned long long bit_mask) 
-{
-    gpio_config_t config_output = {
-    .pin_bit_mask = bit_mask,
-    .mode = GPIO_MODE_INPUT,
-    .pull_up_en = GPIO_PULLUP_ENABLE,
-    .pull_down_en = GPIO_PULLDOWN_DISABLE,
-    .intr_type = GPIO_INTR_POSEDGE
-    };
-    gpio_config(&config_output);
+void configure_pins_input_enca(unsigned long long bit_mask) {
+  gpio_config_t config_output = {.pin_bit_mask = bit_mask,
+                                 .mode = GPIO_MODE_INPUT,
+                                 .pull_up_en = GPIO_PULLUP_ENABLE,
+                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
+                                 .intr_type = GPIO_INTR_POSEDGE};
+  gpio_config(&config_output);
 }
 
-void configure_pins_input_encb(unsigned long long bit_mask) 
-{
-    gpio_config_t config_output = {
-    .pin_bit_mask = bit_mask,
-    .mode = GPIO_MODE_INPUT,
-    .pull_up_en = GPIO_PULLUP_ENABLE,
-    .pull_down_en = GPIO_PULLDOWN_DISABLE,
-    .intr_type = GPIO_INTR_DISABLE
-    };
-    gpio_config(&config_output);
+void configure_pins_input_encb(unsigned long long bit_mask) {
+  gpio_config_t config_output = {.pin_bit_mask = bit_mask,
+                                 .mode = GPIO_MODE_INPUT,
+                                 .pull_up_en = GPIO_PULLUP_ENABLE,
+                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
+                                 .intr_type = GPIO_INTR_DISABLE};
+  gpio_config(&config_output);
 }
 
-void configure_pins_output(unsigned long long bit_mask) 
-{
-    gpio_config_t config_output = {
-    .pin_bit_mask = bit_mask,
-    .mode = GPIO_MODE_OUTPUT,
-    .pull_up_en = GPIO_PULLUP_DISABLE,
-    .pull_down_en = GPIO_PULLDOWN_DISABLE,
-    .intr_type = GPIO_INTR_DISABLE
-    };    
-    gpio_config(&config_output);
+void configure_pins_output(unsigned long long bit_mask) {
+  gpio_config_t config_output = {.pin_bit_mask = bit_mask,
+                                 .mode = GPIO_MODE_OUTPUT,
+                                 .pull_up_en = GPIO_PULLUP_DISABLE,
+                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
+                                 .intr_type = GPIO_INTR_DISABLE};
+  gpio_config(&config_output);
 }
 
 void pin_configuration() {
-    configure_pins_output(OUTPUT_LEFT_FRONT);
-    configure_pins_output(OUTPUT_LEFT_BACK);
-    configure_pins_output(OUTPUT_RIGHT_FRONT);
-    configure_pins_output(OUTPUT_RIGHT_BACK);
-    configure_pwm(L_EN_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT);
-    configure_pwm(L_EN_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK);
-    configure_pwm(L_EN_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT);
-    configure_pwm(L_EN_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK);
-    configure_pins_input_enca(ENCA_GERAL);
-    configure_pins_input_encb(ENCB_GERAL);
-    // gpio_config(&config_enca);
-    // gpio_config(&config_encb);
-    std::cout << "Pinos configurados" << std::endl;
+  configure_pins_output(OUTPUT_LEFT_FRONT);
+  configure_pins_output(OUTPUT_LEFT_BACK);
+  configure_pins_output(OUTPUT_RIGHT_FRONT);
+  // configure_pins_output(OUTPUT_RIGHT_BACK);
+  // configure_pins_output(L_EN_RIGHT_FRONT);
+  // configure_pins_output(L_EN_LEFT_BACK);
+  configure_pwm(R_PWM_RIGHT_FRONT, 0, 0);
+  configure_pwm(L_PWM_RIGHT_FRONT, 0, 1);
+  configure_pwm(R_PWM_LEFT_BACK, 0, 2);
+  configure_pwm(L_PWM_LEFT_BACK, 0, 3);
+  configure_pins_input_enca(ENCA_GERAL);
+  configure_pins_input_encb(ENCB_GERAL);
+  // gpio_config(&config_enca);
+  // gpio_config(&config_encb);
+  std::cout << "Pinos configurados" << std::endl;
 }
