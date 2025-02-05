@@ -13,12 +13,14 @@ QueueHandle_t MotorDC::gpio_evt_queue = NULL;
 
 MotorDC::MotorDC(const int ENCA, const int ENCB,
                  const int L_PWM, const int R_PWM,
-                 ledc_channel_t LEDC_CHANNEL) {
+                 ledc_channel_t LEDC_CHANNEL_L,
+                 ledc_channel_t LEDC_CHANNEL_R) {
   this->ENCA = ENCA;
   this->ENCB = ENCB;
   this->L_PWM = L_PWM;
   this->R_PWM = R_PWM;
-  this->LEDC_CHANNEL = LEDC_CHANNEL;
+  this->LEDC_CHANNEL_L = LEDC_CHANNEL_L;
+  this->LEDC_CHANNEL_R = LEDC_CHANNEL_R;
   gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 }
 
@@ -41,17 +43,16 @@ void MotorDC::set_motor(int direcao, int pwmVal)
 
 {
   if (direcao == 1) {
-    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
-    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
-    // gpio_set_level((gpio_num_t) this->L_PWM, 1);
-    // gpio_set_level((gpio_num_t) this->R_PWM, 0);
+    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_L, (uint32_t)(pwmVal));
+    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
+    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, 0);
+    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
     std::cout << pwmVal << std::endl;
   } else {
-    ledc_set_duty(LEDC_MODE, (ledc_channel_t)(this->LEDC_CHANNEL + 1),
-                  (uint32_t)(pwmVal));
-    ledc_update_duty(LEDC_MODE, (ledc_channel_t)(this->LEDC_CHANNEL + 1));
-    // gpio_set_level((gpio_num_t) this->L_PWM, 1);
-    // gpio_set_level((gpio_num_t) this->R_PWM, 0);
+    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, (uint32_t)(pwmVal));
+    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
+    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_L, 0);
+    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
     std::cout << pwmVal << std::endl;
   }
 }
