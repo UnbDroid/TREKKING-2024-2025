@@ -88,7 +88,7 @@ void pin_configuration() {
   gpio_config(&gpio_34_config);
 
   gpio_config_t gpio_35_config = {
-      .pin_bit_mask = (1ULL << GPIO_NUM_34), // Apenas GPIO 34
+      .pin_bit_mask = (1ULL << GPIO_NUM_35), // Apenas GPIO 34
       .mode = GPIO_MODE_INPUT,               // Garantindo que seja só input
       .pull_up_en = GPIO_PULLUP_DISABLE,
       .pull_down_en =
