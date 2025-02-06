@@ -72,19 +72,18 @@ void MotorDC::read_encoder(void *arg) {
 
 void MotorDC::reset_encoder() { this->posi = 0; }
 
+double MotorDC::return_speed() {return this->current_speed_pwm;}
+
 void MotorDC::go_forward(int speed_rpm) {
 
   this->current_time = esp_timer_get_time() / 1000000.0;
   float dt = (this->current_time - this->last_time);
   float delta_posi = this->posi - this->last_posi;
-  double current_speed_pwm = (delta_posi / this->ticks_per_turn) * 60 / dt;
+  this->current_speed_pwm = (delta_posi / this->ticks_per_turn) * 60 / dt;
   this->last_posi = this->posi;
   this->last_time = this->current_time;
 
-
-  std::cout << "Speed: " << current_speed_pwm << std::endl;
-
-  double error = speed_rpm - current_speed_pwm;
+  double error = speed_rpm - this->current_speed_pwm;
   double p = this->kp * error;
   double i_err_now = this->ki * error * dt;
   this->accumulated_error += i_err_now;
@@ -97,8 +96,6 @@ void MotorDC::go_forward(int speed_rpm) {
   double initial_pwm = ((double)speed_rpm / 625) * 255;
 
   double final_pwm = initial_pwm + pwm;
-
-  std::cout << "PWM: " << final_pwm << std::endl;
 
   int dir = 1;
 

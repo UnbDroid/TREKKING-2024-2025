@@ -28,6 +28,7 @@ class MotorDC{
         void reset_encoder();
         void go_forward(int speed_rpm);
         int32_t return_posi();
+        double return_speed();
         double wheel_lenght = 2 * 3.1415 * 6.272; //TODO: medir o raio da roda real
 
     private:
@@ -51,6 +52,7 @@ class MotorDC{
         float kp; // valor de kp para o PID
         float ki; // valor de ki para o PID
         float kd; // valor de kd para o PID
+        double current_speed_pwm = 0;
         double last_error = 0; // erro anterior para o PID
         double accumulated_error = 0; // erro acumulado para o PID
         int32_t posi = 0; // posição do motor em ticks do encoder
