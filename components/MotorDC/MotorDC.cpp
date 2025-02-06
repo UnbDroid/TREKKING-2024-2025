@@ -3,6 +3,8 @@
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "hal/ledc_types.h"
+#include "esp_err.h"
+#include "esp_timer.h"  
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
 #include <freertos/task.h>
@@ -29,17 +31,17 @@ void MotorDC::stop_motor() {
   gpio_set_level((gpio_num_t)this->R_PWM, 0);
 }
 
-void MotorDC::configure_motor(int ticks_per_turn, float kp, float ki,
-                              float kd) {
-  this->ticks_per_turn = ticks_per_turn;
-  this->kp = kp;
-  this->ki = ki;
-  this->kd = kd;
+void MotorDC::configure_motor(int tpt, float p, float i,
+                              float d) {
+  this->ticks_per_turn = tpt;
+  this->kp = p;
+  this->ki = i;
+  this->kd = d;
 }
 
 int32_t MotorDC::return_posi() { return this->posi; }
 
-void MotorDC::set_motor(int direcao, int pwmVal)
+void MotorDC::set_motor(int direcao, double pwmVal)
 
 {
   if (direcao == 1) {
@@ -70,32 +72,40 @@ void MotorDC::read_encoder(void *arg) {
 
 void MotorDC::reset_encoder() { this->posi = 0; }
 
-void MotorDC::go_forward(int velocidade_rpm) {
+void MotorDC::go_forward(int speed_rpm) {
 
-  if (this->ticks_per_turn != 0) {
-    this->turns = this->posi / this->ticks_per_turn;
-  } else {
-    this->turns = 0;
-  }
+  this->current_time = esp_timer_get_time() / 1000000.0;
+  float dt = (this->current_time - this->last_time);
+  float delta_posi = this->posi - this->last_posi;
+  double current_speed_pwm = (delta_posi / this->ticks_per_turn) * 60 / dt;
+  this->last_posi = this->posi;
+  this->last_time = this->current_time;
 
-  prev_time = time_now;
-  time_now = esp_timer_get_time();
-  double delta_time = (time_now - prev_time) / 1000000;
 
-  this->reference_rpm = velocidade_rpm;
-  this->rps = this->reference_rpm / 60;
-  this->turns = this->posi / this->ticks_per_turn;
-  float turns_per_sec = (this->turns - this->prev_turns) / delta_time;
-  float err = this->rps - turns_per_sec;
-  float p = err * this->kp;
-  float i = this->integral_err * this->ki;
-  float d = (err - this->prev_err) * this->kd;
-  this->integral_err += err;
-  this->prev_err = err;
-  int pwm = p + i + d;
+  std::cout << "Speed: " << current_speed_pwm << std::endl;
+
+  double error = speed_rpm - current_speed_pwm;
+  double p = this->kp * error;
+  double i_err_now = this->ki * error * dt;
+  this->accumulated_error += i_err_now;
+  double i = this->accumulated_error;
+  double d = this->kd * (error - this->last_error) / dt;
+  this->last_error = error;
+
+  double pwm = p + i + d;
+
+  double initial_pwm = ((double)speed_rpm / 625) * 255;
+
+  double final_pwm = initial_pwm + pwm;
+
+  std::cout << "PWM: " << final_pwm << std::endl;
+
   int dir = 1;
-  if (pwm < 0) {
+
+  if (final_pwm < 0) {
+    final_pwm = -final_pwm;
     dir = -1;
   }
-  this->set_motor(dir, pwm);
+
+  this->set_motor(dir, final_pwm);
 }

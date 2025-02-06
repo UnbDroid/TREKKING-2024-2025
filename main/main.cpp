@@ -1,5 +1,6 @@
 #include <MotorDC.h>
 #include <PinConfig.h>
+#include <esp_task_wdt.h>
 
 MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
                          R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L_PWM,
@@ -46,6 +47,10 @@ void robot_setup()
                        (void *)ENCA_RIGHT_FRONT);
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
+  left_front_motor.configure_motor(283, 1, 0, 0);
+  left_back_motor.configure_motor(288, 0, 0, 0);
+  right_front_motor.configure_motor(293, 1, 0, 0);
+  right_back_motor.configure_motor(280, 1, 0, 0);
 }
 
 extern "C" void app_main(void)
@@ -53,52 +58,17 @@ extern "C" void app_main(void)
 
   robot_setup();
 
+  esp_task_wdt_add(NULL);
+
   while (true)
   {
-
-    for (int i = 0; i < 80; i++)
-    {
-      left_front_motor.set_motor(1, i);
-      right_front_motor.set_motor(1, i);
-      left_back_motor.set_motor(1, i);
-      right_back_motor.set_motor(1, i);
-      std::cout << left_front_motor.return_posi()
-                << " "
-                << left_back_motor.return_posi()
-                << " "
-                << right_front_motor.return_posi()
-                << " "
-                << right_back_motor.return_posi()
-                << std::endl;
-      vTaskDelay(300 / portTICK_PERIOD_MS);
-    }
-
-    left_front_motor.stop_motor();
-    right_front_motor.stop_motor();
-    left_back_motor.stop_motor();
-    right_back_motor.stop_motor();
-    vTaskDelay(3000 / portTICK_PERIOD_MS);
-
-    for (int i = 0; i < 80; i++)
-    {
-      left_front_motor.set_motor(-1, i);
-      right_front_motor.set_motor(-1, i);
-      left_back_motor.set_motor(-1, i);
-      right_back_motor.set_motor(-1, i);
-      std::cout << left_front_motor.return_posi()
-                << " "
-                << left_back_motor.return_posi()
-                << " "
-                << right_front_motor.return_posi()
-                << " "
-                << right_back_motor.return_posi()
-                << std::endl;
-      vTaskDelay(300 / portTICK_PERIOD_MS);
-    }
-    left_front_motor.stop_motor();
-    right_front_motor.stop_motor();
-    left_back_motor.stop_motor();
-    right_back_motor.stop_motor();
-    vTaskDelay(3000 / portTICK_PERIOD_MS);
+    left_back_motor.go_forward(100);
+    // Feed the watchdog timer to prevent it from resetting the system
+    esp_task_wdt_reset();
   }
 }
+
+// LF = 283
+// RF = 293
+// LB = 288
+// RB = 280
