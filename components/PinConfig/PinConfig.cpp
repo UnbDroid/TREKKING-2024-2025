@@ -57,6 +57,8 @@ void pin_configuration() {
   configure_pins_output(OUTPUT_LEFT_BACK);
   configure_pins_output(OUTPUT_RIGHT_FRONT);
   configure_pins_output(OUTPUT_RIGHT_BACK);
+  configure_pins_input_enca(ENCA_GERAL);
+  configure_pins_input_encb(ENCB_GERAL);
   configure_pwm(R_PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_R_PWM);
   configure_pwm(L_PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_L_PWM);
   configure_pwm(R_PWM_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK_R_PWM);
@@ -66,36 +68,7 @@ void pin_configuration() {
   configure_pwm(L_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_L_PWM);
   configure_pwm(R_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_R_PWM);
   configure_pwm(L_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_L_PWM);
-  configure_pins_input_enca(1ULL << ENCA_LEFT_FRONT);
-  configure_pins_input_enca(1ULL << ENCA_LEFT_BACK);
-  configure_pins_input_enca(1ULL << ENCA_RIGHT_FRONT);
-  // configure_pins_input_enca(1ULL << ENCA_RIGHT_BACK);
-
-  // configure_pins_input_encb(1ULL << ENCB_RIGHT_BACK);
-  configure_pins_input_encb(1ULL << ENCB_RIGHT_FRONT);
-
-  configure_pins_input_encb(1ULL << ENCB_LEFT_BACK);
-  configure_pins_input_encb(1ULL << ENCB_LEFT_FRONT);
-
-  gpio_config_t gpio_34_config = {
-      .pin_bit_mask = (1ULL << GPIO_NUM_34), // Apenas GPIO 34
-      .mode = GPIO_MODE_INPUT,               // Garantindo que seja só input
-      .pull_up_en = GPIO_PULLUP_DISABLE,
-      .pull_down_en =
-          GPIO_PULLDOWN_DISABLE, // Usando pull-down, pois GPIO 34 é input-only
-      .intr_type = GPIO_INTR_DISABLE}; // Desabilita interrupção
-
-  gpio_config(&gpio_34_config);
-
-  gpio_config_t gpio_35_config = {
-      .pin_bit_mask = (1ULL << GPIO_NUM_35), // Apenas GPIO 34
-      .mode = GPIO_MODE_INPUT,               // Garantindo que seja só input
-      .pull_up_en = GPIO_PULLUP_DISABLE,
-      .pull_down_en =
-          GPIO_PULLDOWN_DISABLE, // Usando pull-down, pois GPIO 34 é input-only
-      .intr_type = GPIO_INTR_DISABLE}; // Desabilita interrupção
-
-  gpio_config(&gpio_35_config);
+  
 
   // configure_pins_input_encb(ENCB_GERAL);
   std::cout << "Pinos configurados" << std::endl;

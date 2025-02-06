@@ -1,14 +1,5 @@
-#include "hal/ledc_types.h"
 #include <MotorDC.h>
 #include <PinConfig.h>
-#include <esp_timer.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/queue.h>
-#include <freertos/task.h>
-#include <inttypes.h>
-#include <iostream>
-#include <rtc_wdt.h>
-#include <stdio.h>
 
 MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
                          R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L_PWM,
@@ -23,17 +14,28 @@ MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_PWM_RIGHT_BACK,
                          R_PWM_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK_L_PWM,
                          LEDC_CHANNEL_RIGHT_BACK_R_PWM);
 
-void read_encoder_left_front(void *arg) { left_front_motor.read_encoder(arg); }
+void read_encoder_left_front(void *arg)
+{
+  left_front_motor.read_encoder(arg);
+}
 
-void read_encoder_left_back(void *arg) { left_back_motor.read_encoder(arg); }
+void read_encoder_left_back(void *arg)
+{
+  left_back_motor.read_encoder(arg);
+}
 
-void read_encoder_right_front(void *arg) {
+void read_encoder_right_front(void *arg)
+{
   right_front_motor.read_encoder(arg);
 }
 
-void read_encoder_right_back(void *arg) { right_back_motor.read_encoder(arg); }
+void read_encoder_right_back(void *arg)
+{
+  right_back_motor.read_encoder(arg);
+}
 
-void robot_setup() {
+void robot_setup()
+{
   pin_configuration();
   gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
   gpio_isr_handler_add((gpio_num_t)ENCA_LEFT_FRONT, read_encoder_left_front,
@@ -46,17 +48,28 @@ void robot_setup() {
                        (void *)ENCA_RIGHT_BACK);
 }
 
-extern "C" void app_main(void) {
-  robot_setup();
-  while (true) {
+extern "C" void app_main(void)
+{
 
-    for (int i = 0; i < 80; i++) {
+  robot_setup();
+
+  while (true)
+  {
+
+    for (int i = 0; i < 80; i++)
+    {
       left_front_motor.set_motor(1, i);
       right_front_motor.set_motor(1, i);
       left_back_motor.set_motor(1, i);
       right_back_motor.set_motor(1, i);
-      std::cout << right_front_motor.return_posi() << " "
-                << left_back_motor.return_posi() << std::endl;
+      std::cout << left_front_motor.return_posi()
+                << " "
+                << left_back_motor.return_posi()
+                << " "
+                << right_front_motor.return_posi()
+                << " "
+                << right_back_motor.return_posi()
+                << std::endl;
       vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 
@@ -64,20 +77,28 @@ extern "C" void app_main(void) {
     right_front_motor.stop_motor();
     left_back_motor.stop_motor();
     right_back_motor.stop_motor();
-    vTaskDelay(300 / portTICK_PERIOD_MS);
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
 
-    for (int i = 0; i < 80; i++) {
+    for (int i = 0; i < 80; i++)
+    {
       left_front_motor.set_motor(-1, i);
       right_front_motor.set_motor(-1, i);
       left_back_motor.set_motor(-1, i);
       right_back_motor.set_motor(-1, i);
-      std::cout << right_front_motor.return_posi() << " "
-                << left_back_motor.return_posi() << std::endl;
+      std::cout << left_front_motor.return_posi()
+                << " "
+                << left_back_motor.return_posi()
+                << " "
+                << right_front_motor.return_posi()
+                << " "
+                << right_back_motor.return_posi()
+                << std::endl;
       vTaskDelay(300 / portTICK_PERIOD_MS);
     }
+    left_front_motor.stop_motor();
+    right_front_motor.stop_motor();
+    left_back_motor.stop_motor();
+    right_back_motor.stop_motor();
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
   }
-  left_front_motor.stop_motor();
-  right_front_motor.stop_motor();
-  left_back_motor.stop_motor();
-  right_back_motor.stop_motor();
 }

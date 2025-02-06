@@ -4,6 +4,7 @@
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "driver/uart.h"
+#include "hal/ledc_types.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -11,6 +12,9 @@
 #include "esp_timer.h"
 #include "driver/gpio.h"
 #include "esp_intr_alloc.h"
+#include "inttypes.h"
+#include "stdio.h"
+#include "iostream"
 
 class MotorDC{
     public:
