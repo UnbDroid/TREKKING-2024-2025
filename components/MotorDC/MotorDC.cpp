@@ -49,13 +49,11 @@ void MotorDC::set_motor(int direcao, double pwmVal)
     ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
     ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, 0);
     ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
-    std::cout << pwmVal << std::endl;
   } else {
     ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, (uint32_t)(pwmVal));
     ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
     ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_L, 0);
     ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
-    std::cout << pwmVal << std::endl;
   }
 }
 
@@ -67,7 +65,9 @@ void MotorDC::read_encoder(void *arg) {
     this->posi--;
   }
 
-  xQueueSendFromISR(gpio_evt_queue, &this->posi, NULL);
+  int32_t posi_value = this->posi;
+
+  xQueueSendFromISR(gpio_evt_queue, &posi_value, NULL);
 }
 
 void MotorDC::reset_encoder() { this->posi = 0; }
@@ -77,23 +77,24 @@ double MotorDC::return_speed() {return this->current_speed_pwm;}
 void MotorDC::go_forward(int speed_rpm) {
 
   this->current_time = esp_timer_get_time() / 1000000.0;
-  float dt = (this->current_time - this->last_time);
-  float delta_posi = this->posi - this->last_posi;
-  this->current_speed_pwm = (delta_posi / this->ticks_per_turn) * 60 / dt;
+  double dt = (this->current_time - this->last_time);
+  double delta_posi = (double)this->posi - (double)this->last_posi;
+  this->current_speed_pwm = (delta_posi / (double)this->ticks_per_turn) * 60 / dt;
   this->last_posi = this->posi;
   this->last_time = this->current_time;
 
   double error = speed_rpm - this->current_speed_pwm;
   double p = this->kp * error;
-  double i_err_now = this->ki * error * dt;
-  this->accumulated_error += i_err_now;
-  double i = this->accumulated_error;
+  this->accumulated_error += error * dt;
+  double i = this->ki * this->accumulated_error;
   double d = this->kd * (error - this->last_error) / dt;
   this->last_error = error;
 
   double pwm = p + i + d;
 
   double initial_pwm = ((double)speed_rpm / 625) * 255;
+
+  pwm = pwm * 255 / 625;
 
   double final_pwm = initial_pwm + pwm;
 
@@ -105,4 +106,5 @@ void MotorDC::go_forward(int speed_rpm) {
   }
 
   this->set_motor(dir, final_pwm);
+
 }

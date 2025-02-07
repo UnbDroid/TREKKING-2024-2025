@@ -55,7 +55,7 @@ class MotorDC{
         double current_speed_pwm = 0;
         double last_error = 0; // erro anterior para o PID
         double accumulated_error = 0; // erro acumulado para o PID
-        int32_t posi = 0; // posição do motor em ticks do encoder
+        volatile int32_t posi = 0; // posição do motor em ticks do encoder
         int32_t last_posi = 0; // posição do motor em ticks do encoder
         double current_time = 0;
         double last_time = 0;

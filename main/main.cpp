@@ -47,10 +47,10 @@ void robot_setup()
                        (void *)ENCA_RIGHT_FRONT);
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
-  left_front_motor.configure_motor(283, 1.5, 0.0, 0);
-  left_back_motor.configure_motor(288, 1.5, 0.0, 0);
-  right_front_motor.configure_motor(293, 1, 0.0, 0);
-  right_back_motor.configure_motor(280, 1, 0.0, 0);
+  left_front_motor.configure_motor(283, 1, 1, 0);
+  left_back_motor.configure_motor(288, 1, 1, 0);
+  right_front_motor.configure_motor(293, 2, 1, 0);
+  right_back_motor.configure_motor(280, 2, 1, 0);
 }
 
 extern "C" void app_main(void)
@@ -58,14 +58,19 @@ extern "C" void app_main(void)
 
   robot_setup();
 
-  while (true)
+  for (long i = 0; i > -1; i++)
   {
     left_front_motor.go_forward(100);
     left_back_motor.go_forward(100);
     right_front_motor.go_forward(100);
     right_back_motor.go_forward(100);
+    // left_front_motor.set_motor(1, 100);
+    // left_back_motor.set_motor(1, 100);
+    // right_front_motor.set_motor(1, 100);
+    // right_back_motor.set_motor(1, 100);
+    // std::cout << "Posi LF: " << left_front_motor.return_posi() << " Posi LB: " << left_back_motor.return_posi() << " Posi RF: " << right_front_motor.return_posi() << " Posi RB: " << right_back_motor.return_posi() << std::endl;
     std::cout << "Vel LF: " << left_front_motor.return_speed() <<  " Vel LB: " << left_back_motor.return_speed() << " Vel RF: " << right_front_motor.return_speed() << " Vel RB: " << right_back_motor.return_speed() << std::endl;
     // Feed the watchdog timer to prevent it from resetting the system
-    vTaskDelay(20 / portTICK_PERIOD_MS);
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 }
