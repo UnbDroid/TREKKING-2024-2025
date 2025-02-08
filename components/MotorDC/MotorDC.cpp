@@ -11,8 +11,6 @@
 #include <iostream>
 #include <stdio.h>
 
-QueueHandle_t MotorDC::gpio_evt_queue = NULL;
-
 MotorDC::MotorDC(const int ENCA, const int ENCB,
                  const int L_PWM, const int R_PWM,
                  ledc_channel_t LEDC_CHANNEL_L,
@@ -23,7 +21,6 @@ MotorDC::MotorDC(const int ENCA, const int ENCB,
   this->R_PWM = R_PWM;
   this->LEDC_CHANNEL_L = LEDC_CHANNEL_L;
   this->LEDC_CHANNEL_R = LEDC_CHANNEL_R;
-  gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 }
 
 void MotorDC::stop_motor() {
@@ -60,39 +57,36 @@ void MotorDC::set_motor(int direcao, double pwmVal)
 void MotorDC::read_encoder(void *arg) {
 
   if (gpio_get_level((gpio_num_t)this->ENCB) == 1) {
-    this->posi++;
+    this->posi = this->posi + 1;
   } else {
-    this->posi--;
+    this->posi = this->posi - 1;
   }
 
-  int32_t posi_value = this->posi;
+  this->current_time = esp_timer_get_time() / 1000000.0;
+  this->dt = (this->current_time - this->last_time);
+  double delta_posi = (double)this->posi - (double)this->last_posi;
+  this->current_speed_rpm = (delta_posi / (double)this->ticks_per_turn) * 60 / this->dt;
+  this->last_posi = this->posi;
+  this->last_time = this->current_time;
 
-  xQueueSendFromISR(gpio_evt_queue, &posi_value, NULL);
 }
 
 void MotorDC::reset_encoder() { this->posi = 0; }
 
-double MotorDC::return_speed() {return this->current_speed_pwm;}
+double MotorDC::return_speed() {return this->current_speed_rpm;}
 
-void MotorDC::go_forward(int speed_rpm) {
+void MotorDC::go_forward(int desired_speed_rpm) {
 
-  this->current_time = esp_timer_get_time() / 1000000.0;
-  double dt = (this->current_time - this->last_time);
-  double delta_posi = (double)this->posi - (double)this->last_posi;
-  this->current_speed_pwm = (delta_posi / (double)this->ticks_per_turn) * 60 / dt;
-  this->last_posi = this->posi;
-  this->last_time = this->current_time;
-
-  double error = speed_rpm - this->current_speed_pwm;
+  double error = desired_speed_rpm - this->current_speed_rpm;
   double p = this->kp * error;
-  this->accumulated_error += error * dt;
+  this->accumulated_error += error * this->dt;
   double i = this->ki * this->accumulated_error;
   double d = this->kd * (error - this->last_error) / dt;
   this->last_error = error;
 
   double pwm = p + i + d;
 
-  double initial_pwm = ((double)speed_rpm / 625) * 255;
+  double initial_pwm = ((double)desired_speed_rpm / 625) * 255;
 
   pwm = pwm * 255 / 625;
 
