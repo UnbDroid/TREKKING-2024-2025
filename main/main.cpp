@@ -2,6 +2,7 @@
 #include <MotorDC.h>
 #include <PinConfig.h>
 #include <esp_task_wdt.h>
+//funciona
 MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
                          R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L_PWM,
                          LEDC_CHANNEL_LEFT_FRONT_R_PWM);
