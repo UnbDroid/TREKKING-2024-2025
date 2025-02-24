@@ -2,8 +2,6 @@
 #define _MOTORDC_H
 
 #include "driver/gpio.h"
-#include "driver/ledc.h"
-#include "driver/uart.h"
 #include "esp_err.h"
 #include "esp_intr_alloc.h"
 #include "esp_timer.h"
@@ -40,15 +38,6 @@ private:
   int R_PWM;
   ledc_channel_t LEDC_CHANNEL_L;
   ledc_channel_t LEDC_CHANNEL_R;
-  const uart_port_t uart_num = UART_NUM_2;
-  uart_config_t uart_config = {
-      .baud_rate = 115200,
-      .data_bits = UART_DATA_8_BITS,
-      .parity = UART_PARITY_DISABLE,
-      .stop_bits = UART_STOP_BITS_1,
-      .flow_ctrl = UART_HW_FLOWCTRL_CTS_RTS,
-      .rx_flow_ctrl_thresh = 122,
-  };
   int ticks_per_turn; // valor de encoder referente a uma volta completa da roda
   float kp;           // valor de kp para o PID
   float ki;           // valor de ki para o PID
