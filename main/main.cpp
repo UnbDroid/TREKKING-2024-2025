@@ -1,70 +1,158 @@
-#include "ps4.h"
-#include <MotorDC.h>
-#include <PinConfig.h>
-#include <esp_task_wdt.h>
-//funciona
-MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
-                         R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L_PWM,
-                         LEDC_CHANNEL_LEFT_FRONT_R_PWM);
-MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_PWM_LEFT_BACK,
-                        R_PWM_LEFT_BACK, LEDC_CHANNEL_LEFT_BACK_L_PWM,
-                        LEDC_CHANNEL_LEFT_BACK_R_PWM);
-MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_PWM_RIGHT_FRONT,
-                          R_PWM_RIGHT_FRONT, LEDC_CHANNEL_RIGHT_FRONT_L_PWM,
-                          LEDC_CHANNEL_RIGHT_FRONT_R_PWM);
-MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_PWM_RIGHT_BACK,
-                         R_PWM_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK_L_PWM,
-                         LEDC_CHANNEL_RIGHT_BACK_R_PWM);
+#include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "nvs_flash.h"
 
-void read_encoder_left_front(void *arg) { left_front_motor.read_encoder(arg); }
+#include "PS4BT.h"
+#include "btd_vhci.h"
+PS4BT PS4;
 
-void read_encoder_left_back(void *arg) { left_back_motor.read_encoder(arg); }
+bool printAngle, printTouch;
+uint8_t oldL2Value, oldR2Value;
 
-void read_encoder_right_front(void *arg) {
-  right_front_motor.read_encoder(arg);
+static const char *LOG_TAG = "main";
+
+// print controller status
+void ps4_print() {
+  if (PS4.connected()) {
+    if (PS4.getAnalogHat(LeftHatX) > 137 || PS4.getAnalogHat(LeftHatX) < 117 ||
+        PS4.getAnalogHat(LeftHatY) > 137 || PS4.getAnalogHat(LeftHatY) < 117 ||
+        PS4.getAnalogHat(RightHatX) > 137 ||
+        PS4.getAnalogHat(RightHatX) < 117 ||
+        PS4.getAnalogHat(RightHatY) > 137 ||
+        PS4.getAnalogHat(RightHatY) < 117) {
+      ESP_LOGI(LOG_TAG, "L_x = %d, L_y = %d, R_x = %d, R_y = %d",
+               PS4.getAnalogHat(LeftHatX), PS4.getAnalogHat(LeftHatY),
+               PS4.getAnalogHat(RightHatX), PS4.getAnalogHat(RightHatY));
+    }
+
+    if (PS4.getAnalogButton(L2) ||
+        PS4.getAnalogButton(
+            R2)) { // These are the only analog buttons on the PS4 controller
+      ESP_LOGI(LOG_TAG, "L2 = %d, R2 = %d", PS4.getAnalogButton(L2),
+               PS4.getAnalogButton(R2));
+    }
+    if (PS4.getAnalogButton(L2) != oldL2Value ||
+        PS4.getAnalogButton(R2) !=
+            oldR2Value) // Only write value if it's different
+      PS4.setRumbleOn(PS4.getAnalogButton(L2), PS4.getAnalogButton(R2));
+    oldL2Value = PS4.getAnalogButton(L2);
+    oldR2Value = PS4.getAnalogButton(R2);
+
+    if (PS4.getButtonClick(PS))
+      ESP_LOGI(LOG_TAG, "PS");
+    if (PS4.getButtonClick(TRIANGLE)) {
+      ESP_LOGI(LOG_TAG, "Triangle");
+      PS4.setRumbleOn(RumbleLow);
+    }
+    if (PS4.getButtonClick(CIRCLE)) {
+      ESP_LOGI(LOG_TAG, "Circle");
+      PS4.setRumbleOn(RumbleHigh);
+    }
+    if (PS4.getButtonClick(CROSS)) {
+      ESP_LOGI(LOG_TAG, "Cross");
+      PS4.setLedFlash(10, 10); // Set it to blink rapidly
+    }
+    if (PS4.getButtonClick(SQUARE)) {
+      ESP_LOGI(LOG_TAG, "Square");
+      PS4.setLedFlash(0, 0); // Turn off blinking
+    }
+
+    if (PS4.getButtonClick(UP)) {
+      ESP_LOGI(LOG_TAG, "UP");
+      PS4.setLed(Red);
+    }
+    if (PS4.getButtonClick(RIGHT)) {
+      ESP_LOGI(LOG_TAG, "RIGHT");
+      PS4.setLed(Blue);
+    }
+    if (PS4.getButtonClick(DOWN)) {
+      ESP_LOGI(LOG_TAG, "DOWN");
+      PS4.setLed(Yellow);
+    }
+    if (PS4.getButtonClick(LEFT)) {
+      ESP_LOGI(LOG_TAG, "LEFT");
+      PS4.setLed(Green);
+    }
+
+    if (PS4.getButtonClick(L1))
+      ESP_LOGI(LOG_TAG, "L1");
+    if (PS4.getButtonClick(L3))
+      ESP_LOGI(LOG_TAG, "L3");
+    if (PS4.getButtonClick(R1))
+      ESP_LOGI(LOG_TAG, "R1");
+    if (PS4.getButtonClick(R3))
+      ESP_LOGI(LOG_TAG, "R3");
+
+    if (PS4.getButtonClick(SHARE))
+      ESP_LOGI(LOG_TAG, "SHARE");
+    if (PS4.getButtonClick(OPTIONS)) {
+      ESP_LOGI(LOG_TAG, "OPTIONS");
+      printAngle = !printAngle;
+    }
+    if (PS4.getButtonClick(TOUCHPAD)) {
+      ESP_LOGI(LOG_TAG, "TOUCHPAD");
+      printTouch = !printTouch;
+    }
+
+    if (printAngle) { // Print angle calculated using the accelerometer only
+      ESP_LOGI(LOG_TAG, "Pitch: %lf Roll: %lf", PS4.getAngle(Pitch),
+               PS4.getAngle(Roll));
+    }
+
+    if (printTouch) { // Print the x, y coordinates of the touchpad
+      if (PS4.isTouching(0) ||
+          PS4.isTouching(1)) // Print newline and carriage return if any of the
+                             // fingers are touching the touchpad
+        ESP_LOGI(LOG_TAG, "");
+      for (uint8_t i = 0; i < 2; i++) { // The touchpad track two fingers
+        if (PS4.isTouching(i)) { // Print the position of the finger if it is
+                                 // touching the touchpad
+          ESP_LOGI(LOG_TAG, "X = %d, Y = %d", PS4.getX(i), PS4.getY(i));
+        }
+      }
+    }
+  }
 }
 
-void read_encoder_right_back(void *arg) { right_back_motor.read_encoder(arg); }
-
-void robot_setup() {
-  pin_configuration();
-  gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-  gpio_isr_handler_add((gpio_num_t)ENCA_LEFT_FRONT, read_encoder_left_front,
-                       (void *)ENCA_LEFT_FRONT);
-  gpio_isr_handler_add((gpio_num_t)ENCA_LEFT_BACK, read_encoder_left_back,
-                       (void *)ENCA_LEFT_BACK);
-  gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_FRONT, read_encoder_right_front,
-                       (void *)ENCA_RIGHT_FRONT);
-  gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
-                       (void *)ENCA_RIGHT_BACK);
-  left_front_motor.configure_motor(283, 1, 1, 0);
-  left_back_motor.configure_motor(288, 1, 1, 0);
-  right_front_motor.configure_motor(293, 2, 1, 0);
-  right_back_motor.configure_motor(280, 2, 1, 0);
+void ps4_loop_task(void *task_params) {
+  while (1) {
+    btd_vhci_mutex_lock();   // lock mutex so controller's data is not updated
+                             // meanwhile
+    ps4_print();             // print PS4 status
+    btd_vhci_mutex_unlock(); // unlock mutex
+    vTaskDelay(1);
+  }
 }
 
 extern "C" void app_main(void) {
+  esp_err_t ret;
 
-  robot_setup();
-
-  for (long i = 0; i > -1; i++) {
-    left_front_motor.go_forward(100);
-    left_back_motor.go_forward(100);
-    right_front_motor.go_forward(100);
-    right_back_motor.go_forward(100);
-    // left_front_motor.set_motor(1, 100);
-    // left_back_motor.set_motor(1, 100);
-    // right_front_motor.set_motor(1, 100);
-    // right_back_motor.set_motor(1, 100);
-    // std::cout << "Posi LF: " << left_front_motor.return_posi() << " Posi LB:
-    // " << left_back_motor.return_posi() << " Posi RF: " <<
-    // right_front_motor.return_posi() << " Posi RB: " <<
-    // right_back_motor.return_posi() << std::endl;
-    std::cout << "Vel LF: " << left_front_motor.return_speed()
-              << " Vel LB: " << left_back_motor.return_speed()
-              << " Vel RF: " << right_front_motor.return_speed()
-              << " Vel RB: " << right_back_motor.return_speed() << std::endl;
-    // Feed the watchdog timer to prevent it from resetting the system
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+  // initialize flash
+  ret = nvs_flash_init();
+  if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
+      ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    ESP_ERROR_CHECK(nvs_flash_erase());
+    ret = nvs_flash_init();
   }
+  ESP_ERROR_CHECK(ret);
+
+  // initilize the library
+  ret = btd_vhci_init();
+  if (ret != ESP_OK) {
+    ESP_LOGE(LOG_TAG, "BTD init error!");
+  }
+  ESP_ERROR_CHECK(ret);
+
+  // run example code
+  xTaskCreatePinnedToCore(ps4_loop_task, "ps4_loop_task", 10 * 1024, NULL, 2,
+                          NULL, 1);
+
+  // run auto connect task
+  btd_vhci_autoconnect(&PS4);
+
+  while (1) {
+    vTaskDelay(pdMS_TO_TICKS(100));
+  }
+  // main task should not return
 }

@@ -1,0 +1,21 @@
+dependencies:
+  idf:
+    source:
+      type: idf
+    version: 5.5.0
+  pink0d/btd_vhci:
+    component_hash: ffada18e1f8b9a7339e113276731dd3b8ae60faa6e5d8fb66a23e6b71cf12eb1
+    dependencies:
+    - name: idf
+      require: private
+      version: '>5.1.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 0.5.1
+direct_dependencies:
+- idf
+- pink0d/btd_vhci
+manifest_hash: f81f0bfaa3476517a17bfd3f388181f0b3e044a79f8b4856e91c76cb70e4e0da
+target: esp32
+version: 2.0.0
