@@ -61,21 +61,32 @@ int map_analogHat_backward_direction(int value) {
   return proportional * slliced_value;
 }
 void RobotPs4Controller::controll_robot() {
-  if (this->PS4->getAnalogHat(LeftHatY) > 138 ||
-      this->PS4->getAnalogHat(LeftHatY) < 116) {
-    if (this->PS4->getAnalogButton(L2)) {
-      ESP_LOGI(LOG_TAG, " DENTRO DO WHILE Valor L2 = %d",
-               this->PS4->getAnalogButton(L2));
-    } else if (this->PS4->getAnalogButton(R2)) {
-      // std::cout << this->PS4->getAnalogButton(L2) << std::endl;
-      ESP_LOGI(LOG_TAG, " DENTRO DO WHILE Valor R2 = %d",
-               this->PS4->getAnalogButton(R2));
+  if (this->PS4->getAnalogHat(LeftHatY) > START_BACKWARD_ANALOG_HAT_VALUE ||
+      this->PS4->getAnalogHat(LeftHatY) < START_FOWARD_ANALOG_HAT_VALUE) {
+
+    int value = this->PS4->getAnalogHat(LeftHatY);
+    bool foward = false;
+    if (value < 116) {
+      value = map_analogHat_foward_direction(value);
+      foward = true;
     } else {
-      int valor = this->PS4->getAnalogHat(LeftHatY);
-      int scalled_value_foward = map_analogHat_foward_direction(valor);
-      ESP_LOGI(LOG_TAG, "valor Y = %d valor Y mapeado = %d", valor,
-               scalled_value_foward);
+      value = map_analogHat_backward_direction(value);
     }
+    int left_velocity_motors = value;
+    int right_velocity_motors = value;
+    if (this->PS4->getAnalogButton(L2)) {
+      int valor = this->PS4->getAnalogButton(L2);
+      int scalled_value = map_R2_and_L2_to_pwm(valor);
+      right_velocity_motors = right_velocity_motors - scalled_value;
+    } else if (this->PS4->getAnalogButton(R2)) {
+      int valor = this->PS4->getAnalogButton(R2);
+      int scalled_value = map_R2_and_L2_to_pwm(valor);
+      right_velocity_motors = left_velocity_motors - scalled_value;
+    }
+    this->right_front_motor->set_motor(foward, right_velocity_motors);
+    this->left_front_motor->set_motor(foward, left_velocity_motors);
+    this->right_back_motor->set_motor(foward, right_velocity_motors);
+    this->left_back_motor->set_motor(foward, left_velocity_motors);
   } else if (this->PS4->getAnalogButton(L2)) {
 
     int valor = this->PS4->getAnalogButton(L2);
