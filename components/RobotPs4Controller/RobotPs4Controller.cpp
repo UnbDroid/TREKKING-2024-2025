@@ -7,16 +7,7 @@
 #include "esp_log.h"
 #include "freertos/idf_additions.h"
 #include "include/RobotPs4Controller.h"
-#include "iostream"
-#include <iostream>
-#include <stdio.h>
-static const char *LOG_TAG = "main";
-#define MAX_VALUE_PWM 160
-#define MAX_VALUE_R2_L2 255
-#define START_FOWARD_ANALOG_HAT_VALUE 116
-#define END_FOWARD_ANALOG_HAT_VALUE 0
-#define START_BACKWARD_ANALOG_HAT_VALUE 138
-#define END_BACKWARD_ANALOG_HAT_VALUE 255
+
 RobotPs4Controller::RobotPs4Controller(MotorDC *right_front_motor,
                                        MotorDC *right_back_motor,
                                        MotorDC *left_front_motor,
@@ -27,34 +18,44 @@ RobotPs4Controller::RobotPs4Controller(MotorDC *right_front_motor,
   this->left_back_motor = left_back_motor;
 };
 RobotPs4Controller::RobotPs4Controller() {}
-void RobotPs4Controller::move_foward() {
-  this->right_back_motor->set_motor(1, 110);
-  this->right_front_motor->set_motor(1, 110);
-  this->left_back_motor->set_motor(1, 110);
-  this->left_front_motor->set_motor(1, 110);
+void RobotPs4Controller::move(DIRECTION direction, int pwm_right_motors,
+                              int pwm_left_motors) {
+  this->right_back_motor->set_motor(direction, pwm_right_motors);
+  this->right_front_motor->set_motor(direction, pwm_right_motors);
+  this->left_back_motor->set_motor(direction, pwm_left_motors);
+  this->left_front_motor->set_motor(direction, pwm_left_motors);
 };
 void RobotPs4Controller::set_controller(PS4BT *PS4) { this->PS4 = PS4; }
-void RobotPs4Controller::move_backward() {
+void RobotPs4Controller::rotate(TRIGGER_BOTTON triggerBoton, int pwm_value) {
+  if (triggerBoton == TRIGGER_BOTTON::R2_TRIGGERED) {
+    this->right_front_motor->set_motor(-1, pwm_value);
+    this->left_front_motor->set_motor(1, pwm_value);
 
-  this->right_back_motor->set_motor(-1, 110);
-  this->right_front_motor->set_motor(-1, 110);
-  this->left_back_motor->set_motor(-1, 110);
-  this->left_front_motor->set_motor(-1, 110);
+    this->right_back_motor->set_motor(-1, pwm_value);
+    this->left_back_motor->set_motor(1, pwm_value);
+  } else {
+    this->right_front_motor->set_motor(1, pwm_value);
+    this->left_front_motor->set_motor(-1, pwm_value);
+
+    this->right_back_motor->set_motor(1, pwm_value);
+    this->left_back_motor->set_motor(-1, pwm_value);
+  }
 }
 int map_R2_and_L2_to_pwm(int value) {
   float proportional = float(MAX_VALUE_PWM) / MAX_VALUE_R2_L2;
   int new_value_scalled = proportional * value;
   return new_value_scalled;
 }
-int map_analogHat_foward_direction(int value) {
-  int slliced_value = value * -1;
-  slliced_value = slliced_value + START_FOWARD_ANALOG_HAT_VALUE;
-  float proportional = float(MAX_VALUE_PWM) / (START_FOWARD_ANALOG_HAT_VALUE -
-                                               END_FOWARD_ANALOG_HAT_VALUE);
-  int new_value_scalled = proportional * slliced_value;
-  return new_value_scalled;
-}
-int map_analogHat_backward_direction(int value) {
+int map_analogHat(DIRECTION direction, int value) {
+
+  if (direction == DIRECTION::FOWARD) {
+    int slliced_value = value * -1;
+    slliced_value = slliced_value + START_FOWARD_ANALOG_HAT_VALUE;
+    float proportional = float(MAX_VALUE_PWM) / (START_FOWARD_ANALOG_HAT_VALUE -
+                                                 END_FOWARD_ANALOG_HAT_VALUE);
+    int new_value_scalled = proportional * slliced_value;
+    return new_value_scalled;
+  }
   int slliced_value = value - 138;
   float proportional = float(MAX_VALUE_PWM) / (END_BACKWARD_ANALOG_HAT_VALUE -
                                                START_BACKWARD_ANALOG_HAT_VALUE);
@@ -65,13 +66,11 @@ void RobotPs4Controller::controll_robot() {
       this->PS4->getAnalogHat(LeftHatY) < START_FOWARD_ANALOG_HAT_VALUE) {
 
     int value = this->PS4->getAnalogHat(LeftHatY);
-    bool foward = false;
-    if (value < 116) {
-      value = map_analogHat_foward_direction(value);
-      foward = true;
-    } else {
-      value = map_analogHat_backward_direction(value);
-    }
+    DIRECTION direction = DIRECTION::BACKWARD;
+    direction = value < START_FOWARD_ANALOG_HAT_VALUE ? DIRECTION::FOWARD
+                                                      : DIRECTION::BACKWARD;
+    value = map_analogHat(direction, value);
+
     int left_velocity_motors = value;
     int right_velocity_motors = value;
     if (this->PS4->getAnalogButton(L2)) {
@@ -83,35 +82,21 @@ void RobotPs4Controller::controll_robot() {
       int scalled_value = map_R2_and_L2_to_pwm(valor);
       right_velocity_motors = left_velocity_motors - scalled_value;
     }
-    this->right_front_motor->set_motor(foward, right_velocity_motors);
-    this->left_front_motor->set_motor(foward, left_velocity_motors);
-    this->right_back_motor->set_motor(foward, right_velocity_motors);
-    this->left_back_motor->set_motor(foward, left_velocity_motors);
+    move(direction, right_velocity_motors, left_velocity_motors);
   } else if (this->PS4->getAnalogButton(L2)) {
 
     int valor = this->PS4->getAnalogButton(L2);
     int scalled_value = map_R2_and_L2_to_pwm(valor);
     ESP_LOGI(LOG_TAG, " Valor L2 = %d , VALOR L2 MAPEADO = %d", valor,
              scalled_value);
-
-    this->right_front_motor->set_motor(1, scalled_value);
-    this->left_front_motor->set_motor(-1, scalled_value);
-
-    this->right_back_motor->set_motor(1, scalled_value);
-    this->left_back_motor->set_motor(-1, scalled_value);
-
+    rotate(L2_TRIGGERED, scalled_value);
   } else if (this->PS4->getAnalogButton(R2)) {
 
     int valor = this->PS4->getAnalogButton(R2);
     int scalled_value = map_R2_and_L2_to_pwm(valor);
     ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
              scalled_value);
-
-    this->right_front_motor->set_motor(-1, scalled_value);
-    this->left_front_motor->set_motor(1, scalled_value);
-
-    this->right_back_motor->set_motor(-1, scalled_value);
-    this->left_back_motor->set_motor(1, scalled_value);
+    rotate(R2_TRIGGERED, scalled_value);
   }
 }
 
