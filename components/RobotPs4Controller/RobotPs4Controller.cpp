@@ -56,11 +56,21 @@ void RobotPs4Controller::controll_robot() {
     ESP_LOGI(LOG_TAG, "Valor L2 = %d Valor R2 = %d",
              this->PS4->getAnalogButton(L2), this->PS4->getAnalogButton(R2));
   } else if (this->PS4->getAnalogButton(L2)) {
-    // std::cout << this->PS4->getAnalogButton(L2) << std::endl;
-    ESP_LOGI(LOG_TAG, "Valor L2 = %d", this->PS4->getAnalogButton(L2));
+
+    this->right_front_motor->set_motor(1, 60);
+    this->left_front_motor->set_motor(-1, 60);
+
+    this->right_back_motor->set_motor(1, 60);
+    this->left_back_motor->set_motor(-1, 60);
+
   } else if (this->PS4->getAnalogButton(R2)) {
-    // std::cout << this->PS4->getAnalogButton(L2) << std::endl;
-    ESP_LOGI(LOG_TAG, "Valor R2 = %d", this->PS4->getAnalogButton(R2));
+    this->right_front_motor->set_motor(-1, 60);
+    this->left_front_motor->set_motor(1, 60);
+
+    this->right_back_motor->set_motor(-1, 60);
+    this->left_back_motor->set_motor(1, 60);
+    ESP_LOGI(LOG_TAG, " DENTRO DO WHILE Valor R2 = %d",
+             this->PS4->getAnalogButton(R2));
   }
 }
 
@@ -71,7 +81,4 @@ void RobotPs4Controller::task_robot_controll(void *tasks_param) {
     btd_vhci_mutex_unlock();
     vTaskDelay(3);
   }
-
-  // btd_vhci_mutex_lock();
-  // btd_vhci_autoconnect(&this->ps4);
 }
