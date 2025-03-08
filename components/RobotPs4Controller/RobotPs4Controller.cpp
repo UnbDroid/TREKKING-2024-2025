@@ -11,6 +11,9 @@
 #include <iostream>
 #include <stdio.h>
 static const char *LOG_TAG = "main";
+#define MAX_VALUE_PWM 160
+#define MAX_VALUE_R2_L2 255
+#define START_FOWARD_ANALOG_HAT_VALUE 116
 RobotPs4Controller::RobotPs4Controller(MotorDC *right_front_motor,
                                        MotorDC *right_back_motor,
                                        MotorDC *left_front_motor,
@@ -35,9 +38,26 @@ void RobotPs4Controller::move_backward() {
   this->left_back_motor->set_motor(-1, 110);
   this->left_front_motor->set_motor(-1, 110);
 }
+int map_R2_and_L2_to_pwm(int value) {
+  float proportional = float(MAX_VALUE_PWM) / MAX_VALUE_R2_L2;
+  int new_value_scalled = proportional * value;
+  return new_value_scalled;
+}
+int map_analogHat_foward_direction(int value) {
+  int slliced_value = value * -1;
+  slliced_value = slliced_value + START_FOWARD_ANALOG_HAT_VALUE;
+  int proportional = MAX_VALUE_PWM / START_FOWARD_ANALOG_HAT_VALUE;
+  int new_value_scalled = proportional * slliced_value;
+  return new_value_scalled;
+}
+int map_analogHat_backward_direction(int value) {
+  int slliced_value = value - 138;
+  float proportional = MAX_VALUE_PWM / 255;
+  return proportional * slliced_value;
+}
 void RobotPs4Controller::controll_robot() {
-  if (this->PS4->getAnalogHat(LeftHatY) > 137 ||
-      this->PS4->getAnalogHat(LeftHatY) < 117) {
+  if (this->PS4->getAnalogHat(LeftHatY) > 138 ||
+      this->PS4->getAnalogHat(LeftHatY) < 116) {
     if (this->PS4->getAnalogButton(L2) && this->PS4->getAnalogButton(R2)) {
       ESP_LOGI(LOG_TAG, "OS DOIS DENTRO DO WHILE Valor L2 = %d Valor R2 = %d",
                this->PS4->getAnalogButton(L2), this->PS4->getAnalogButton(R2));
@@ -64,13 +84,16 @@ void RobotPs4Controller::controll_robot() {
     this->left_back_motor->set_motor(-1, 60);
 
   } else if (this->PS4->getAnalogButton(R2)) {
-    this->right_front_motor->set_motor(-1, 60);
-    this->left_front_motor->set_motor(1, 60);
 
-    this->right_back_motor->set_motor(-1, 60);
-    this->left_back_motor->set_motor(1, 60);
-    ESP_LOGI(LOG_TAG, " DENTRO DO WHILE Valor R2 = %d",
-             this->PS4->getAnalogButton(R2));
+    int valor = this->PS4->getAnalogButton(R2);
+    int scalled_value = map_R2_and_L2_to_pwm(valor);
+    ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
+             scalled_value);
+    this->right_front_motor->set_motor(-1, scalled_value);
+    this->left_front_motor->set_motor(1, scalled_value);
+
+    this->right_back_motor->set_motor(-1, scalled_value);
+    this->left_back_motor->set_motor(1, scalled_value);
   }
 }
 
