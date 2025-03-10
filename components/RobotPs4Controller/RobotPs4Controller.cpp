@@ -77,11 +77,11 @@ void RobotPs4Controller::controll_robot() {
     if (this->PS4->getAnalogButton(L2)) {
       int valor = this->PS4->getAnalogButton(L2);
       int scalled_value = map_R2_and_L2_to_pwm(valor);
-      right_velocity_motors = right_velocity_motors - scalled_value;
+      right_velocity_motors = right_velocity_motors - 2 * scalled_value;
     } else if (this->PS4->getAnalogButton(R2)) {
       int valor = this->PS4->getAnalogButton(R2);
       int scalled_value = map_R2_and_L2_to_pwm(valor);
-      right_velocity_motors = left_velocity_motors - scalled_value;
+      left_velocity_motors = left_velocity_motors - 2 * scalled_value;
     }
     move(direction, right_velocity_motors, left_velocity_motors);
   } else if (this->PS4->getAnalogButton(L2)) {
