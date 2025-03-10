@@ -98,12 +98,17 @@ void RobotPs4Controller::controll_robot() {
     ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
              scalled_value);
     rotate(R2_TRIGGERED, scalled_value);
+  } else {
+    rotate(R2_TRIGGERED, 0);
+    move(FOWARD, 0, 0);
   }
 }
 
 void RobotPs4Controller::task_robot_controll(void *tasks_param) {
+
   while (1) {
     btd_vhci_mutex_lock();
+
     controll_robot();
     btd_vhci_mutex_unlock();
     vTaskDelay(pdMS_TO_TICKS(100));
