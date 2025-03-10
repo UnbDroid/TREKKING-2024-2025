@@ -55,33 +55,33 @@ extern "C" void app_main(void) {
   esp_err_t ret;
   robot_setup();
   // initialize flash
-  //  ret = nvs_flash_init();
-  // ret = btd_vhci_init();
-  // btd_vhci_autoconnect(&PS4);
-  // robo.set_controller(&PS4);
-  // xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
-  //                        NULL, 1);
+  ret = nvs_flash_init();
+  ret = btd_vhci_init();
+  btd_vhci_autoconnect(&PS4);
+  robo.set_controller(&PS4);
+  xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
+                          NULL, 1);
 
-  for (long i = 0; i > -1; i++) {
-    // left_front_motor.go_forward(10);
-    // left_back_motor.go_forward(30);
-    // right_front_motor.go_forward(30);
-    // right_back_motor.go_forward(30);
-    left_front_motor.set_motor(1, 30);
-    // left_back_motor.set_motor(1, 30);
-    right_front_motor.set_motor(1, 30);
-    // right_back_motor.set_motor(1, 30);
-    //  std::cout << "Posi LF: " << left_front_motor.return_posi() << " Posi LB:
-    //  " << left_back_motor.return_posi() << " Posi RF: " <<
-    //  right_front_motor.return_posi() << " Posi RB: " <<
-    //  right_back_motor.return_posi() << std::endl;
-    std::cout << "Vel LF: "
-              << left_front_motor.return_speed()
-              //<< " Vel LB: "
-              //<< left_back_motor.return_speed()
-              << " Vel RF: " << right_front_motor.return_speed() << std::endl;
-    //<< " Vel RB: " << right_back_motor.return_speed() << std::endl;
-    // Feed the watchdog timer to prevent it from resetting the system
-    vTaskDelay(10 / portTICK_PERIOD_MS);
-  }
+  //  for (long i = 0; i > -1; i++) {
+  // left_front_motor.go_forward(10);
+  // left_back_motor.go_forward(30);
+  // right_front_motor.go_forward(30);
+  // right_back_motor.go_forward(30);
+  //  left_front_motor.set_motor(1, 30);
+  // left_back_motor.set_motor(1, 30);
+  // right_front_motor.set_motor(1, 30);
+  // right_back_motor.set_motor(1, 30);
+  //  std::cout << "Posi LF: " << left_front_motor.return_posi() << " Posi LB:
+  //  " << left_back_motor.return_posi() << " Posi RF: " <<
+  //  right_front_motor.return_posi() << " Posi RB: " <<
+  //  right_back_motor.return_posi() << std::endl;
+  // std::cout << "Vel LF: "
+  //        << left_front_motor.return_speed()
+  //<< " Vel LB: "
+  //<< left_back_motor.return_speed()
+  //      << " Vel RF: " << right_front_motor.return_speed() << std::endl;
+  //<< " Vel RB: " << right_back_motor.return_speed() << std::endl;
+  // Feed the watchdog timer to prevent it from resetting the system
+  // vTaskDelay(10 / portTICK_PERIOD_MS);
+  //}
 }

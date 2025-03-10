@@ -6,6 +6,7 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "freertos/idf_additions.h"
+#include "freertos/projdefs.h"
 #include "include/RobotPs4Controller.h"
 
 RobotPs4Controller::RobotPs4Controller(MotorDC *right_front_motor,
@@ -70,7 +71,7 @@ void RobotPs4Controller::controll_robot() {
     direction = value < START_FOWARD_ANALOG_HAT_VALUE ? DIRECTION::FOWARD
                                                       : DIRECTION::BACKWARD;
     value = map_analogHat(direction, value);
-
+    ESP_LOGI(LOG_TAG, "VALOR ANALOGICO: %d", value);
     int left_velocity_motors = value;
     int right_velocity_motors = value;
     if (this->PS4->getAnalogButton(L2)) {
@@ -105,6 +106,6 @@ void RobotPs4Controller::task_robot_controll(void *tasks_param) {
     btd_vhci_mutex_lock();
     controll_robot();
     btd_vhci_mutex_unlock();
-    vTaskDelay(3);
+    vTaskDelay(pdMS_TO_TICKS(100));
   }
 }
