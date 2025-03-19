@@ -5,6 +5,7 @@
 #include "btd_vhci.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/projdefs.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
 MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
@@ -41,16 +42,39 @@ void robot_setup() {
                        (void *)ENCA_RIGHT_FRONT);
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
-  left_front_motor.configure_motor(283, 1, 1, 0);
-  left_back_motor.configure_motor(288, 1, 1, 0);
-  right_front_motor.configure_motor(293, 2, 1, 0);
-  right_back_motor.configure_motor(280, 2, 1, 0);
+  left_front_motor.configure_motor(300, 1, 1, 0);
+  left_back_motor.configure_motor(300, 1, 1, 0);
+  right_front_motor.configure_motor(300, 2, 1, 0);
+  right_back_motor.configure_motor(300, 2, 1, 0);
 }
 
 PS4BT PS4;
 RobotPs4Controller robo(&right_front_motor, &right_back_motor,
                         &left_front_motor, &left_back_motor);
+float distance_between_wheels = 0.075; // meters
+
+typedef struct {
+  int x = 0;
+  int y = 0;
+  float anguloTheta = 0;
+} VetorPosicao;
+
+typedef struct {
+  int vel_angular_right = 0;
+  int vel_angular_left = 0;
+  int pos_angular_right = 0;
+  int pos_angular_left = 0;
+  int distancia_metros_right = 0;
+  int distancia_metros_left = 0;
+  int vel_linear_robo = 0;
+  int vel_linear_left = 0;
+  int vel_linear_right = 0;
+} RoboVirtual;
+
 void task_controll(void *task_params) { robo.task_robot_controll(task_params); }
+RoboVirtual robovirtual;
+VetorPosicao vetorPosicao;
+
 extern "C" void app_main(void) {
   esp_err_t ret;
   robot_setup();
@@ -61,27 +85,35 @@ extern "C" void app_main(void) {
   robo.set_controller(&PS4);
   xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
                           NULL, 1);
+  float R = 0.06272;
+  while (1) {
+    robovirtual.distancia_metros_left =
+        (left_front_motor.return_posi() * 2 * 3.1415 * R / 300);
+    robovirtual.distancia_metros_right =
+        ((right_front_motor.return_posi() * 2 * 3.1415 * R / 293) +
+         (right_back_motor.return_posi() * 2 * 3.1415 * R / 280)) /
+        2;
+    float distLF = (left_front_motor.return_posi() * 2 * 3.1415 * R / 300);
+    float distRF = (right_front_motor.return_posi() * 2 * 3.1415 * R / 300);
+    float distLB = (left_back_motor.return_posi() * 2 * 3.1415 * R / 300);
+    float distRB = (right_back_motor.return_posi() * 2 * 3.1415 * R / 300);
 
-  //  for (long i = 0; i > -1; i++) {
-  // left_front_motor.go_forward(10);
-  // left_back_motor.go_forward(30);
-  // right_front_motor.go_forward(30);
-  // right_back_motor.go_forward(30);
-  //  left_front_motor.set_motor(1, 30);
-  // left_back_motor.set_motor(1, 30);
-  // right_front_motor.set_motor(1, 30);
-  // right_back_motor.set_motor(1, 30);
-  //  std::cout << "Posi LF: " << left_front_motor.return_posi() << " Posi LB:
-  //  " << left_back_motor.return_posi() << " Posi RF: " <<
-  //  right_front_motor.return_posi() << " Posi RB: " <<
-  //  right_back_motor.return_posi() << std::endl;
-  // std::cout << "Vel LF: "
-  //        << left_front_motor.return_speed()
-  //<< " Vel LB: "
-  //<< left_back_motor.return_speed()
-  //      << " Vel RF: " << right_front_motor.return_speed() << std::endl;
-  //<< " Vel RB: " << right_back_motor.return_speed() << std::endl;
-  // Feed the watchdog timer to prevent it from resetting the system
-  // vTaskDelay(10 / portTICK_PERIOD_MS);
-  //}
+    vetorPosicao.anguloTheta = (robovirtual.distancia_metros_right -
+                                robovirtual.distancia_metros_left) /
+                               33;
+    ESP_LOGI("DISTANCIAS",
+             "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
+             left_front_motor.return_posi(), right_front_motor.return_posi(),
+             left_back_motor.return_posi(), right_back_motor.return_posi());
+    ESP_LOGI("DISTANCIAS2",
+             "LEFT_FRONT %f RIGHT_FRONT %f LEFT_BACK %f RIGHT_BACK %f", distLF,
+             distRF, distLB, distRB);
+
+    ESP_LOGI("POS_ANGULAR",
+             "Posicao esquerda %d Posicao direita %d Angulo theta %f",
+             right_back_motor.return_posi(), right_front_motor.return_posi(),
+             vetorPosicao.anguloTheta * 180 / 3.1415);
+
+    vTaskDelay(pdMS_TO_TICKS(100));
+  }
 }
