@@ -29,6 +29,10 @@ public:
   int32_t return_posi();
   double return_speed();
   double wheel_lenght = 2 * 3.1415 * 6.272; // TODO: medir o raio da roda real
+  float return_kp();
+  float return_ki();
+  float return_kd();
+  void tweak_pid(int variable, float diff);
 
 private:
   int ENCA; // Cabo amarelo

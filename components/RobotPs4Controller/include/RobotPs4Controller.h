@@ -34,6 +34,9 @@ private:
   void move(DIRECTION direction, int pwm_right_motors, int pwm_left_motors);
   void rotate(TRIGGER_BOTTON triggerBoton, int pwm_value);
   void controll_robot();
+  int current_pid_variable = 0; // [0, 1, 2] = [kp, ki, kd]
+  float chosen_pid_diff = 0.01; // [0.01, 0.001, 0.001] = [kp, ki, kd]
+  int currently_selected_motor = 0; // [0, 1, 2, 3] = [left_front_motor, right_front_motor, left_back_motor, right_back_motor]
   MotorDC *right_front_motor;
   MotorDC *right_back_motor;
   MotorDC *left_front_motor;

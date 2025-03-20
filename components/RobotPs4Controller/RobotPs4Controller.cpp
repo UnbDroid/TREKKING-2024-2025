@@ -102,6 +102,64 @@ void RobotPs4Controller::controll_robot() {
     rotate(R2_TRIGGERED, 0);
     move(FOWARD, 0, 0);
   }
+
+  // Individual Motors PID configuration
+
+  if (this->PS4->getButtonClick(R1)) {
+    this->currently_selected_motor += 1;
+    if (this->currently_selected_motor > 3) {
+      this->currently_selected_motor = 0;
+    }
+    ESP_LOGI(LOG_TAG, "MOTOR SELECIONADO: %d", this->currently_selected_motor);
+  }
+
+  if (this->PS4->getButtonClick(L1)) {
+    this->currently_selected_motor -= 1;
+    if (this->currently_selected_motor < 0) {
+      this->currently_selected_motor = 3;
+    }
+    ESP_LOGI(LOG_TAG, "MOTOR SELECIONADO: %d", this->currently_selected_motor);
+  }
+
+  if (this->PS4->getButtonClick(CIRCLE)) {
+    this->right_front_motor->tweak_pid(current_pid_variable, chosen_pid_diff);
+    if (current_pid_variable == 0) {
+      ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
+    } else if (current_pid_variable == 1) {
+      ESP_LOGI(LOG_TAG, "KI: %f", this->right_front_motor->return_ki());
+    } else {
+      ESP_LOGI(LOG_TAG, "KD: %f", this->right_front_motor->return_kd());
+    }
+  }
+  if (this->PS4->getButtonClick(CROSS)) {
+    this->right_back_motor->tweak_pid(current_pid_variable, (-1*chosen_pid_diff));
+    if (current_pid_variable == 0) {
+      ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
+    } else if (current_pid_variable == 1) {
+      ESP_LOGI(LOG_TAG, "KI: %f", this->right_front_motor->return_ki());
+    } else {
+      ESP_LOGI(LOG_TAG, "KD: %f", this->right_front_motor->return_kd());
+    }
+  }
+
+  if (this->PS4->getButtonClick(SQUARE)) {
+    this->current_pid_variable -= 1;
+    if (this->current_pid_variable < 0) {
+      this->current_pid_variable = 2;
+    }
+    ESP_LOGI(LOG_TAG, "VARIAVEL PID SELECIONADA: %d",
+             this->current_pid_variable);
+  }
+
+  if (this->PS4->getButtonClick(TRIANGLE)) {
+    this->current_pid_variable += 1;
+    if (this->current_pid_variable > 2) {
+      this->current_pid_variable = 0;
+    }
+    ESP_LOGI(LOG_TAG, "VARIAVEL PID SELECIONADA: %d",
+             this->current_pid_variable);
+  }
+
 }
 
 void RobotPs4Controller::task_robot_controll(void *tasks_param) {

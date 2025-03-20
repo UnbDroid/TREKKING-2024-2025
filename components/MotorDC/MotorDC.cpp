@@ -73,6 +73,22 @@ void MotorDC::reset_encoder() { this->posi = 0; }
 
 double MotorDC::return_speed() { return this->current_speed_rpm; }
 
+float MotorDC::return_kp() { return this->kp; }
+
+float MotorDC::return_ki() { return this->ki; }
+
+float MotorDC::return_kd() { return this->kd; }
+
+void MotorDC::tweak_pid(int variable, float diff) {
+  if (variable == 0) {
+    this->kp += diff;
+  } else if (variable == 1) {
+    this->ki += diff;
+  } else {
+    this->kd += diff;
+  }
+}
+
 void MotorDC::go_forward(int desired_speed_rpm) {
 
   double error = desired_speed_rpm - this->current_speed_rpm;

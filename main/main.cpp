@@ -101,18 +101,23 @@ extern "C" void app_main(void) {
     vetorPosicao.anguloTheta = (robovirtual.distancia_metros_right -
                                 robovirtual.distancia_metros_left) /
                                33;
-    ESP_LOGI("DISTANCIAS",
-             "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
-             left_front_motor.return_posi(), right_front_motor.return_posi(),
-             left_back_motor.return_posi(), right_back_motor.return_posi());
-    ESP_LOGI("DISTANCIAS2",
-             "LEFT_FRONT %f RIGHT_FRONT %f LEFT_BACK %f RIGHT_BACK %f", distLF,
-             distRF, distLB, distRB);
 
-    ESP_LOGI("POS_ANGULAR",
-             "Posicao esquerda %d Posicao direita %d Angulo theta %f",
-             right_back_motor.return_posi(), right_front_motor.return_posi(),
-             vetorPosicao.anguloTheta * 180 / 3.1415);
+    // ESSA PARTE EMBAIXO DEU ERRO NA COMPILAÇÃO --------------------------------------
+
+    // ESP_LOGI("DISTANCIAS",
+    //          "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
+    //          left_front_motor.return_posi(), right_front_motor.return_posi(),
+    //          left_back_motor.return_posi(), right_back_motor.return_posi());
+    // ESP_LOGI("DISTANCIAS2",
+    //          "LEFT_FRONT %f RIGHT_FRONT %f LEFT_BACK %f RIGHT_BACK %f", distLF,
+    //          distRF, distLB, distRB);
+
+    // ESP_LOGI("POS_ANGULAR",
+    //          "Posicao esquerda %d Posicao direita %d Angulo theta %f",
+    //          right_back_motor.return_posi(), right_front_motor.return_posi(),
+    //          vetorPosicao.anguloTheta * 180 / 3.1415);
+
+    // --------------------------------------------------------------------------------
 
     vTaskDelay(pdMS_TO_TICKS(100));
   }

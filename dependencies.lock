@@ -2,7 +2,7 @@ dependencies:
   idf:
     source:
       type: idf
-    version: 5.5.0
+    version: 5.2.5
   pink0d/btd_vhci:
     component_hash: ffada18e1f8b9a7339e113276731dd3b8ae60faa6e5d8fb66a23e6b71cf12eb1
     dependencies:
