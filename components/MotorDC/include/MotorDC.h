@@ -12,7 +12,7 @@
 #include "inttypes.h"
 #include "iostream"
 #include "stdio.h"
-
+#define WHEEL_RADIUS_METERS 0.06272
 class MotorDC {
 public:
   MotorDC(const int ENCA, const int ENCB, const int L_PWM, const int R_PWM,
@@ -28,7 +28,8 @@ public:
   void go_forward(int desired_speed_rpm);
   int32_t return_posi();
   double return_speed();
-  double wheel_lenght = 2 * 3.1415 * 6.272; // TODO: medir o raio da roda real
+  double wheel_lenght =
+      2 * 3.1415 * WHEEL_RADIUS_METERS; // TODO: medir o raio da roda real
   float return_kp();
   float return_ki();
   float return_kd();

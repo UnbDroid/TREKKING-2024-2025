@@ -51,7 +51,8 @@
 
 // Configuração GPIO dos pinos {
 // --------------------------------------------------------------------------------
-
+#define TICKS_PER_ROTATIONS 300
+#define DISTANCE_BETWEEN_WHEELS_METERS 0.075
 void configure_pins_output(unsigned long long bit_mask);
 void configure_pins_input_enca(unsigned long long bit_mask);
 void configure_pins_input_encb(unsigned long long bit_mask);
