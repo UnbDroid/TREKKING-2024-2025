@@ -12,7 +12,7 @@
 #include "inttypes.h"
 #include "iostream"
 #include "stdio.h"
-#define WHEEL_RADIUS_METERS 0.06272
+#define WHEEL_RADIUS_METERS 0.05978
 class MotorDC {
 public:
   MotorDC(const int ENCA, const int ENCB, const int L_PWM, const int R_PWM,

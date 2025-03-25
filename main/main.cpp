@@ -64,8 +64,8 @@ typedef struct {
   int vel_angular_left = 0;
   int pos_angular_right = 0;
   int pos_angular_left = 0;
-  int distancia_metros_right = 0;
-  int distancia_metros_left = 0;
+  double distancia_metros_right = 0;
+  double distancia_metros_left = 0;
   int vel_linear_robo = 0;
   int vel_linear_left = 0;
   int vel_linear_right = 0;
@@ -83,6 +83,9 @@ extern "C" void app_main(void) {
   ret = btd_vhci_init();
   btd_vhci_autoconnect(&PS4);
   robo.set_controller(&PS4);
+  vetorPosicao.x = 0;
+  vetorPosicao.y = 0;
+  vetorPosicao.anguloTheta = 0;
   xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
                           NULL, 1);
   float RADIO_IN_METERS = 0.06272;
@@ -99,12 +102,27 @@ extern "C" void app_main(void) {
          (right_back_motor.return_posi() * right_back_motor.wheel_lenght /
           TICKS_PER_ROTATIONS)) /
         2;
-    vetorPosicao.anguloTheta = (robovirtual.distancia_metros_right -
+    
+    float theta = (robovirtual.distancia_metros_right -
                                 robovirtual.distancia_metros_left) /
                                33;
+    vetorPosicao.anguloTheta = theta;
+    float distLF = (left_front_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300); 
+
+    float distRF = (right_front_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300);
+ 
+
+    float distLB = (left_back_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300);
+ 
+
+    float distRB = (right_back_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300);
+ 
+    
+
+
 
     // ESSA PARTE EMBAIXO DEU ERRO NA COMPILAÇÃO
-    // --------------------------------------
+    // -------------------------------------- 
 
     // ESP_LOGI("DISTANCIAS",
     //          "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
@@ -117,10 +135,17 @@ extern "C" void app_main(void) {
     // ESP_LOGI("POS_ANGULAR",
     //          "Posicao esquerda %d Posicao direita %d Angulo theta %f",
     //          right_back_motor.return_posi(), right_front_motor.return_posi(),
-    //          vetorPosicao.anguloTheta * 180 / 3.1415);
+    //          vetorPosicao.anguloTheta * 180 / 3.1415); 
 
-    // --------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------- I (104311) distancias_robo_virtual: distancia em metros esquerda: 0.788129, direita: -0.000626
+
+    // ESP_LOGI("distancias_robo_virtual", "distancia em metros esquerda: %f, direita: %f", robovirtual.distancia_metros_left,robovirtual.distancia_metros_right);
+    ESP_LOGI("ANGULO ",
+                "Angulo %f",
+                vetorPosicao.anguloTheta);
 
     vTaskDelay(pdMS_TO_TICKS(100));
   }
 }
+
+

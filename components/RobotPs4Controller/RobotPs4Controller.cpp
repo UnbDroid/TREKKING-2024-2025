@@ -122,23 +122,88 @@ void RobotPs4Controller::controll_robot() {
   }
 
   if (this->PS4->getButtonClick(CIRCLE)) {
-    this->right_front_motor->tweak_pid(current_pid_variable, chosen_pid_diff);
-    if (current_pid_variable == 0) {
-      ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
-    } else if (current_pid_variable == 1) {
-      ESP_LOGI(LOG_TAG, "KI: %f", this->right_front_motor->return_ki());
+    if (currently_selected_motor == 0) {
+      this->left_front_motor->tweak_pid(current_pid_variable,chosen_pid_diff);
+    } else if (currently_selected_motor == 1) {
+      this->right_front_motor->tweak_pid(current_pid_variable,chosen_pid_diff);
+    } else if (currently_selected_motor == 2) {
+      this->left_back_motor->tweak_pid(current_pid_variable,chosen_pid_diff);
     } else {
-      ESP_LOGI(LOG_TAG, "KD: %f", this->right_front_motor->return_kd());
+      this->right_back_motor->tweak_pid(current_pid_variable,chosen_pid_diff);
+    }
+    if (current_pid_variable == 0) {
+      if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_kp());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_kp());
+      } else {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_kp());
+      }
+    } else if (current_pid_variable == 1) {
+      if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_ki());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_ki());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_ki());
+      } else {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_ki());
+      }
+    } else {
+      if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_kd());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kd());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_kd());
+      } else {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_kd());
+      }
     }
   }
   if (this->PS4->getButtonClick(CROSS)) {
-    this->right_back_motor->tweak_pid(current_pid_variable, (-1*chosen_pid_diff));
-    if (current_pid_variable == 0) {
-      ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
-    } else if (current_pid_variable == 1) {
-      ESP_LOGI(LOG_TAG, "KI: %f", this->right_front_motor->return_ki());
+    if (currently_selected_motor == 0) {
+      this->left_front_motor->tweak_pid(current_pid_variable,((-1)*chosen_pid_diff));
+    } else if (currently_selected_motor == 1) {
+      this->right_front_motor->tweak_pid(current_pid_variable,((-1)*chosen_pid_diff));
+    } else if (currently_selected_motor == 2) {
+      this->left_back_motor->tweak_pid(current_pid_variable,((-1)*chosen_pid_diff));
     } else {
-      ESP_LOGI(LOG_TAG, "KD: %f", this->right_front_motor->return_kd());
+      this->right_back_motor->tweak_pid(current_pid_variable,((-1)*chosen_pid_diff));
+    }
+
+    if (current_pid_variable == 0) {
+      if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_kp());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_kp());
+      } else {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_kp());
+      }
+    } else if (current_pid_variable == 1) {
+      if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_ki());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_ki());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_ki());
+      } else {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_ki());
+      }
+    } else {
+      if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_kd());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kd());
+      } else if (currently_selected_motor == 0) {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_kd());
+      } else {
+        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_kd());
+      }
     }
   }
 
