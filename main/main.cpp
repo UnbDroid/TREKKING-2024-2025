@@ -69,6 +69,9 @@ typedef struct {
   int vel_linear_robo = 0;
   int vel_linear_left = 0;
   int vel_linear_right = 0;
+  int x_dot = 0;
+  int y_dot = 0;
+  float theta_dot = 0;
 } RoboVirtual;
 
 void task_controll(void *task_params) { robo.task_robot_controll(task_params); }
@@ -102,27 +105,25 @@ extern "C" void app_main(void) {
          (right_back_motor.return_posi() * right_back_motor.wheel_lenght /
           TICKS_PER_ROTATIONS)) /
         2;
-    
+
     float theta = (robovirtual.distancia_metros_right -
-                                robovirtual.distancia_metros_left) /
-                               33;
+                   robovirtual.distancia_metros_left) /
+                  33;
     vetorPosicao.anguloTheta = theta;
-    float distLF = (left_front_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300); 
+    float distLF = (left_front_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
 
-    float distRF = (right_front_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300);
- 
+    float distRF = (right_front_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
 
-    float distLB = (left_back_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300);
- 
+    float distLB = (left_back_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
 
-    float distRB = (right_back_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS / 300);
- 
-    
-
-
+    float distRB = (right_back_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
 
     // ESSA PARTE EMBAIXO DEU ERRO NA COMPILAÇÃO
-    // -------------------------------------- 
+    // --------------------------------------
 
     // ESP_LOGI("DISTANCIAS",
     //          "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
@@ -135,17 +136,17 @@ extern "C" void app_main(void) {
     // ESP_LOGI("POS_ANGULAR",
     //          "Posicao esquerda %d Posicao direita %d Angulo theta %f",
     //          right_back_motor.return_posi(), right_front_motor.return_posi(),
-    //          vetorPosicao.anguloTheta * 180 / 3.1415); 
+    //          vetorPosicao.anguloTheta * 180 / 3.1415);
 
-    // -------------------------------------------------------------------------------- I (104311) distancias_robo_virtual: distancia em metros esquerda: 0.788129, direita: -0.000626
+    // --------------------------------------------------------------------------------
+    // I (104311) distancias_robo_virtual: distancia em metros esquerda:
+    // 0.788129, direita: -0.000626
 
-    // ESP_LOGI("distancias_robo_virtual", "distancia em metros esquerda: %f, direita: %f", robovirtual.distancia_metros_left,robovirtual.distancia_metros_right);
-    ESP_LOGI("ANGULO ",
-                "Angulo %f",
-                vetorPosicao.anguloTheta);
+    // ESP_LOGI("distancias_robo_virtual", "distancia em metros esquerda: %f,
+    // direita: %f",
+    // robovirtual.distancia_metros_left,robovirtual.distancia_metros_right);
+    ESP_LOGI("ANGULO ", "Angulo %f", vetorPosicao.anguloTheta);
 
     vTaskDelay(pdMS_TO_TICKS(100));
   }
 }
-
-
