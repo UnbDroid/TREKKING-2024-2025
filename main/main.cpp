@@ -89,6 +89,10 @@ extern "C" void app_main(void) {
   vetorPosicao.x = 0;
   vetorPosicao.y = 0;
   vetorPosicao.anguloTheta = 0;
+  left_front_motor.reset_encoder();
+  right_front_motor.reset_encoder();
+  left_back_motor.reset_encoder();
+  right_back_motor.reset_encoder();
   xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
                           NULL, 1);
   float RADIO_IN_METERS = 0.06272;
@@ -108,7 +112,7 @@ extern "C" void app_main(void) {
 
     float theta = (robovirtual.distancia_metros_right -
                    robovirtual.distancia_metros_left) /
-                  33;
+                  27.1;
     vetorPosicao.anguloTheta = theta;
     float distLF = (left_front_motor.return_posi() * 2 * 3.1415 *
                     WHEEL_RADIUS_METERS / 300);
@@ -129,9 +133,8 @@ extern "C" void app_main(void) {
     //          "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
     //          left_front_motor.return_posi(), right_front_motor.return_posi(),
     //          left_back_motor.return_posi(), right_back_motor.return_posi());
-    // ESP_LOGI("DISTANCIAS2",
-    //          "LEFT_FRONT %f RIGHT_FRONT %f LEFT_BACK %f RIGHT_BACK %f",
-    //          distLF, distRF, distLB, distRB);
+    ESP_LOGI("DISTANCIAS2", "LEFT %f RIGHT %f", (distLF + distLB) / 2,
+             (distRF + distRB) / 2);
 
     // ESP_LOGI("POS_ANGULAR",
     //          "Posicao esquerda %d Posicao direita %d Angulo theta %f",
