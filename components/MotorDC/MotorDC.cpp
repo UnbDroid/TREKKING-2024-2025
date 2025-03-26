@@ -3,6 +3,7 @@
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "esp_err.h"
+#include "esp_log.h"
 #include "esp_timer.h"
 #include "hal/ledc_types.h"
 #include <freertos/FreeRTOS.h>
@@ -59,19 +60,25 @@ void MotorDC::read_encoder(void *arg) {
   } else {
     this->posi = this->posi - 1;
   }
-
-  this->current_time = esp_timer_get_time() / 1000000.0;
-  this->dt = (this->current_time - this->last_time);
+}
+void MotorDC::fetch_rpm() {
+  this->current_time = esp_timer_get_time();
+  long time = this->current_time;
+  this->dt = (double)(time - this->last_time);
+  this->dt = (this->dt / 1000000.0);
   double delta_posi = (double)this->posi - (double)this->last_posi;
+
   this->current_speed_rpm =
       (delta_posi / (double)this->ticks_per_turn) * 60 / this->dt;
   this->last_posi = this->posi;
   this->last_time = this->current_time;
 }
-
 void MotorDC::reset_encoder() { this->posi = 0; }
 
-double MotorDC::return_speed() { return this->current_speed_rpm; }
+double MotorDC::return_speed() {
+  double velocity = this->current_speed_rpm;
+  return velocity;
+}
 
 float MotorDC::return_kp() { return this->kp; }
 

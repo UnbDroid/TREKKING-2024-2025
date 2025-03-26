@@ -15,8 +15,8 @@
 #include "stdio.h"
 
 typedef struct {
-  int x = 0;
-  int y = 0;
+  float x = 0;
+  float y = 0;
   float anguloTheta = 0;
 } VectorPosition;
 
@@ -27,7 +27,7 @@ typedef struct {
 } RoboVirtual;
 #define DISTANCE_BETWEEN_WHEELS_METERS 0.075
 
-RoboVirtual roboVirtual;
+// RoboVirtual roboVirtual;
 class RobotProperties {
 public:
   RobotProperties(MotorDC *right_front_motor, MotorDC *right_back_motor,

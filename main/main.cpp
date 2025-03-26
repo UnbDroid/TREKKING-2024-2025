@@ -1,6 +1,7 @@
 #include "MotorDC.h"
 #include "PS4BT.h"
 #include "PinConfig.h"
+#include "RobotProperties.h"
 #include "RobotPs4Controller.h"
 #include "btd_vhci.h"
 #include "esp_log.h"
@@ -8,7 +9,6 @@
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
-
 MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
                          R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L_PWM,
                          LEDC_CHANNEL_LEFT_FRONT_R_PWM);
@@ -52,32 +52,18 @@ void robot_setup() {
 PS4BT PS4;
 RobotPs4Controller robo(&right_front_motor, &right_back_motor,
                         &left_front_motor, &left_back_motor);
-
-typedef struct {
-  int x = 0;
-  int y = 0;
-  float anguloTheta = 0;
-} VetorPosicao;
-
-typedef struct {
-  int vel_angular_right = 0;
-  int vel_angular_left = 0;
-  int pos_angular_right = 0;
-  int pos_angular_left = 0;
-  double distancia_metros_right = 0;
-  double distancia_metros_left = 0;
-  int vel_linear_robo = 0;
-  int vel_linear_left = 0;
-  int vel_linear_right = 0;
-  int x_dot = 0;
-  int y_dot = 0;
-  float theta_dot = 0;
-} RoboVirtual;
-
+RobotProperties robotProperties(&right_front_motor, &right_back_motor,
+                                &left_front_motor, &left_back_motor);
 void task_controll(void *task_params) { robo.task_robot_controll(task_params); }
-RoboVirtual robovirtual;
-VetorPosicao vetorPosicao;
-
+void task_velocity(void *task_params) {
+  while (1) {
+    left_back_motor.fetch_rpm();
+    left_front_motor.fetch_rpm();
+    right_back_motor.fetch_rpm();
+    right_front_motor.fetch_rpm();
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
+}
 extern "C" void app_main(void) {
   esp_err_t ret;
   robot_setup();
@@ -86,70 +72,20 @@ extern "C" void app_main(void) {
   ret = btd_vhci_init();
   btd_vhci_autoconnect(&PS4);
   robo.set_controller(&PS4);
-  vetorPosicao.x = 0;
-  vetorPosicao.y = 0;
-  vetorPosicao.anguloTheta = 0;
   left_front_motor.reset_encoder();
   right_front_motor.reset_encoder();
   left_back_motor.reset_encoder();
   right_back_motor.reset_encoder();
   xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
                           NULL, 1);
+  xTaskCreatePinnedToCore(task_velocity, "velocity", 5 * 1024, NULL, 3, NULL,
+                          1);
   float RADIO_IN_METERS = 0.06272;
   while (1) {
-    robovirtual.distancia_metros_left =
-        ((left_back_motor.return_posi() * left_back_motor.wheel_lenght /
-          TICKS_PER_ROTATIONS) +
-         (left_front_motor.return_posi() * left_front_motor.wheel_lenght /
-          TICKS_PER_ROTATIONS)) /
-        2;
-    robovirtual.distancia_metros_right =
-        ((right_front_motor.return_posi() * right_front_motor.wheel_lenght /
-          TICKS_PER_ROTATIONS) +
-         (right_back_motor.return_posi() * right_back_motor.wheel_lenght /
-          TICKS_PER_ROTATIONS)) /
-        2;
-
-    float theta = (robovirtual.distancia_metros_right -
-                   robovirtual.distancia_metros_left) /
-                  27.1;
-    vetorPosicao.anguloTheta = theta;
-    float distLF = (left_front_motor.return_posi() * 2 * 3.1415 *
-                    WHEEL_RADIUS_METERS / 300);
-
-    float distRF = (right_front_motor.return_posi() * 2 * 3.1415 *
-                    WHEEL_RADIUS_METERS / 300);
-
-    float distLB = (left_back_motor.return_posi() * 2 * 3.1415 *
-                    WHEEL_RADIUS_METERS / 300);
-
-    float distRB = (right_back_motor.return_posi() * 2 * 3.1415 *
-                    WHEEL_RADIUS_METERS / 300);
-
-    // ESSA PARTE EMBAIXO DEU ERRO NA COMPILAÇÃO
-    // --------------------------------------
-
-    // ESP_LOGI("DISTANCIAS",
-    //          "LEFT_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
-    //          left_front_motor.return_posi(), right_front_motor.return_posi(),
-    //          left_back_motor.return_posi(), right_back_motor.return_posi());
-    ESP_LOGI("DISTANCIAS2", "LEFT %f RIGHT %f", (distLF + distLB) / 2,
-             (distRF + distRB) / 2);
-
-    // ESP_LOGI("POS_ANGULAR",
-    //          "Posicao esquerda %d Posicao direita %d Angulo theta %f",
-    //          right_back_motor.return_posi(), right_front_motor.return_posi(),
-    //          vetorPosicao.anguloTheta * 180 / 3.1415);
-
-    // --------------------------------------------------------------------------------
-    // I (104311) distancias_robo_virtual: distancia em metros esquerda:
-    // 0.788129, direita: -0.000626
-
-    // ESP_LOGI("distancias_robo_virtual", "distancia em metros esquerda: %f,
-    // direita: %f",
-    // robovirtual.distancia_metros_left,robovirtual.distancia_metros_right);
-    ESP_LOGI("ANGULO ", "Angulo %f", vetorPosicao.anguloTheta);
-
-    vTaskDelay(pdMS_TO_TICKS(100));
+    RoboVirtual resultado = robotProperties.compute_vector_position();
+    // ESP_LOGI("robo", "distancia em x: %f", resultado.vectorPosition.x);
+    double velocidade = left_front_motor.return_speed();
+    ESP_LOGI("vel", "vel: %lf", velocidade);
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 }

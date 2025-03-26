@@ -12,6 +12,7 @@
 #include "inttypes.h"
 #include "iostream"
 #include "stdio.h"
+#include <sys/types.h>
 #define WHEEL_RADIUS_METERS 0.05978
 class MotorDC {
 public:
@@ -25,6 +26,7 @@ public:
   void IRAM_ATTR read_encoder(void *arg);
   void set_encoder();
   void reset_encoder();
+  void fetch_rpm();
   void go_forward(int desired_speed_rpm);
   int32_t return_posi();
   double return_speed();
@@ -34,6 +36,13 @@ public:
   float return_ki();
   float return_kd();
   void tweak_pid(int variable, float diff);
+  volatile double current_speed_rpm = 0;
+  volatile double last_error = 0;        // erro anterior para o PID
+  volatile double accumulated_error = 0; // erro acumulado para o PID
+  volatile u_int32_t posi = 0;           // posição do motor em ticks do encoder
+  u_int32_t last_posi = 0;               // posição do motor em ticks do encoder
+  volatile unsigned long current_time = 0;
+  unsigned long last_time = 0;
 
 private:
   int ENCA; // Cabo amarelo
@@ -48,14 +57,6 @@ private:
   float ki;           // valor de ki para o PID
   float kd;           // valor de kd para o PID
   double dt = 0;
-
-  volatile double current_speed_rpm = 0;
-  volatile double last_error = 0;        // erro anterior para o PID
-  volatile double accumulated_error = 0; // erro acumulado para o PID
-  volatile int32_t posi = 0;             // posição do motor em ticks do encoder
-  int32_t last_posi = 0;                 // posição do motor em ticks do encoder
-  volatile double current_time = 0;
-  volatile double last_time = 0;
 };
 
 #endif
