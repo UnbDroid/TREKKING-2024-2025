@@ -40,7 +40,7 @@ public:
   volatile double last_error = 0;        // erro anterior para o PID
   volatile double accumulated_error = 0; // erro acumulado para o PID
   volatile u_int32_t posi = 0;           // posição do motor em ticks do encoder
-  u_int32_t last_posi = 0;               // posição do motor em ticks do encoder
+  volatile u_int32_t last_posi = 0;      // posição do motor em ticks do encoder
   volatile unsigned long current_time = 0;
   unsigned long last_time = 0;
 
