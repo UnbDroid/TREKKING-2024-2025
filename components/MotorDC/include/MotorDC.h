@@ -13,7 +13,8 @@
 #include "iostream"
 #include "stdio.h"
 #include <sys/types.h>
-#define WHEEL_RADIUS_METERS 0.05978
+// ou 0.0565
+#define WHEEL_RADIUS_METERS 0.06
 class MotorDC {
 public:
   MotorDC(const int ENCA, const int ENCB, const int L_PWM, const int R_PWM,
@@ -39,10 +40,10 @@ public:
   volatile double current_speed_rpm = 0;
   volatile double last_error = 0;        // erro anterior para o PID
   volatile double accumulated_error = 0; // erro acumulado para o PID
-  volatile u_int32_t posi = 0;           // posição do motor em ticks do encoder
-  volatile u_int32_t last_posi = 0;      // posição do motor em ticks do encoder
-  volatile unsigned long current_time = 0;
-  unsigned long last_time = 0;
+  volatile int32_t posi = 0;             // posição do motor em ticks do encoder
+  volatile int32_t last_posi = 0;        // posição do motor em ticks do encoder
+  volatile double current_time = 0;
+  volatile double last_time = 0;
 
 private:
   int ENCA; // Cabo amarelo

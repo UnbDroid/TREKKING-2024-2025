@@ -21,8 +21,8 @@ typedef struct {
 } VectorPosition;
 
 typedef struct {
-  int rpm_left_velocity_mean = 0;
-  int rpm_right_velocity_mean = 0;
+  double rpm_left_velocity_mean = 0;
+  double rpm_right_velocity_mean = 0;
   VectorPosition vectorPosition;
 } RoboVirtual;
 #define DISTANCE_BETWEEN_WHEELS_METERS 0.075
@@ -40,6 +40,6 @@ private:
   MotorDC *right_back_motor;
   MotorDC *left_front_motor;
   MotorDC *left_back_motor;
-  unsigned long last_time = 0;
+  double last_time = 0;
 };
 #endif

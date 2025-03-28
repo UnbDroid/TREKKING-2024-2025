@@ -2,6 +2,7 @@
 #include "MotorDC.h"
 #include "esp_log.h"
 #include "math.h"
+#include <cstdint>
 #define ANGULO_TESTE_CHECAR_UNIDADE 0
 RobotProperties::RobotProperties(MotorDC *right_front_motor,
                                  MotorDC *right_back_motor,
@@ -14,7 +15,7 @@ RobotProperties::RobotProperties(MotorDC *right_front_motor,
   this->right_back_motor = right_back_motor;
 }
 RoboVirtual RobotProperties::compute_vector_position() {
-  unsigned long current_time = esp_timer_get_time() / 1000000.0;
+  double current_time = esp_timer_get_time() / 100000.0;
   this->robo_virtual.rpm_left_velocity_mean =
       (left_back_motor->return_speed() + left_front_motor->return_speed()) / 2;
   this->robo_virtual.rpm_right_velocity_mean =
@@ -22,24 +23,32 @@ RoboVirtual RobotProperties::compute_vector_position() {
       2;
 
   double dt = current_time - this->last_time;
-  double oper1 = (double)(0.05978) * cos(ANGULO_TESTE_CHECAR_UNIDADE);
-  long operation =
-      dt *
-      (double)((double)(WHEEL_RADIUS_METERS *
-                        cos(ANGULO_TESTE_CHECAR_UNIDADE)) *
-               (double)(this->robo_virtual.rpm_left_velocity_mean +
-                        this->robo_virtual.rpm_right_velocity_mean)) /
-      2;
+  double oper1 =
+      ((double)(WHEEL_RADIUS_METERS)) * cos(ANGULO_TESTE_CHECAR_UNIDADE);
+  double direito = (oper1 * this->robo_virtual.rpm_right_velocity_mean) / 2;
+  double esquerdo = (oper1 * this->robo_virtual.rpm_left_velocity_mean) / 2;
+  double direito2 = (WHEEL_RADIUS_METERS * sin(ANGULO_TESTE_CHECAR_UNIDADE) *
+                     this->robo_virtual.rpm_right_velocity_mean) /
+                    2;
+  double esquerdo2 = (WHEEL_RADIUS_METERS * sin(ANGULO_TESTE_CHECAR_UNIDADE) *
+                      this->robo_virtual.rpm_left_velocity_mean) /
+                     2;
+  double resultado = direito + esquerdo;
+  double operation = dt * resultado;
+
   double posicao_anterior = robo_virtual.vectorPosition.x;
   robo_virtual.vectorPosition.x =
-      (long)(robo_virtual.vectorPosition.x + operation);
-  ESP_LOGI("variaveis", "%lf", oper1);
+      robo_virtual.vectorPosition.x + (dt * resultado);
+  ESP_LOGI("var",
+           "right: %f ,left: %f , result: %f ,ope: %f , posiX: %f, posiY: %f",
+           direito, esquerdo, resultado, operation,
+           robo_virtual.vectorPosition.x, robo_virtual.vectorPosition.y);
   ESP_LOGI("x",
-           "posicaoNova: %lf ,posicao anterior: %lf,  velocidades: %lf "
-           ", posicao %lf",
+           "posicaoNova: %lf ,posicao anterior: %lf,  VelDireita: %lf, "
+           "VelEsquerda %lf",
            this->robo_virtual.vectorPosition.x, posicao_anterior,
            this->robo_virtual.rpm_right_velocity_mean,
-           robo_virtual.vectorPosition.x);
+           this->robo_virtual.rpm_left_velocity_mean);
   robo_virtual.vectorPosition.y =
       robo_virtual.vectorPosition.y +
       (unsigned long)dt *
