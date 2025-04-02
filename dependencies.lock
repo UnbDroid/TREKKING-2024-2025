@@ -2,20 +2,16 @@ dependencies:
   idf:
     source:
       type: idf
-    version: 5.5.0
+    version: 5.4.1
   pink0d/btd_vhci:
-    component_hash: ffada18e1f8b9a7339e113276731dd3b8ae60faa6e5d8fb66a23e6b71cf12eb1
-    dependencies:
-    - name: idf
-      require: private
-      version: '>5.1.0'
+    dependencies: []
     source:
-      registry_url: https://components.espressif.com/
-      type: service
+      path: /home/arthur/Projects/DROID/TREKKING-2024-2025/components/pink0d__btd_vhci
+      type: local
     version: 0.5.1
 direct_dependencies:
 - idf
 - pink0d/btd_vhci
-manifest_hash: f81f0bfaa3476517a17bfd3f388181f0b3e044a79f8b4856e91c76cb70e4e0da
+manifest_hash: 3ce5fab69d931f74af6d6acdbe5cb8971cde6a7d600f5f81aeb7cfcab744af91
 target: esp32
 version: 2.0.0

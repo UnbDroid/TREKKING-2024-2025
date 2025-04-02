@@ -4,6 +4,7 @@
 #include "RobotProperties.h"
 #include "RobotPs4Controller.h"
 #include "btd_vhci.h"
+#include "esp_attr.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/idf_additions.h"
@@ -23,15 +24,21 @@ MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_PWM_RIGHT_BACK,
                          R_PWM_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK_L_PWM,
                          LEDC_CHANNEL_RIGHT_BACK_R_PWM);
 
-void read_encoder_left_front(void *arg) { left_front_motor.read_encoder(arg); }
+void IRAM_ATTR read_encoder_left_front(void *arg) {
+  left_front_motor.read_encoder(arg);
+}
 
-void read_encoder_left_back(void *arg) { left_back_motor.read_encoder(arg); }
+void IRAM_ATTR read_encoder_left_back(void *arg) {
+  left_back_motor.read_encoder(arg);
+}
 
-void read_encoder_right_front(void *arg) {
+void IRAM_ATTR read_encoder_right_front(void *arg) {
   right_front_motor.read_encoder(arg);
 }
 // ta dando problema nisso aqui
-void read_encoder_right_back(void *arg) { right_back_motor.read_encoder(arg); }
+void IRAM_ATTR read_encoder_right_back(void *arg) {
+  right_back_motor.read_encoder(arg);
+}
 
 void robot_setup() {
   pin_configuration();
@@ -88,10 +95,14 @@ extern "C" void app_main(void) {
   // float RADIO_IN_METERS = 0.06272;
   while (1) {
     RoboVirtual resultado = robotProperties.compute_vector_position();
-    // ESP_LOGI("robo", "distancia em x: %f", resultado.vectorPosition.x);
-    // double velocidade = left_front_motor.return_speed();
-    // ESP_LOGI("vel", "vel: %lf", velocidade);
-    //    ESP_LOGI("Vel", "%f", right_front_motor.current_speed_rpm);
-    //  vTaskDelay(pdMS_TO_TICKS(10));
+    // right_front_motor.set_motor(1, 255);
+    // right_back_motor.set_motor(1, 255);
+    // left_front_motor.set_motor(1, 255);
+    // left_back_motor.set_motor(1, 255);
+    //  ESP_LOGI("robo", "distancia em x: %f", resultado.vectorPosition.x);
+    //  double velocidade = left_front_motor.return_speed();
+    //  ESP_LOGI("vel", "vel: %lf", velocidade);
+    //     ESP_LOGI("Vel", "%f", right_front_motor.current_speed_rpm);
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 }
