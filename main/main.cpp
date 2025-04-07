@@ -51,12 +51,12 @@ void robot_setup() {
                        (void *)ENCA_RIGHT_FRONT);
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
-  left_front_motor.configure_motor(300, 1, 1, 0);
-  left_back_motor.configure_motor(300, 1, 1, 0);
-  right_front_motor.configure_motor(300, 2, 1, 0);
-  right_back_motor.configure_motor(300, 2, 1, 0);
+  left_front_motor.configure_motor(300, 1.4, 1.2, 0.00001);
+  left_back_motor.configure_motor(300, 1.8, 0.5, 0);
+  right_front_motor.configure_motor(300, 1.3, 0.3, 0);
+  right_back_motor.configure_motor(300, 1.3, 0.3, 0);
 }
-
+int vel = 120;
 PS4BT PS4;
 RobotPs4Controller robo(&right_front_motor, &right_back_motor,
                         &left_front_motor, &left_back_motor);
@@ -69,10 +69,10 @@ void task_velocity(void *task_params) {
     left_front_motor.fetch_rpm();
     right_back_motor.fetch_rpm();
     right_front_motor.fetch_rpm();
-    ESP_LOGI("v", "%f , %f , %f , %f", right_front_motor.current_speed_rpm,
-             left_front_motor.current_speed_rpm,
-             right_back_motor.current_speed_rpm,
-             left_back_motor.current_speed_rpm);
+    ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
+             left_back_motor.current_speed_rpm,
+             right_front_motor.current_speed_rpm,
+             right_back_motor.current_speed_rpm);
     vTaskDelay(pdMS_TO_TICKS(30));
   }
 }
@@ -84,10 +84,10 @@ extern "C" void app_main(void) {
   ret = btd_vhci_init();
   btd_vhci_autoconnect(&PS4);
   robo.set_controller(&PS4);
-  //  left_front_motor.reset_encoder();
-  // right_front_motor.reset_encoder();
-  // left_back_motor.reset_encoder();
-  // right_back_motor.reset_encoder();
+  //   left_front_motor.reset_encoder();
+  //  right_front_motor.reset_encoder();
+  //  left_back_motor.reset_encoder();
+  //  right_back_motor.reset_encoder();
   xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
                           NULL, 1);
   xTaskCreatePinnedToCore(task_velocity, "velocity", 10 * 1024, NULL, 2, NULL,
@@ -95,10 +95,83 @@ extern "C" void app_main(void) {
   // float RADIO_IN_METERS = 0.06272;
   while (1) {
     RoboVirtual resultado = robotProperties.compute_vector_position();
-    // right_front_motor.set_motor(1, 255);
-    // right_back_motor.set_motor(1, 255);
-    // left_front_motor.set_motor(1, 255);
-    // left_back_motor.set_motor(1, 255);
+
+    int distancia_metros_left =
+
+        (left_front_motor.return_posi() * 2 * 3.1415 * R / 300);
+
+    int distancia_metros_right =
+
+        ((right_front_motor.return_posi() * 2 * 3.1415 * R / 293) +
+
+         (right_back_motor.return_posi() * 2 * 3.1415 * R / 280)) /
+
+        2;
+
+    float distLF = (left_front_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
+
+    float distRF = (right_front_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
+
+    float distLB = (left_back_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
+
+    float distRB = (right_back_motor.return_posi() * 2 * 3.1415 *
+                    WHEEL_RADIUS_METERS / 300);
+    ESP_LOGI("TICKS", "LEF_FRONT %d RIGHT_FRONT %d LEFT_BACK %d RIGHT_BACK %d",
+             (int)left_front_motor.return_posi(),
+             (int)right_front_motor.return_posi(),
+             (int)left_back_motor.return_posi(),
+             (int)right_back_motor.return_posi());
+
+    // while (distRB < 2.7 || distRF < 2.7 || distLF < 2.7 || distLB < 2.7) {
+
+    ESP_LOGI("DISTANCIAS2",
+
+             "LEFT_FRONT %f RIGHT_FRONT %f LEFT_BACK %f RIGHT_BACK %f", distLF,
+             distRF, distLB, distRB);
+    //  right_front_motor.set_motor(1, 66);
+    // right_back_motor.set_motor(1, 66);
+    // left_front_motor.set_motor(1, 66);
+    // left_back_motor.set_motor(1, 66);
+    distLF = (left_front_motor.return_posi() * 2 * 3.1415 *
+              WHEEL_RADIUS_METERS / 300);
+
+    distRF = (right_front_motor.return_posi() * 2 * 3.1415 *
+              WHEEL_RADIUS_METERS / 300);
+
+    distLB = (left_back_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS /
+              300);
+
+    distRB = (right_back_motor.return_posi() * 2 * 3.1415 *
+              WHEEL_RADIUS_METERS / 300);
+    //}
+    // right_front_motor.set_motor(1, 0);
+    // right_back_motor.set_motor(1, 0);
+    // left_front_motor.set_motor(1, 0);
+    // left_back_motor.set_motor(1, 0);
+    // left_front_motor.go_forward(vel);
+    // left_back_motor.go_forward(vel);
+    // right_front_motor.go_forward(vel);
+    // right_back_motor.go_forward(vel);
+    distLF = (left_front_motor.return_posi() * 2 * 3.1415 *
+              WHEEL_RADIUS_METERS / 300);
+
+    distRF = (right_front_motor.return_posi() * 2 * 3.1415 *
+              WHEEL_RADIUS_METERS / 300);
+
+    distLB = (left_back_motor.return_posi() * 2 * 3.1415 * WHEEL_RADIUS_METERS /
+              300);
+
+    distRB = (right_back_motor.return_posi() * 2 * 3.1415 *
+              WHEEL_RADIUS_METERS / 300);
+
+    ESP_LOGI("DISTANCIAS2",
+
+             "PRONTO LEF_FRONT %f RIGHT_FRONT %f LEFT_BACK %f RIGHT_BACK %f",
+             distLF, distRF, distLB, distRB);
+
     //  ESP_LOGI("robo", "distancia em x: %f", resultado.vectorPosition.x);
     //  double velocidade = left_front_motor.return_speed();
     //  ESP_LOGI("vel", "vel: %lf", velocidade);
