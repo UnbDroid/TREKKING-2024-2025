@@ -16,6 +16,29 @@ RobotProperties::RobotProperties(MotorDC *right_front_motor,
 }
 RoboVirtual RobotProperties::compute_vector_position() {
   double current_time = esp_timer_get_time() / 100000.0;
+  double deltaPosiRightFront = (right_front_motor->getAngularPosition() -
+                                right_front_motor->last_angular_position);
+
+  right_front_motor->last_angular_position =
+      right_front_motor->getAngularPosition();
+  double deltaPosiRightBack = (right_back_motor->getAngularPosition() -
+                               right_back_motor->last_angular_position);
+
+  double medianDeltaPosiRight = (deltaPosiRightBack + deltaPosiRightBack) / 2;
+
+  double deltaPosiLeftFront = (left_front_motor->getAngularPosition() -
+                               left_front_motor->last_angular_position);
+  double deltaPosiLeftBack = (left_back_motor->getAngularPosition() -
+                              left_back_motor->last_angular_position);
+  double medianDeltaPosiLeft = (deltaPosiLeftBack + deltaPosiLeftBack) / 2;
+  right_back_motor->last_angular_position =
+      right_back_motor->getAngularPosition();
+  left_front_motor->last_angular_position =
+      left_front_motor->getAngularPosition();
+  left_back_motor->last_angular_position =
+      left_back_motor->getAngularPosition();
+
+  double deslocamento = (medianDeltaPosiRight + medianDeltaPosiLeft) / 2;
   this->robo_virtual.rpm_left_velocity_mean =
       (left_back_motor->return_speed() + left_front_motor->return_speed()) / 2;
   this->robo_virtual.rpm_right_velocity_mean =
@@ -38,7 +61,7 @@ RoboVirtual RobotProperties::compute_vector_position() {
 
   double posicao_anterior = robo_virtual.vectorPosition.x;
   robo_virtual.vectorPosition.x =
-      robo_virtual.vectorPosition.x + (dt * resultado);
+      robo_virtual.vectorPosition.x + (oper1 * deslocamento);
   ESP_LOGI("var",
            "right: %f ,left: %f , result: %f ,ope: %f , posiX: %f, posiY: %f",
            direito, esquerdo, resultado, operation,
@@ -65,5 +88,6 @@ RoboVirtual RobotProperties::compute_vector_position() {
              this->robo_virtual.rpm_left_velocity_mean))) /
           2 * DISTANCE_BETWEEN_WHEELS_METERS;
   this->last_time = current_time;
+
   return robo_virtual;
 }

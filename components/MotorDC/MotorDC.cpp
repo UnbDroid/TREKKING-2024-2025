@@ -81,7 +81,10 @@ double MotorDC::return_speed() {
 }
 
 float MotorDC::return_kp() { return this->kp; }
-
+double MotorDC::getAngularPosition() {
+  double angular_position = (this->return_posi() * 2 * 3.1415 / ticks_per_turn);
+  return angular_position;
+}
 float MotorDC::return_ki() { return this->ki; }
 
 float MotorDC::return_kd() { return this->kd; }

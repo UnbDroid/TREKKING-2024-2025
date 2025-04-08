@@ -12,6 +12,7 @@
 #include "inttypes.h"
 #include "iostream"
 #include "stdio.h"
+#include <cstdint>
 #include <sys/types.h>
 // ou 0.0565
 #define WHEEL_RADIUS_METERS 0.06
@@ -29,8 +30,10 @@ public:
   void reset_encoder();
   void fetch_rpm();
   void go_forward(int desired_speed_rpm);
+  int32_t diff_angular_position();
   int32_t return_posi();
   double return_speed();
+  double getAngularPosition();
   double wheel_lenght =
       2 * 3.1415 * WHEEL_RADIUS_METERS; // TODO: medir o raio da roda real
   float return_kp();
@@ -44,6 +47,8 @@ public:
   volatile int32_t last_posi = 0;        // posição do motor em ticks do encoder
   volatile double current_time = 0;
   volatile double last_time = 0;
+  volatile double angular_position = 0;
+  volatile double last_angular_position = 0;
 
 private:
   int ENCA; // Cabo amarelo
