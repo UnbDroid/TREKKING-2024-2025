@@ -63,39 +63,60 @@ RobotPs4Controller robo(&right_front_motor, &right_back_motor,
                         &left_front_motor, &left_back_motor);
 RobotProperties robotProperties(&right_front_motor, &right_back_motor,
                                 &left_front_motor, &left_back_motor);
+EspRaspRobot autonomousRobot(
+    &right_front_motor, &right_back_motor, &left_front_motor, &left_back_motor,
+    &robotProperties); // Pass the RobotProperties object to the constructor
 void task_controll(void *task_params) { robo.task_robot_controll(task_params); }
 void task_velocity(void *task_params) {
   while (1) {
+    left_front_motor.go_forward(80);
+    left_back_motor.go_forward(80);
+    right_front_motor.go_forward(80);
+    right_back_motor.go_forward(80);
     left_back_motor.fetch_rpm();
     left_front_motor.fetch_rpm();
     right_back_motor.fetch_rpm();
     right_front_motor.fetch_rpm();
-    ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
-             left_back_motor.current_speed_rpm,
-             right_front_motor.current_speed_rpm,
-             right_back_motor.current_speed_rpm);
+    // ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
+    //          left_back_motor.current_speed_rpm,
+    //          right_front_motor.current_speed_rpm,
+    //          right_back_motor.current_speed_rpm);
     vTaskDelay(pdMS_TO_TICKS(30));
   }
 }
+void rosStuff(void *task_params) {
+  autonomousRobot.update_posi_and_speed();
+  autonomousRobot.micro_ros_run();
+  vTaskDelay(pdMS_TO_TICKS(30));
+}
 
 extern "C" void app_main(void) {
-
+  
+  autonomousRobot.micro_ros_setup();
   esp_err_t ret;
   robot_setup();
   // initialize flash
-  ret = nvs_flash_init();
-  ret = btd_vhci_init();
-  btd_vhci_autoconnect(&PS4);
-  robo.set_controller(&PS4);
-  //   left_front_motor.reset_encoder();
-  //  right_front_motor.reset_encoder();
-  //  left_back_motor.reset_encoder();
-  //  right_back_motor.reset_encoder();
-  xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
-                          NULL, 1);
-  xTaskCreatePinnedToCore(task_velocity, "velocity", 10 * 1024, NULL, 2, NULL,
-                          1);
+  // ret = nvs_flash_init();
+  // ret = btd_vhci_init();
+  // btd_vhci_autoconnect(&PS4);
+  // robo.set_controller(&PS4);
+  // //   left_front_motor.reset_encoder();
+  // //  right_front_motor.reset_encoder();
+  // //  left_back_motor.reset_encoder();
+  // //  right_back_motor.reset_encoder();
+  // xTaskCreatePinnedToCore(task_controll, "ps4_loop_task", 10 * 1024, NULL, 2,
+  //                         NULL, 1);
+  // xTaskCreatePinnedToCore(task_velocity, "velocity", 10 * 1024, NULL, 2, NULL,
+  //                         1);
+
+  // Set all motors to go forward at 120
+  xTaskCreate(task_velocity, "velocity", 10 * 1024, NULL, 2, NULL);
+
+  xTaskCreate(rosStuff, "ros", 10 * 1024, NULL, 2, NULL);
   // float RADIO_IN_METERS = 0.06272;
+
+  /*
+  
   while (1) {
     RoboVirtual resultado = robotProperties.compute_vector_position();
 
@@ -179,6 +200,10 @@ extern "C" void app_main(void) {
     //  double velocidade = left_front_motor.return_speed();
     //  ESP_LOGI("vel", "vel: %lf", velocidade);
     //     ESP_LOGI("Vel", "%f", right_front_motor.current_speed_rpm);
-    vTaskDelay(pdMS_TO_TICKS(10));
-  }
+    }
+    
+    */
+   
+   vTaskDelay(pdMS_TO_TICKS(10));
+
 }

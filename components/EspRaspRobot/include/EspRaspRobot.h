@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "MotorDC.h"
+#include "RobotProperties.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -15,13 +16,15 @@
 
 #include <rcl/rcl.h>
 #include <rcl/error_handling.h>
+#include <math.h>
+#include <geometry_msgs/msg/quaternion.h>
+#include <geometry_msgs/msg/twist.h>
 #include <std_msgs/msg/int32.h>
-#include <std_msgs/msg/float32_multi_array.h>
-#include <std_msgs/msg/string.h>
-#include <std_msgs/msg/float32.h>
-#include <std_msgs/msg/float64.h>
-#include <std_msgs/msg/float64_multi_array.h>
-#include <std_msgs/msg/byte_multi_array.h>
+#include <micro_ros_utilities/type_utilities.h>
+#include <micro_ros_utilities/string_utilities.h>
+#include <nav_msgs/msg/odometry.h>
+#include <geometry_msgs/msg/twist.h>
+#include <geometry_msgs/msg/vector3.h>
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 
@@ -32,12 +35,12 @@
 class EspRaspRobot {
     public:
         // Constructor that accepts 4 MotorDC pointers
-        EspRaspRobot(MotorDC *left_front_motor, MotorDC *right_front_motor, MotorDC *left_back_motor, MotorDC *right_back_motor);
+        EspRaspRobot(MotorDC *left_front_motor, MotorDC *right_front_motor, MotorDC *left_back_motor, MotorDC *right_back_motor, RobotProperties *robotProperties);
 
         void micro_ros_setup();
+        static void timer_callback_wrapper(rcl_timer_t* timer, int64_t last_call_time);
         void micro_ros_run();
         void update_posi_and_speed();
-        void go_forward(double distance);
         void follow_path();
         void test_micro_ros();
 
@@ -46,6 +49,8 @@ class EspRaspRobot {
         MotorDC* right_front_motor;
         MotorDC* left_back_motor;
         MotorDC* right_back_motor;
+        RobotProperties* robotProperties;
+        static EspRaspRobot* instance;
         
         double pos_x;
         double pos_y;
@@ -67,24 +72,28 @@ class EspRaspRobot {
         // Main Node
         rcl_node_t esp_node;
 
-        // Motor Speed Publishers
-        rcl_publisher_t left_motor_speed_publisher;
-        rcl_publisher_t right_motor_speed_publisher;
+        // Pub and Sub
+        rcl_publisher_t odom_publisher;
+        rcl_publisher_t tf_publisher;
+        rcl_subscription_t subscription;
+        
+        // Allocator, support and executor
+        rcl_allocator_t allocator = rcl_get_default_allocator();
+        rclc_support_t support;
+        rclc_executor_t executor;
 
-        // Motor Odometry Publisher
-        rcl_publisher_t left_motor_odometry_publisher;
-        rcl_publisher_t right_motor_odometry_publisher;
+        // Node 
+        rcl_node_t node;
 
-        // Map Position Subscriber
-        rcl_subscription_t map_position_subscriber;
-
-        // Desired Speed Subscriber
-        rcl_subscription_t left_desired_speed_subscriber;
-        rcl_subscription_t right_desired_speed_subscriber;
+        // Msg 
+        nav_msgs__msg__Odometry odom;
 
         // Timer Stuff
         rcl_timer_t timer;
     	const unsigned int timer_timeout = 1000;
+
+        // Functions
+        void timer_callback(rcl_timer_t * timer, int64_t last_call_time);
 
 };
 
