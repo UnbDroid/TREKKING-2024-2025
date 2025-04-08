@@ -2,6 +2,7 @@
 #include "PS4BT.h"
 #include "PinConfig.h"
 #include "RobotProperties.h"
+#include "EspRaspRobot.h"
 #include "RobotPs4Controller.h"
 #include "btd_vhci.h"
 #include "esp_attr.h"
@@ -76,7 +77,9 @@ void task_velocity(void *task_params) {
     vTaskDelay(pdMS_TO_TICKS(30));
   }
 }
+
 extern "C" void app_main(void) {
+
   esp_err_t ret;
   robot_setup();
   // initialize flash
