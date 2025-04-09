@@ -46,12 +46,12 @@ void EspRaspRobot::timer_callback(rcl_timer_t* timer, int64_t last_call_time)
         // - rpm_left_velocity_mean, rpm_right_velocity_mean
         // - vectorPosition with x, y and anguloTheta (yaw)
         RoboVirtual state = this->robotProperties->compute_vector_position();
-        double left_speed = state.rpm_left_velocity_mean;
-        double right_speed = state.rpm_right_velocity_mean;
+        double left_speed = state.rpm_left_velocity_mean*WHEEL_RADIUS_METERS;
+        double right_speed = state.rpm_right_velocity_mean*WHEEL_RADIUS_METERS;
         double linear_velocity = (left_speed + right_speed) / 2.0;
         
         // Compute angular velocity from differential drive kinematics (ensure wheel_base is set)
-        double angular_velocity = (right_speed - left_speed) / 0.275;
+        double angular_velocity = (left_speed - right_speed) / (0.275/2);
 
         this->odom.pose.pose.position.x = state.vectorPosition.x;
         this->odom.pose.pose.position.y = state.vectorPosition.y;
@@ -73,6 +73,9 @@ void EspRaspRobot::timer_callback(rcl_timer_t* timer, int64_t last_call_time)
         this->odom.twist.twist.angular.y = 0.0;
 
         RCSOFTCHECK(rcl_publish(&this->odom_publisher, &this->odom, NULL));
+
+        // Now the subscription
+
     }
 }
 
@@ -83,23 +86,35 @@ void EspRaspRobot::timer_callback_wrapper(rcl_timer_t* timer, int64_t last_call_
     }
 }
 
-void EspRaspRobot::update_posi_and_speed() {
-    RoboVirtual state = this->robotProperties->compute_vector_position();
-    
-    this->pos_x = state.vectorPosition.x;
-    this->pos_y = state.vectorPosition.y;
-    this->yaw   = state.vectorPosition.anguloTheta;
-    
-    this->speed_left_front  = state.rpm_left_velocity_mean;
-    this->speed_left_back   = state.rpm_left_velocity_mean;
-    this->speed_right_front = state.rpm_right_velocity_mean;
-    this->speed_right_back  = state.rpm_right_velocity_mean;
+void EspRaspRobot::subscription_callback(const void * msgin)
+{
+    const geometry_msgs__msg__Twist * msg = (const geometry_msgs__msg__Twist *)msgin;
+    double linear_x = msg->linear.x;
+    double angular_z = msg->angular.z;
+
+    // Convert to desired speed
+    this->desired_speed_left_vol = (int)(linear_x - angular_z);
+    this->desired_speed_right_vol = (int)(linear_x + angular_z);
+
+    // Call the follow_path method
+    // this->follow_path();
+}
+
+void EspRaspRobot::subscription_callback_wrapper(const void * msgin)
+{
+    if (EspRaspRobot::instance != NULL) {
+        EspRaspRobot::instance->subscription_callback(msgin);
+    }
 }
 
 void EspRaspRobot::micro_ros_run() {
     // Initialize the node
 
-    RCCHECK(rclc_support_init(&this->support, 0, NULL, &this->allocator));
+    rcl_init_options_t init_options = rcl_get_zero_initialized_init_options();
+
+    RCCHECK(rcl_init_options_init(&init_options, this->allocator));
+
+    RCCHECK(rclc_support_init_with_options(&this->support, 0, NULL, &init_options, &this->allocator));
 
     rclc_node_init_default(&this->esp_node, "esp32_node", "", &this->support);
 
@@ -110,8 +125,15 @@ void EspRaspRobot::micro_ros_run() {
         ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry),
         "odom");
 
+    // Create the subscription for cmd_vel
+    // rclc_subscription_init_default(
+    //     &this->subscription,
+    //     &this->esp_node,
+    //     ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist),
+    //     "cmd_vel");
+
     // Create the timer for publishing odometry
-    const unsigned int timer_timeout = 1000;
+    const unsigned int timer_timeout = 10;
     RCCHECK(rclc_timer_init_default(
 		&timer,
 		&this->support,
@@ -120,16 +142,22 @@ void EspRaspRobot::micro_ros_run() {
 
     // Create the executor
     RCCHECK(rclc_executor_init(&this->executor, &this->support.context, 1, &this->allocator));
+    RCCHECK(rclc_executor_set_timeout(&this->executor, RCL_MS_TO_NS(this->timer_timeout)));
     RCCHECK(rclc_executor_add_timer(&this->executor, &this->timer));
+    // RCCHECK(rclc_executor_add_subscription(&this->executor, &this->subscription,
+    //                                       &this->cmd_vel_msg,
+    //                                       EspRaspRobot::subscription_callback_wrapper,
+    //                                       ON_NEW_DATA));
 
     // Spin the node
     while (1) {
-        rclc_executor_spin_some(&this->executor, RCL_MS_TO_NS(100));
-        vTaskDelay(pdMS_TO_TICKS(100));
+        rclc_executor_spin_some(&this->executor, RCL_MS_TO_NS(10));
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 
     // free resources
     RCCHECK(rcl_publisher_fini(&this->odom_publisher, &this->esp_node));
+    // RCCHECK(rcl_subscription_fini(&this->subscription, &this->esp_node));
     RCCHECK(rcl_node_fini(&this->esp_node));
 
     vTaskDelete(NULL);

@@ -62,16 +62,16 @@ RoboVirtual RobotProperties::compute_vector_position() {
   double posicao_anterior = robo_virtual.vectorPosition.x;
   robo_virtual.vectorPosition.x =
       robo_virtual.vectorPosition.x + (oper1 * deslocamento);
-  ESP_LOGI("var",
-           "right: %f ,left: %f , result: %f ,ope: %f , posiX: %f, posiY: %f",
-           direito, esquerdo, resultado, operation,
-           robo_virtual.vectorPosition.x, robo_virtual.vectorPosition.y);
-  ESP_LOGI("x",
-           "posicaoNova: %lf ,posicao anterior: %lf,  VelDireita: %lf, "
-           "VelEsquerda %lf",
-           this->robo_virtual.vectorPosition.x, posicao_anterior,
-           this->robo_virtual.rpm_right_velocity_mean,
-           this->robo_virtual.rpm_left_velocity_mean);
+//   ESP_LOGI("var",
+//            "right: %f ,left: %f , result: %f ,ope: %f , posiX: %f, posiY: %f",
+//            direito, esquerdo, resultado, operation,
+//            robo_virtual.vectorPosition.x, robo_virtual.vectorPosition.y);
+//   ESP_LOGI("x",
+//            "posicaoNova: %lf ,posicao anterior: %lf,  VelDireita: %lf, "
+//            "VelEsquerda %lf",
+//            this->robo_virtual.vectorPosition.x, posicao_anterior,
+//            this->robo_virtual.rpm_right_velocity_mean,
+//            this->robo_virtual.rpm_left_velocity_mean);
   robo_virtual.vectorPosition.y =
       robo_virtual.vectorPosition.y +
       (unsigned long)dt *

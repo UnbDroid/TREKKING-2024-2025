@@ -39,8 +39,8 @@ class EspRaspRobot {
 
         void micro_ros_setup();
         static void timer_callback_wrapper(rcl_timer_t* timer, int64_t last_call_time);
+        static void subscription_callback_wrapper(const void * msgin);
         void micro_ros_run();
-        void update_posi_and_speed();
         void follow_path();
         void test_micro_ros();
 
@@ -70,7 +70,7 @@ class EspRaspRobot {
         volatile int desired_speed_right_vol = 0;
 
         // Main Node
-        rcl_node_t esp_node;
+        rcl_node_t esp_node = rcl_get_zero_initialized_node();
 
         // Pub and Sub
         rcl_publisher_t odom_publisher;
@@ -82,9 +82,6 @@ class EspRaspRobot {
         rclc_support_t support;
         rclc_executor_t executor;
 
-        // Node 
-        rcl_node_t node;
-
         // Msg 
         nav_msgs__msg__Odometry odom;
 
@@ -92,8 +89,12 @@ class EspRaspRobot {
         rcl_timer_t timer;
     	const unsigned int timer_timeout = 1000;
 
+        // Received message
+        geometry_msgs__msg__Twist cmd_vel_msg;
+
         // Functions
         void timer_callback(rcl_timer_t * timer, int64_t last_call_time);
+        void subscription_callback(const void * msgin);
 
 };
 
