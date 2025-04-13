@@ -1,4 +1,5 @@
 #include "EspRaspRobot.h"
+#include "rosidl_runtime_c/string_functions.h"
 
 EspRaspRobot* EspRaspRobot::instance = nullptr;
 
@@ -71,6 +72,10 @@ void EspRaspRobot::timer_callback(rcl_timer_t* timer, int64_t last_call_time)
         this->odom.twist.twist.angular.z = angular_velocity;
         this->odom.twist.twist.angular.x = 0.0;
         this->odom.twist.twist.angular.y = 0.0;
+
+        // Set the frame_id and child_frame_id
+        rosidl_runtime_c__String__assign(&this->odom.header.frame_id, "odom");
+        rosidl_runtime_c__String__assign(&this->odom.child_frame_id, "base_link");
 
         RCSOFTCHECK(rcl_publish(&this->odom_publisher, &this->odom, NULL));
 
