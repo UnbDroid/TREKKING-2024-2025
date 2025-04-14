@@ -22,10 +22,10 @@ RobotPs4Controller::RobotPs4Controller() {}
 void RobotPs4Controller::move(DIRECTION direction, int pwm_right_motors,
                               int pwm_left_motors) {
 
-  this->right_back_motor->go_forward(pwm_right_motors);
-  this->right_front_motor->go_forward(pwm_right_motors);
-  this->left_back_motor->go_forward(pwm_left_motors);
-  this->left_front_motor->go_forward(pwm_left_motors);
+  this->right_back_motor->move_pid(pwm_right_motors);
+  this->right_front_motor->move_pid(pwm_right_motors);
+  this->left_back_motor->move_pid(pwm_left_motors);
+  this->left_front_motor->move_pid(pwm_left_motors);
 };
 void RobotPs4Controller::set_controller(PS4BT *PS4) { this->PS4 = PS4; }
 void RobotPs4Controller::rotate(TRIGGER_BOTTON triggerBoton, int pwm_value) {

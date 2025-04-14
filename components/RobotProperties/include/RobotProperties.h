@@ -13,7 +13,7 @@
 #include "inttypes.h"
 #include "iostream"
 #include "stdio.h"
-
+#define DISTANCE_BETWEEN_WHEELS_METERS 0.075
 typedef struct {
   float x = 0;
   float y = 0;
@@ -24,10 +24,12 @@ typedef struct {
   double rpm_left_velocity_mean = 0;
   double rpm_right_velocity_mean = 0;
   VectorPosition vectorPosition;
+  float position_x = 0;
+  float position_y = 0;
+  float anguloTheta = 0;
 } RoboVirtual;
-#define DISTANCE_BETWEEN_WHEELS_METERS 0.075
 
-// RoboVirtual roboVirtual;
+
 class RobotProperties {
 public:
   RobotProperties(MotorDC *right_front_motor, MotorDC *right_back_motor,

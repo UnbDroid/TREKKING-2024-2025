@@ -16,6 +16,18 @@
 #include <sys/types.h>
 // ou 0.0565
 #define WHEEL_RADIUS_METERS 0.06
+#define ANGULAR_POSITION_TO_METERS =(float) (2 * 3.1415 * WHEEL_RADIUS_METERS)
+
+typedef enum motor_pid_t{
+int ticks_per_turn;
+float kp, ki, kd;
+}motor_pid_config_t;
+
+typedef enum motor_pins_t{ 
+  const int ENCA, ENCB, L_PWM, R_PWM;
+  ledc_channel_t LEDC_CHANNEL_L, LEDC_CHANNEL_R
+  }motor_pins_config_t;
+
 class MotorDC {
 public:
   MotorDC(const int ENCA, const int ENCB, const int L_PWM, const int R_PWM,
@@ -24,18 +36,15 @@ public:
   void stop_motor();
   void configure_motor(int ticks_per_turn, float kp, float ki,
                        float kd); // Função para configurar o motor
-  void set_motor(int direcao, double pwmVal);
+  void set_direction_pwm(int direcao, double pwmVal);
   void IRAM_ATTR read_encoder(void *arg);
-  void set_encoder();
   void reset_encoder();
   void fetch_rpm();
-  void go_forward(int desired_speed_rpm);
+  void move_pid(int desired_speed_rpm);
   int32_t diff_angular_position();
   int32_t return_posi();
   double return_speed();
   double getAngularPosition();
-  double wheel_lenght =
-      2 * 3.1415 * WHEEL_RADIUS_METERS; // TODO: medir o raio da roda real
   float return_kp();
   float return_ki();
   float return_kd();

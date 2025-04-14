@@ -37,7 +37,7 @@ void MotorDC::configure_motor(int tpt, float p, float i, float d) {
 
 int32_t MotorDC::return_posi() { return this->posi; }
 
-void MotorDC::set_motor(int direcao, double pwmVal)
+void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
 {
   if (direcao == 1) {
@@ -99,7 +99,7 @@ void MotorDC::tweak_pid(int variable, float diff) {
   }
 }
 
-void MotorDC::go_forward(int desired_speed_rpm) {
+void MotorDC::move_pid(int desired_speed_rpm) {
 
   double error = desired_speed_rpm - this->current_speed_rpm;
   double p = this->kp * error;
@@ -123,5 +123,5 @@ void MotorDC::go_forward(int desired_speed_rpm) {
     dir = -1;
   }
 
-  this->set_motor(dir, final_pwm);
+  this->set_direction_pwm(dir, final_pwm);
 }
