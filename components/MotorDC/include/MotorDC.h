@@ -16,17 +16,17 @@
 #include <sys/types.h>
 // ou 0.0565
 #define WHEEL_RADIUS_METERS 0.06
-#define ANGULAR_POSITION_TO_METERS =(float) (2 * 3.1415 * WHEEL_RADIUS_METERS)
+#define ANGULAR_POSITION_TO_METERS = (float)(2 * 3.1415 * WHEEL_RADIUS_METERS)
 
-typedef enum motor_pid_t{
-int ticks_per_turn;
-float kp, ki, kd;
-}motor_pid_config_t;
+typedef struct motor_pid_t {
+  int ticks_per_turn = 0;
+  float kp, ki, kd = 0;
+} motor_pid_config_t;
 
-typedef enum motor_pins_t{ 
-  const int ENCA, ENCB, L_PWM, R_PWM;
-  ledc_channel_t LEDC_CHANNEL_L, LEDC_CHANNEL_R
-  }motor_pins_config_t;
+typedef struct motor_pins_t {
+  const int ENCA, ENCB, L_PWM, R_PWM = 0;
+  ledc_channel_t LEDC_CHANNEL_L, LEDC_CHANNEL_R;
+} motor_pins_t;
 
 class MotorDC {
 public:

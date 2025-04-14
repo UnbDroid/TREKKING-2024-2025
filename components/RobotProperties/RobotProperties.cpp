@@ -14,7 +14,8 @@ RobotProperties::RobotProperties(MotorDC *right_front_motor,
   this->right_front_motor = right_front_motor;
   this->right_back_motor = right_back_motor;
 }
-void compute_new_x_position(float medianRight, float medianLeft) {
+void RobotProperties::compute_new_x_position(float medianRight,
+                                             float medianLeft) {
   float thetaXContribuition =
       ((double)(WHEEL_RADIUS_METERS)) * cos(ANGULO_TESTE_CHECAR_UNIDADE);
   float distanceMoved = (medianRight + medianLeft);
@@ -22,7 +23,8 @@ void compute_new_x_position(float medianRight, float medianLeft) {
                                         (thetaXContribuition * distanceMoved);
   ESP_LOGI("new_x_position", "x: %f ", this->robo_virtual.vectorPosition.x);
 }
-void compute_new_y_position(float medianRight, float medianLeft) {
+void RobotProperties::compute_new_y_position(float medianRight,
+                                             float medianLeft) {
   float thetaYContribuition =
       ((double)(WHEEL_RADIUS_METERS)) * sin(ANGULO_TESTE_CHECAR_UNIDADE);
   float distanceMoved = (medianRight + medianLeft) / 2;
@@ -34,9 +36,9 @@ void compute_new_y_position(float medianRight, float medianLeft) {
 float compute_median_delta_position_from_motors(MotorDC *front_motor,
                                                 MotorDC *rear_motor) {
   float deltaAngularPositionFront =
-      front_motor->getAngularPosition() - front_motor->last_angular_position();
+      front_motor->getAngularPosition() - front_motor->last_angular_position;
   float deltaAngularPositionRear =
-      rear_motor->getAngularPosition() - rear_motor->last_angular_position();
+      rear_motor->getAngularPosition() - rear_motor->last_angular_position;
   return (deltaAngularPositionFront + deltaAngularPositionRear) / 2;
 }
 RoboVirtual RobotProperties::compute_vector_position() {

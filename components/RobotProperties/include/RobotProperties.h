@@ -29,7 +29,6 @@ typedef struct {
   float anguloTheta = 0;
 } RoboVirtual;
 
-
 class RobotProperties {
 public:
   RobotProperties(MotorDC *right_front_motor, MotorDC *right_back_motor,
@@ -43,5 +42,7 @@ private:
   MotorDC *left_front_motor;
   MotorDC *left_back_motor;
   double last_time = 0;
+  void compute_new_x_position(float medianRight, float medianLeft);
+  void compute_new_y_position(float medianRight, float medianLeft);
 };
 #endif

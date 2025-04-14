@@ -30,17 +30,17 @@ void RobotPs4Controller::move(DIRECTION direction, int pwm_right_motors,
 void RobotPs4Controller::set_controller(PS4BT *PS4) { this->PS4 = PS4; }
 void RobotPs4Controller::rotate(TRIGGER_BOTTON triggerBoton, int pwm_value) {
   if (triggerBoton == TRIGGER_BOTTON::R2_TRIGGERED) {
-    this->right_front_motor->set_motor(-1, pwm_value);
-    this->left_front_motor->set_motor(1, pwm_value);
+    this->right_front_motor->set_direction_pwm(-1, pwm_value);
+    this->left_front_motor->set_direction_pwm(1, pwm_value);
 
-    this->right_back_motor->set_motor(-1, pwm_value);
-    this->left_back_motor->set_motor(1, pwm_value);
+    this->right_back_motor->set_direction_pwm(-1, pwm_value);
+    this->left_back_motor->set_direction_pwm(1, pwm_value);
   } else {
-    this->right_front_motor->set_motor(1, pwm_value);
-    this->left_front_motor->set_motor(-1, pwm_value);
+    this->right_front_motor->set_direction_pwm(1, pwm_value);
+    this->left_front_motor->set_direction_pwm(-1, pwm_value);
 
-    this->right_back_motor->set_motor(1, pwm_value);
-    this->left_back_motor->set_motor(-1, pwm_value);
+    this->right_back_motor->set_direction_pwm(1, pwm_value);
+    this->left_back_motor->set_direction_pwm(-1, pwm_value);
   }
 }
 int map_R2_and_L2_to_pwm(int value) {
