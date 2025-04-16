@@ -66,15 +66,14 @@ class EspRaspRobot {
         volatile double speed_left_back = 0;
         volatile double speed_right_back = 0;
 
-        volatile int desired_speed_left_vol = 0;
-        volatile int desired_speed_right_vol = 0;
+        int desired_speed_left_vol = 0;
+        int desired_speed_right_vol = 0;
 
         // Main Node
         rcl_node_t esp_node = rcl_get_zero_initialized_node();
 
         // Pub and Sub
         rcl_publisher_t odom_publisher;
-        rcl_publisher_t tf_publisher;
         rcl_subscription_t subscription;
         
         // Allocator, support and executor
@@ -90,7 +89,7 @@ class EspRaspRobot {
     	const unsigned int timer_timeout = 1000;
 
         // Received message
-        geometry_msgs__msg__Twist cmd_vel;
+        geometry_msgs__msg__Twist cmd_vel_nav;
 
         // Functions
         void timer_callback(rcl_timer_t * timer, int64_t last_call_time);

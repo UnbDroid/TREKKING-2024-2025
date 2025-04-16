@@ -79,8 +79,6 @@ void EspRaspRobot::timer_callback(rcl_timer_t* timer, int64_t last_call_time)
 
         RCSOFTCHECK(rcl_publish(&this->odom_publisher, &this->odom, NULL));
 
-        // Now the subscription
-
     }
 }
 
@@ -96,8 +94,8 @@ void EspRaspRobot::subscription_callback(const void * msgin)
     const geometry_msgs__msg__Twist * msg = (const geometry_msgs__msg__Twist *)msgin;
 
     // Extract linear and angular velocities from the message
-    double linear_x = msg->linear.x;  // Forward/backward velocity
-    double angular_z = msg->angular.z;  // Rotational velocity
+    double linear_x = msg->linear.x;
+    double angular_z = msg->angular.z;
 
     // Convert velocities to motor speeds using differential drive kinematics
     double wheel_base = 0.275;  // Distance between wheels (meters)
@@ -108,11 +106,14 @@ void EspRaspRobot::subscription_callback(const void * msgin)
     double right_speed = (linear_x + (angular_z * wheel_base / 2)) / wheel_radius;
 
     // Convert speeds to PWM values (assuming a linear relationship)
-    this->desired_speed_left_vol = static_cast<int>(left_speed * 100);  // Scale factor for PWM
-    this->desired_speed_right_vol = static_cast<int>(right_speed * 100);
+    this->desired_speed_left_vol = (int)(left_speed * 100);  // Scale to PWM range
+    this->desired_speed_right_vol = (int)(right_speed * 100);  // Scale to PWM range
+    
+    this->left_front_motor->move_pid(this->desired_speed_left_vol);
+    this->left_back_motor->move_pid(this->desired_speed_left_vol);
+    this->right_front_motor->move_pid(this->desired_speed_right_vol);
+    this->right_back_motor->move_pid(this->desired_speed_right_vol);
 
-    // Apply the computed speeds to the motors
-    this->follow_path();
 }
 
 void EspRaspRobot::subscription_callback_wrapper(const void * msgin)
@@ -132,7 +133,7 @@ void EspRaspRobot::micro_ros_run() {
     RCCHECK(rclc_support_init_with_options(&this->support, 0, NULL, &init_options, &this->allocator));
 
     rclc_node_init_default(&this->esp_node, "esp32_node", "", &this->support);
-
+    
     // Create the publisher for odometry
     RCCHECK(rclc_publisher_init_default(
         &this->odom_publisher,
@@ -140,12 +141,19 @@ void EspRaspRobot::micro_ros_run() {
         ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry),
         "odom"));
 
-    // Create the subscription for cmd_vel
+    // Create the subscription for cmd_vel_nav geometry_msgs/msg/Twist  cmd_vel_nav_nav
     RCCHECK(rclc_subscription_init_default(
         &this->subscription,
         &this->esp_node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist),
-        "cmd_vel"));
+        "cmd_vel_nav"));
+
+    // Parameters:
+
+    // subscription – [inout] - a zero-initialized rcl_subscription_t
+    // node – [in] the rcl node
+    // type_support – [in] the message data type
+    // topic_name – [in] the name of subscribed topic
 
     // Create the timer for publishing odometry
     const unsigned int timer_timeout = 10;
@@ -156,11 +164,11 @@ void EspRaspRobot::micro_ros_run() {
 		EspRaspRobot::timer_callback_wrapper));
 
     // Create the executor
-    RCCHECK(rclc_executor_init(&this->executor, &this->support.context, 1, &this->allocator));
+    RCCHECK(rclc_executor_init(&this->executor, &this->support.context, 2, &this->allocator));
     RCCHECK(rclc_executor_set_timeout(&this->executor, RCL_MS_TO_NS(this->timer_timeout)));
     RCCHECK(rclc_executor_add_timer(&this->executor, &this->timer));
     RCCHECK(rclc_executor_add_subscription(&this->executor, &this->subscription,
-                                          &this->cmd_vel,
+                                          &this->cmd_vel_nav,
                                           EspRaspRobot::subscription_callback_wrapper,
                                           ON_NEW_DATA));
 
@@ -172,7 +180,7 @@ void EspRaspRobot::micro_ros_run() {
 
     // free resources
     RCCHECK(rcl_publisher_fini(&this->odom_publisher, &this->esp_node));
-    RCCHECK(rcl_subscription_fini(&this->subscription, &this->esp_node));
+    // RCCHECK(rcl_subscription_fini(&this->subscription, &this->esp_node));
     RCCHECK(rcl_node_fini(&this->esp_node));
 
     vTaskDelete(NULL);
