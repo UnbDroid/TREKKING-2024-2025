@@ -94,15 +94,25 @@ void EspRaspRobot::timer_callback_wrapper(rcl_timer_t* timer, int64_t last_call_
 void EspRaspRobot::subscription_callback(const void * msgin)
 {
     const geometry_msgs__msg__Twist * msg = (const geometry_msgs__msg__Twist *)msgin;
-    double linear_x = msg->linear.x;
-    double angular_z = msg->angular.z;
 
-    // Convert to desired speed
-    this->desired_speed_left_vol = (int)(linear_x - angular_z);
-    this->desired_speed_right_vol = (int)(linear_x + angular_z);
+    // Extract linear and angular velocities from the message
+    double linear_x = msg->linear.x;  // Forward/backward velocity
+    double angular_z = msg->angular.z;  // Rotational velocity
 
-    // Call the follow_path method
-    // this->follow_path();
+    // Convert velocities to motor speeds using differential drive kinematics
+    double wheel_base = 0.275;  // Distance between wheels (meters)
+    double wheel_radius = WHEEL_RADIUS_METERS;
+
+    // Compute individual wheel speeds
+    double left_speed = (linear_x - (angular_z * wheel_base / 2)) / wheel_radius;
+    double right_speed = (linear_x + (angular_z * wheel_base / 2)) / wheel_radius;
+
+    // Convert speeds to PWM values (assuming a linear relationship)
+    this->desired_speed_left_vol = static_cast<int>(left_speed * 100);  // Scale factor for PWM
+    this->desired_speed_right_vol = static_cast<int>(right_speed * 100);
+
+    // Apply the computed speeds to the motors
+    this->follow_path();
 }
 
 void EspRaspRobot::subscription_callback_wrapper(const void * msgin)
@@ -124,18 +134,18 @@ void EspRaspRobot::micro_ros_run() {
     rclc_node_init_default(&this->esp_node, "esp32_node", "", &this->support);
 
     // Create the publisher for odometry
-    rclc_publisher_init_default(
+    RCCHECK(rclc_publisher_init_default(
         &this->odom_publisher,
         &this->esp_node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry),
-        "odom");
+        "odom"));
 
     // Create the subscription for cmd_vel
-    // rclc_subscription_init_default(
-    //     &this->subscription,
-    //     &this->esp_node,
-    //     ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist),
-    //     "cmd_vel");
+    RCCHECK(rclc_subscription_init_default(
+        &this->subscription,
+        &this->esp_node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist),
+        "cmd_vel"));
 
     // Create the timer for publishing odometry
     const unsigned int timer_timeout = 10;
@@ -149,10 +159,10 @@ void EspRaspRobot::micro_ros_run() {
     RCCHECK(rclc_executor_init(&this->executor, &this->support.context, 1, &this->allocator));
     RCCHECK(rclc_executor_set_timeout(&this->executor, RCL_MS_TO_NS(this->timer_timeout)));
     RCCHECK(rclc_executor_add_timer(&this->executor, &this->timer));
-    // RCCHECK(rclc_executor_add_subscription(&this->executor, &this->subscription,
-    //                                       &this->cmd_vel_msg,
-    //                                       EspRaspRobot::subscription_callback_wrapper,
-    //                                       ON_NEW_DATA));
+    RCCHECK(rclc_executor_add_subscription(&this->executor, &this->subscription,
+                                          &this->cmd_vel,
+                                          EspRaspRobot::subscription_callback_wrapper,
+                                          ON_NEW_DATA));
 
     // Spin the node
     while (1) {
@@ -162,7 +172,7 @@ void EspRaspRobot::micro_ros_run() {
 
     // free resources
     RCCHECK(rcl_publisher_fini(&this->odom_publisher, &this->esp_node));
-    // RCCHECK(rcl_subscription_fini(&this->subscription, &this->esp_node));
+    RCCHECK(rcl_subscription_fini(&this->subscription, &this->esp_node));
     RCCHECK(rcl_node_fini(&this->esp_node));
 
     vTaskDelete(NULL);
@@ -171,8 +181,10 @@ void EspRaspRobot::micro_ros_run() {
 void EspRaspRobot::follow_path() {
     int desired_speed_left = this->desired_speed_left_vol;
     int desired_speed_right = this->desired_speed_right_vol;
-    this->left_front_motor->go_forward(desired_speed_left);
-    this->right_front_motor->go_forward(desired_speed_right);
-    this->left_back_motor->go_forward(desired_speed_left);
-    this->right_back_motor->go_forward(desired_speed_right);
+
+    // Apply the speeds to the motors
+    this->left_front_motor->move_pid(desired_speed_left);
+    this->right_front_motor->move_pid(desired_speed_right);
+    this->left_back_motor->move_pid(desired_speed_left);
+    this->right_back_motor->move_pid(desired_speed_right);
 }

@@ -90,7 +90,7 @@ class EspRaspRobot {
     	const unsigned int timer_timeout = 1000;
 
         // Received message
-        geometry_msgs__msg__Twist cmd_vel_msg;
+        geometry_msgs__msg__Twist cmd_vel;
 
         // Functions
         void timer_callback(rcl_timer_t * timer, int64_t last_call_time);

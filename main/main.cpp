@@ -79,10 +79,10 @@ void task_velocity(void *task_params) {
     left_front_motor.fetch_rpm();
     right_back_motor.fetch_rpm();
     right_front_motor.fetch_rpm();
-    left_front_motor.go_forward(80);
-    left_back_motor.go_forward(80);
-    right_front_motor.go_forward(80);
-    right_back_motor.go_forward(80);
+    left_front_motor.move_pid(80);
+    left_back_motor.move_pid(80);
+    right_front_motor.move_pid(80);
+    right_back_motor.move_pid(80);
     // ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
     //          left_back_motor.current_speed_rpm,
     //          right_front_motor.current_speed_rpm,
@@ -114,7 +114,7 @@ extern "C" void app_main(void) {
 
   // Set all motors to go forward at 120
 
-  xTaskCreatePinnedToCore(task_velocity, "velocity", 1 * 1024, NULL, 1, NULL, 0);
+  // xTaskCreatePinnedToCore(task_velocity, "velocity", 1 * 1024, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(rosStuff, "ros", 2 * 1024, NULL, 2, NULL, 1);
   
 
