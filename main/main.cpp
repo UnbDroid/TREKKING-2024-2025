@@ -271,12 +271,15 @@ void task_velocity(void *task_params) {
     double wheel_radius = WHEEL_RADIUS_METERS;
     
     // Compute individual wheel speeds
-    double left_speed = (linear_x - (angular_z * wheel_base / 2)) / wheel_radius;
-    double right_speed = (linear_x + (angular_z * wheel_base / 2)) / wheel_radius;
+    double left_speed = (linear_x - (angular_z * 1.5)) / wheel_radius;
+    double right_speed = (linear_x + (angular_z * 1.5)) / wheel_radius;
+
+    // double left_speed = (linear_x/WHEEL_RADIUS_METERS) - (wheel_base/WHEEL_RADIUS_METERS)*angular_z;
+    // double right_speed = (linear_x/WHEEL_RADIUS_METERS) + (wheel_base/WHEEL_RADIUS_METERS)*angular_z;
     
     // Convert speeds to PWM values (assuming a linear relationship)
-    int desired_speed_left_vol = (int)(left_speed * 100);   // Scale to PWM range
-    int desired_speed_right_vol = (int)(right_speed * 100); // Scale to PWM range
+    int desired_speed_left_vol = (int)(left_speed * 20);   // Scale to PWM range
+    int desired_speed_right_vol = (int)(right_speed * 20); // Scale to PWM range
 
     left_front_motor.fetch_rpm();
     left_back_motor.fetch_rpm();
@@ -288,7 +291,7 @@ void task_velocity(void *task_params) {
     right_front_motor.move_pid(desired_speed_right_vol);
     right_back_motor.move_pid(desired_speed_right_vol);
     
-    vTaskDelay(pdMS_TO_TICKS(10));
+    vTaskDelay(pdMS_TO_TICKS(5));
   }
 }
 
@@ -311,10 +314,10 @@ extern "C" void app_main(void)
   robot_setup();
     
     
-    xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
-    xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
-    
-    // free resources
+  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
+  
+  // free resources
 
   vTaskDelete(NULL);
 }
