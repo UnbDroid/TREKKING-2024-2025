@@ -231,6 +231,71 @@ void robot_setup()
 //                    &left_back_motor, &right_back_motor, &robotProperties);
 
 void *task_params = NULL;
+
+// void RPM_fetching(void *task_params)
+// {
+//   while (1)
+//   {
+//     left_back_motor.fetch_rpm();
+//     left_front_motor.fetch_rpm();
+//     right_back_motor.fetch_rpm();
+//     right_front_motor.fetch_rpm();
+//     vTaskDelay(pdMS_TO_TICKS(10));
+//   }
+// }
+
+void task_velocity() {
+  // Extract linear and angular velocities from the message
+  double linear_x = (double)msg.linear.x;  // Linear velocity in m/s
+  double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
+
+  // Multiply both by 5
+
+  linear_x = linear_x * 2;
+  angular_z = angular_z * 3;
+  
+  // Convert velocities to motor speeds using differential drive kinematics
+  double wheel_base = 0.325; // Distance between wheels (meters)
+  double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
+  
+  // Compute individual wheel speeds in RPS
+  double left_speed_mps = linear_x - (angular_z * wheel_base / 2);
+  double right_speed_mps = linear_x + (angular_z * wheel_base / 2);
+  
+  // Convert wheel speeds from RPS to RPM
+  double left_speed_rpm = (left_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
+  double right_speed_rpm = (right_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
+
+  // Fetch current RPM values from the motors
+  left_front_motor.fetch_rpm();
+  left_back_motor.fetch_rpm();
+  right_front_motor.fetch_rpm();
+  right_back_motor.fetch_rpm();
+
+  // Limit speed to a maximum value (50 RPM in this case)
+  if (left_speed_rpm > 40) {
+    left_speed_rpm = 40;
+  }
+  if (right_speed_rpm > 40) {
+    right_speed_rpm = 40;
+  }
+  if (left_speed_rpm < -40) {
+    left_speed_rpm = -40;
+  }
+  if (right_speed_rpm < -40) {
+    right_speed_rpm = -40;
+  }
+  
+  // Send the desired RPM values to the motors using PID control
+  left_front_motor.move_pid(left_speed_rpm);
+  left_back_motor.move_pid(left_speed_rpm);
+  right_front_motor.move_pid(right_speed_rpm);
+  right_back_motor.move_pid(right_speed_rpm);
+  
+  // Delay to allow the FreeRTOS task to yield
+  vTaskDelay(pdMS_TO_TICKS(10));
+}
+
 void rosStuff(void *task_params) {
   rclc_executor_t executor;
   rcl_allocator_t allocator = rcl_get_default_allocator();
@@ -252,47 +317,14 @@ void rosStuff(void *task_params) {
     
   // create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
-  RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg, &subscription_callback, ALWAYS));
+  RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg, &subscription_callback, ON_NEW_DATA));
   
   while(1){
     rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10000));
+    task_velocity();
     usleep(10000);
   }
 
-}
-void task_velocity(void *task_params) {
-  while (1) {
-    // Extract linear and angular velocities from the message
-    double linear_x = (double)msg.linear.x;
-    double angular_z = (double)msg.angular.z;
-    
-    // Convert velocities to motor speeds using differential drive kinematics
-    double wheel_base = 0.275; // Distance between wheels (meters)
-    double wheel_radius = WHEEL_RADIUS_METERS;
-    
-    // Compute individual wheel speeds
-    double left_speed = (linear_x - (angular_z * 1.5)) / wheel_radius;
-    double right_speed = (linear_x + (angular_z * 1.5)) / wheel_radius;
-
-    // double left_speed = (linear_x/WHEEL_RADIUS_METERS) - (wheel_base/WHEEL_RADIUS_METERS)*angular_z;
-    // double right_speed = (linear_x/WHEEL_RADIUS_METERS) + (wheel_base/WHEEL_RADIUS_METERS)*angular_z;
-    
-    // Convert speeds to PWM values (assuming a linear relationship)
-    int desired_speed_left_vol = (int)(left_speed * 20);   // Scale to PWM range
-    int desired_speed_right_vol = (int)(right_speed * 20); // Scale to PWM range
-
-    left_front_motor.fetch_rpm();
-    left_back_motor.fetch_rpm();
-    right_front_motor.fetch_rpm();
-    right_back_motor.fetch_rpm();
-    
-    left_front_motor.move_pid(desired_speed_left_vol);
-    left_back_motor.move_pid(desired_speed_left_vol);
-    right_front_motor.move_pid(desired_speed_right_vol);
-    right_back_motor.move_pid(desired_speed_right_vol);
-    
-    vTaskDelay(pdMS_TO_TICKS(5));
-  }
 }
 
 extern "C" void app_main(void)
@@ -313,10 +345,14 @@ extern "C" void app_main(void)
   
   robot_setup();
     
-    
+
+  // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
   xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
+  // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   
+  // right_front_motor.set_direction_pwm(1, 120);
+  // right_back_motor.set_direction_pwm(1, 120);
+
   // free resources
 
   vTaskDelete(NULL);
