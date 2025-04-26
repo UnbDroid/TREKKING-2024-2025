@@ -70,6 +70,7 @@ void MotorDC::fetch_rpm() {
 
   this->current_speed_rpm =
       (delta_posi / (double)this->ticks_per_turn) * 60 / this->dt;
+  // ESP_LOGI("MotorDC", "RPM: %f", this->current_speed_rpm);
   this->last_posi = this->posi;
   this->last_time = this->current_time;
 }
@@ -110,18 +111,18 @@ void MotorDC::move_pid(int desired_speed_rpm) {
 
   double pwm = p + i + d;
 
-  double initial_pwm = ((double)desired_speed_rpm / 625) * 255;
+  // double initial_pwm = ((double)desired_speed_rpm / 625) * 255;
 
-  pwm = pwm * 255 / 625;
+  // pwm = pwm * 255 / 625;
 
-  double final_pwm = initial_pwm + pwm;
+  // double final_pwm = initial_pwm + pwm;
 
   int dir = 1;
 
-  if (final_pwm < 0) {
-    final_pwm = -final_pwm;
+  if (pwm < 0) {
+    pwm = -pwm;
     dir = -1;
   }
 
-  this->set_direction_pwm(dir, final_pwm);
+  this->set_direction_pwm(dir, pwm);
 }
