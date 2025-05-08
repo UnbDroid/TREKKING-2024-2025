@@ -161,18 +161,14 @@
 rcl_subscription_t subscriber;
 geometry_msgs__msg__Twist msg;
 
-MotorDC left_front_motor(ENCA_LEFT_FRONT, ENCB_LEFT_FRONT, L_PWM_LEFT_FRONT,
-                         R_PWM_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_L_PWM,
-                         LEDC_CHANNEL_LEFT_FRONT_R_PWM);
-MotorDC left_back_motor(ENCA_LEFT_BACK, ENCB_LEFT_BACK, L_PWM_LEFT_BACK,
-                        R_PWM_LEFT_BACK, LEDC_CHANNEL_LEFT_BACK_L_PWM,
-                        LEDC_CHANNEL_LEFT_BACK_R_PWM);
-MotorDC right_front_motor(ENCA_RIGHT_FRONT, ENCB_RIGHT_FRONT, L_PWM_RIGHT_FRONT,
-                          R_PWM_RIGHT_FRONT, LEDC_CHANNEL_RIGHT_FRONT_L_PWM,
-                          LEDC_CHANNEL_RIGHT_FRONT_R_PWM);
-MotorDC right_back_motor(ENCA_RIGHT_BACK, ENCB_RIGHT_BACK, L_PWM_RIGHT_BACK,
-                         R_PWM_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK_L_PWM,
-                         LEDC_CHANNEL_RIGHT_BACK_R_PWM);
+MotorDC left_front_motor(ENCA_LEFT_FRONT, PWM_LEFT_FRONT, L_IN_LEFT_FRONT,
+                          R_IN_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_PWM);
+MotorDC left_back_motor(ENCA_LEFT_BACK, PWM_LEFT_BACK, L_IN_LEFT_BACK,
+                          R_IN_LEFT_BACK, LEDC_CHANNEL_LEFT_BACK_PWM);
+MotorDC right_front_motor(ENCA_RIGHT_FRONT, PWM_RIGHT_FRONT, L_IN_RIGHT_FRONT,
+                          R_IN_RIGHT_FRONT, LEDC_CHANNEL_RIGHT_FRONT_PWM);
+MotorDC right_back_motor(ENCA_RIGHT_BACK, PWM_RIGHT_BACK, L_IN_RIGHT_BACK,
+                          R_IN_RIGHT_BACK, LEDC_CHANNEL_RIGHT_BACK_PWM);
 
 void subscription_callback(const void *msgin)
 {
@@ -216,9 +212,9 @@ void robot_setup()
   (void *)ENCA_RIGHT_BACK);
   
   left_front_motor.configure_motor(300, 1.4, 1.2, 0.00001);
-  left_back_motor.configure_motor(300, 1.8, 0.5, 0);
-  right_front_motor.configure_motor(300, 1.3, 0.3, 0);
-  right_back_motor.configure_motor(300, 1.3, 0.3, 0);
+  right_front_motor.configure_motor(300, 1.8, 0.3, 0);
+  left_back_motor.configure_motor(450, 1.8, 0.5, 0);
+  right_back_motor.configure_motor(600, 1.8, 0.3, 0);
 }
 
 // RobotProperties robotProperties;
@@ -245,55 +241,77 @@ void *task_params = NULL;
 // }
 
 void task_velocity() {
-  // Extract linear and angular velocities from the message
-  double linear_x = (double)msg.linear.x;  // Linear velocity in m/s
-  double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
+    // Extract linear and angular velocities from the message
+    double linear_x = (double)msg.linear.x;  // Linear velocity in m/s
+    double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
 
-  // Multiply both by 5
+    // Multiply both by 5
 
-  linear_x = linear_x * 2;
-  angular_z = angular_z * 3;
-  
-  // Convert velocities to motor speeds using differential drive kinematics
-  double wheel_base = 0.325; // Distance between wheels (meters)
-  double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
-  
-  // Compute individual wheel speeds in RPS
-  double left_speed_mps = linear_x - (angular_z * wheel_base / 2);
-  double right_speed_mps = linear_x + (angular_z * wheel_base / 2);
-  
-  // Convert wheel speeds from RPS to RPM
-  double left_speed_rpm = (left_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
-  double right_speed_rpm = (right_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
+    // linear_x = linear_x * 2;
+    // angular_z = angular_z * 5;
+    
+    // Convert velocities to motor speeds using differential drive kinematics
+    double wheel_base = 0.235; // Distance between wheels (meters)
+    double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
+    
+    // Compute individual wheel speeds in RPS
+    double left_speed_mps = linear_x - (angular_z * wheel_base / 2);
+    double right_speed_mps = linear_x + (angular_z * wheel_base / 2);
+    
+    // Convert wheel speeds from RPS to RPM
+    double left_speed_rpm = (left_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
+    double right_speed_rpm = (right_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
 
-  // Fetch current RPM values from the motors
-  left_front_motor.fetch_rpm();
-  left_back_motor.fetch_rpm();
-  right_front_motor.fetch_rpm();
-  right_back_motor.fetch_rpm();
+    // Fetch current RPM values from the motors
+    left_front_motor.fetch_rpm();
+    left_back_motor.fetch_rpm();
+    right_front_motor.fetch_rpm();
+    right_back_motor.fetch_rpm();
 
-  // Limit speed to a maximum value (50 RPM in this case)
-  if (left_speed_rpm > 40) {
-    left_speed_rpm = 40;
-  }
-  if (right_speed_rpm > 40) {
-    right_speed_rpm = 40;
-  }
-  if (left_speed_rpm < -40) {
-    left_speed_rpm = -40;
-  }
-  if (right_speed_rpm < -40) {
-    right_speed_rpm = -40;
+    // Print speeds
+    // ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
+    //          left_back_motor.current_speed_rpm,
+    //          right_front_motor.current_speed_rpm,
+    //          right_back_motor.current_speed_rpm);
+
+    // // Limit speed to a maximum value (50 RPM in this case)
+    if (left_speed_rpm > 80) {
+      left_speed_rpm = 80;
+    }
+    if (right_speed_rpm > 80) {
+      right_speed_rpm = 80;
+    }
+    if (left_speed_rpm < -80) {
+      left_speed_rpm = -80;
+    }
+    if (right_speed_rpm < -80) {
+      right_speed_rpm = -80;
+    }
+    
+    // Send the desired RPM values to the motors using PID control
+    left_front_motor.move_pid(left_speed_rpm);
+    left_back_motor.move_pid(left_speed_rpm);
+    right_front_motor.move_pid(right_speed_rpm);
+    right_back_motor.move_pid(right_speed_rpm);
+    
+    // Delay to allow the FreeRTOS task to yield
+    vTaskDelay(pdMS_TO_TICKS(10));
+}
+
+void test_motor_working(void *task_params) {
+  while (1)
+  {
+    left_front_motor.fetch_rpm();
+    left_back_motor.fetch_rpm();
+    right_front_motor.fetch_rpm();
+    right_back_motor.fetch_rpm();
+    left_front_motor.move_pid(50);
+    left_back_motor.move_pid(50);
+    right_front_motor.move_pid(50);
+    right_back_motor.move_pid(50);
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
   
-  // Send the desired RPM values to the motors using PID control
-  left_front_motor.move_pid(left_speed_rpm);
-  left_back_motor.move_pid(left_speed_rpm);
-  right_front_motor.move_pid(right_speed_rpm);
-  right_back_motor.move_pid(right_speed_rpm);
-  
-  // Delay to allow the FreeRTOS task to yield
-  vTaskDelay(pdMS_TO_TICKS(10));
 }
 
 void rosStuff(void *task_params) {
@@ -330,26 +348,26 @@ void rosStuff(void *task_params) {
 extern "C" void app_main(void)
 {
   
-  #if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
-		rmw_uros_set_custom_transport(
-      true,
-      (void *) &uart_port,
-		esp32_serial_open,
-		esp32_serial_close,
-		esp32_serial_write,
-		esp32_serial_read
-  );
-	#else
-	#error micro-ROS transports misconfigured
-	#endif  // RMW_UXRCE_TRANSPORT_CUSTOM
+  // #if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
+	// 	rmw_uros_set_custom_transport(
+  //     true,
+  //     (void *) &uart_port,
+	// 	esp32_serial_open,
+	// 	esp32_serial_close,
+	// 	esp32_serial_write,
+	// 	esp32_serial_read
+  // );
+	// #else
+	// #error micro-ROS transports misconfigured
+	// #endif  // RMW_UXRCE_TRANSPORT_CUSTOM
   
-  robot_setup();
-    
+  robot_setup();    
 
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+  // xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
-  
+  xTaskCreate(test_motor_working, "test_motor_working", 4 * 1024, NULL, 1, NULL);
+
   // right_front_motor.set_direction_pwm(1, 120);
   // right_back_motor.set_direction_pwm(1, 120);
 

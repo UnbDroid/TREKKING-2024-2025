@@ -12,49 +12,48 @@
 // 34, 35
 
 // #define L_EN_LEFT_FRONT 23  // placeholders
-#define L_PWM_LEFT_FRONT 22 // placeholders
-#define R_PWM_LEFT_FRONT 23 // placeholders
+#define L_IN_LEFT_FRONT 19 //22 // placeholders
+#define R_IN_LEFT_FRONT 21 //23 // placeholders
+#define PWM_LEFT_FRONT  32 //25 // placeholders
 #define OUTPUT_LEFT_FRONT                                                      \
-  ((1ULL << L_PWM_LEFT_FRONT) | (1ULL << R_PWM_LEFT_FRONT))
-#define ENCA_LEFT_FRONT 25 // placeholders
-#define ENCB_LEFT_FRONT 26 // placeholders
+  ((1ULL << L_IN_LEFT_FRONT) | (1ULL << R_IN_LEFT_FRONT) | (1ULL << PWM_LEFT_FRONT))
+#define ENCA_LEFT_FRONT 26 //26 // placeholders
 
 // #define L_EN_LEFT_BACK 22  // placeholders FUNCIONANDO
-#define L_PWM_LEFT_BACK 21 // placeholders
-#define R_PWM_LEFT_BACK 19 // placeholders
-#define OUTPUT_LEFT_BACK ((1ULL << R_PWM_LEFT_BACK) | (1ULL << L_PWM_LEFT_BACK))
-#define ENCA_LEFT_BACK 32 // placeholders
-#define ENCB_LEFT_BACK 33 // placeholders
+#define L_IN_LEFT_BACK 23 //21 // placeholders
+#define R_IN_LEFT_BACK 22 //19 // placeholders
+#define PWM_LEFT_BACK 25 //32 // placeholders
+#define OUTPUT_LEFT_BACK ((1ULL << R_IN_LEFT_BACK) | (1ULL << L_IN_LEFT_BACK) | (1ULL << PWM_LEFT_BACK))
+#define ENCA_LEFT_BACK 33 //33 // placeholders
 
 // #define L_EN_RIGHT_FRONT 26  // placeholders
-#define L_PWM_RIGHT_FRONT 27 // placeholders
-#define R_PWM_RIGHT_FRONT 14 // placeholders
+#define L_IN_RIGHT_FRONT 27 // placeholders
+#define R_IN_RIGHT_FRONT 14 // placeholders
+#define PWM_RIGHT_FRONT 16 // placeholders 17
 #define OUTPUT_RIGHT_FRONT                                                     \
-  ((1ULL << L_PWM_RIGHT_FRONT) | (1ULL << R_PWM_RIGHT_FRONT))
-#define ENCA_RIGHT_FRONT 16 // placeholders 17
-#define ENCB_RIGHT_FRONT 17 // placeholders 16
+  ((1ULL << L_IN_RIGHT_FRONT) | (1ULL << R_IN_RIGHT_FRONT) | (1ULL << PWM_RIGHT_FRONT))
+#define ENCA_RIGHT_FRONT 17 // placeholders 16
 
 // #define L_EN_RIGHT_BACK 10
-#define L_PWM_RIGHT_BACK 13
-#define R_PWM_RIGHT_BACK 12
+#define L_IN_RIGHT_BACK 12
+#define R_IN_RIGHT_BACK 13
+#define PWM_RIGHT_BACK 5  // placeholders
 #define OUTPUT_RIGHT_BACK                                                      \
-  ((1ULL << L_PWM_RIGHT_BACK) | (1ULL << R_PWM_RIGHT_BACK))
-#define ENCA_RIGHT_BACK 5  // placeholders
-#define ENCB_RIGHT_BACK 18 // placeholders
+  ((1ULL << L_IN_RIGHT_BACK) | (1ULL << R_IN_RIGHT_BACK) | (1ULL << PWM_RIGHT_BACK))
+#define ENCA_RIGHT_BACK 18 // placeholders
 
+// #define PWM_GERAL                                                             
+//   ((1ULL << PWM_LEFT_FRONT) | (1ULL << PWM_LEFT_BACK) |                      
+//    (1ULL << PWM_RIGHT_FRONT) | (1ULL << PWM_RIGHT_BACK))
 #define ENCA_GERAL                                                             \
   ((1ULL << ENCA_LEFT_FRONT) | (1ULL << ENCA_LEFT_BACK) |                      \
    (1ULL << ENCA_RIGHT_FRONT) | (1ULL << ENCA_RIGHT_BACK))
-#define ENCB_GERAL                                                             \
-  ((1ULL << ENCB_LEFT_FRONT) | (1ULL << ENCB_LEFT_BACK) |                      \
-   (1ULL << ENCB_RIGHT_FRONT) | (1ULL << ENCB_RIGHT_BACK))
 
 // Configuração GPIO dos pinos {
 // --------------------------------------------------------------------------------
 #define TICKS_PER_ROTATIONS 300
 void configure_pins_output(unsigned long long bit_mask);
-void configure_pins_input_enca(unsigned long long bit_mask);
-void configure_pins_input_encb(unsigned long long bit_mask);
+void configure_pins_input_ENCA(unsigned long long bit_mask);
 
 void pin_configuration();
 
@@ -66,14 +65,14 @@ void pin_configuration();
 
 #define LEDC_TIMER LEDC_TIMER_0
 #define LEDC_MODE LEDC_LOW_SPEED_MODE
-#define LEDC_CHANNEL_LEFT_FRONT_L_PWM LEDC_CHANNEL_0
-#define LEDC_CHANNEL_LEFT_FRONT_R_PWM LEDC_CHANNEL_1
-#define LEDC_CHANNEL_LEFT_BACK_L_PWM LEDC_CHANNEL_2
-#define LEDC_CHANNEL_LEFT_BACK_R_PWM LEDC_CHANNEL_3
-#define LEDC_CHANNEL_RIGHT_FRONT_L_PWM LEDC_CHANNEL_4
-#define LEDC_CHANNEL_RIGHT_FRONT_R_PWM LEDC_CHANNEL_5
-#define LEDC_CHANNEL_RIGHT_BACK_L_PWM LEDC_CHANNEL_6
-#define LEDC_CHANNEL_RIGHT_BACK_R_PWM LEDC_CHANNEL_7
+#define LEDC_CHANNEL_LEFT_FRONT_PWM LEDC_CHANNEL_0
+#define LEDC_CHANNEL_LEFT_BACK_PWM LEDC_CHANNEL_2
+#define LEDC_CHANNEL_RIGHT_FRONT_PWM LEDC_CHANNEL_4
+#define LEDC_CHANNEL_RIGHT_BACK_PWM LEDC_CHANNEL_6
+// #define LEDC_CHANNEL_RIGHT_FRONT_L_IN LEDC_CHANNEL_4
+// #define LEDC_CHANNEL_RIGHT_FRONT_R_IN LEDC_CHANNEL_5
+// #define LEDC_CHANNEL_RIGHT_BACK_L_IN LEDC_CHANNEL_6
+// #define LEDC_CHANNEL_RIGHT_BACK_R_IN LEDC_CHANNEL_7
 #define LEDC_DUTY_RES LEDC_TIMER_8_BIT // Set duty resolution to 13 bits
 #define LEDC_DUTY (128)        // Set duty to 50%. (2 ** 13) * 50% = 4096
 #define LEDC_FREQUENCY (10000) // Frequency in Hertz. Set frequency at 4 kH

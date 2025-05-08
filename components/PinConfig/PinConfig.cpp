@@ -31,14 +31,14 @@ void configure_pins_input_enca(unsigned long long bit_mask) {
   gpio_config(&config_output);
 }
 
-void configure_pins_input_encb(unsigned long long bit_mask) {
-  gpio_config_t config_output = {.pin_bit_mask = bit_mask,
-                                 .mode = GPIO_MODE_INPUT,
-                                 .pull_up_en = GPIO_PULLUP_ENABLE,
-                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
-                                 .intr_type = GPIO_INTR_DISABLE};
-  gpio_config(&config_output);
-}
+// void configure_pins_input_encb(unsigned long long bit_mask) {
+//   gpio_config_t config_output = {.pin_bit_mask = bit_mask,
+//                                  .mode = GPIO_MODE_INPUT,
+//                                  .pull_up_en = GPIO_PULLUP_ENABLE,
+//                                  .pull_down_en = GPIO_PULLDOWN_DISABLE,
+//                                  .intr_type = GPIO_INTR_DISABLE};
+//   gpio_config(&config_output);
+// }
 
 void configure_pins_output(unsigned long long bit_mask) {
   gpio_config_t config_output = {.pin_bit_mask = bit_mask,
@@ -55,16 +55,16 @@ void pin_configuration() {
   configure_pins_output(OUTPUT_RIGHT_FRONT);
   configure_pins_output(OUTPUT_RIGHT_BACK);
   configure_pins_input_enca(ENCA_GERAL);
-  configure_pins_input_encb(ENCB_GERAL);
-  configure_pwm(R_PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_R_PWM);
-  configure_pwm(L_PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_L_PWM);
-  configure_pwm(R_PWM_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK_R_PWM);
-  configure_pwm(L_PWM_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK_L_PWM);
+  // configure_pins_input_encb(ENCB_GERAL);
+  configure_pwm(PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_PWM);
+  configure_pwm(PWM_LEFT_BACK, 0, LEDC_CHANNEL_LEFT_BACK_PWM);
+  configure_pwm(PWM_RIGHT_FRONT, 0, LEDC_CHANNEL_RIGHT_FRONT_PWM);
+  configure_pwm(PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_PWM);
 
-  configure_pwm(R_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_R_PWM);
-  configure_pwm(L_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_L_PWM);
-  configure_pwm(R_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_R_PWM);
-  configure_pwm(L_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_L_PWM);
+  // configure_pwm(R_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_R_PWM);
+  // configure_pwm(L_PWM_RIGHT_BACK, 0, LEDC_CHANNEL_RIGHT_BACK_L_PWM);
+  // configure_pwm(R_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_R_PWM);
+  // configure_pwm(L_PWM_LEFT_FRONT, 0, LEDC_CHANNEL_LEFT_FRONT_L_PWM);
 
   // configure_pins_input_encb(ENCB_GERAL);
   std::cout << "Pinos configurados" << std::endl;

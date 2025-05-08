@@ -6,7 +6,7 @@ dependencies:
   pink0d/btd_vhci:
     dependencies: []
     source:
-      path: /home/caldo/Projects/TREKKING-2024-2025/components/pink0d__btd_vhci
+      path: /home/caldo/Projects/DROID/TREKKING-2024-2025/components/pink0d__btd_vhci
       type: local
     version: 0.5.1
 direct_dependencies:

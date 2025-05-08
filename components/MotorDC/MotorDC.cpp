@@ -12,20 +12,18 @@
 #include <iostream>
 #include <stdio.h>
 
-MotorDC::MotorDC(const int ENCA, const int ENCB, const int L_PWM,
-                 const int R_PWM, ledc_channel_t LEDC_CHANNEL_L,
-                 ledc_channel_t LEDC_CHANNEL_R) {
+MotorDC::MotorDC(const int ENCA, const int PWM, const int L_IN,
+                 const int R_IN, ledc_channel_t LEDC_CHANNEL) {
   this->ENCA = ENCA;
-  this->ENCB = ENCB;
-  this->L_PWM = L_PWM;
-  this->R_PWM = R_PWM;
-  this->LEDC_CHANNEL_L = LEDC_CHANNEL_L;
-  this->LEDC_CHANNEL_R = LEDC_CHANNEL_R;
+  this->PWM = PWM;
+  this->L_IN = L_IN;
+  this->R_IN = R_IN;
+  this->LEDC_CHANNEL = LEDC_CHANNEL;
 }
 
 void MotorDC::stop_motor() {
-  gpio_set_level((gpio_num_t)this->L_PWM, 0);
-  gpio_set_level((gpio_num_t)this->R_PWM, 0);
+  gpio_set_level((gpio_num_t)this->L_IN, 0);
+  gpio_set_level((gpio_num_t)this->R_IN, 0);
 }
 
 void MotorDC::configure_motor(int tpt, float p, float i, float d) {
@@ -41,26 +39,33 @@ void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
 {
   if (direcao == 1) {
-    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_L, (uint32_t)(pwmVal));
-    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
-    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, 0);
-    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
+    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
+    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
+    gpio_set_level((gpio_num_t)this->L_IN, 1);
+    gpio_set_level((gpio_num_t)this->R_IN, 0);
   } else {
-    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_R, (uint32_t)(pwmVal));
-    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_R);
-    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL_L, 0);
-    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL_L);
+    ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(pwmVal));
+    ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
+    gpio_set_level((gpio_num_t)this->L_IN, 0);
+    gpio_set_level((gpio_num_t)this->R_IN, 1);
   }
 }
 
 void MotorDC::read_encoder(void *arg) {
 
-  if (gpio_get_level((gpio_num_t)this->ENCB) == 1) {
-    this->posi = this->posi + 1;
+  if ((this->current_speed_rpm) > 0) {
+    this->posi++;
+  } else if (this->current_speed_rpm < 0) {
+    this->posi--;
   } else {
-    this->posi = this->posi - 1;
+    if (this->desired_speed_rpm > 0) {
+      this->posi++;
+    } else if (this->desired_speed_rpm < 0) {
+      this->posi--;
+    }
   }
 }
+
 void MotorDC::fetch_rpm() {
   this->current_time = esp_timer_get_time();
   long time = this->current_time;
@@ -102,7 +107,8 @@ void MotorDC::tweak_pid(int variable, float diff) {
 
 void MotorDC::move_pid(int desired_speed_rpm) {
 
-  double error = desired_speed_rpm - this->current_speed_rpm;
+  this->desired_speed_rpm = desired_speed_rpm;
+  double error = this->desired_speed_rpm - this->current_speed_rpm;
   double p = this->kp * error;
   this->accumulated_error += error * this->dt;
   double i = this->ki * this->accumulated_error;
@@ -111,11 +117,11 @@ void MotorDC::move_pid(int desired_speed_rpm) {
 
   double pwm = p + i + d;
 
-  // double initial_pwm = ((double)desired_speed_rpm / 625) * 255;
+  // double initiaL_IN = ((double)desired_speed_rpm / 625) * 255;
 
   // pwm = pwm * 255 / 625;
 
-  // double final_pwm = initial_pwm + pwm;
+  // double finaL_IN = initiaL_IN + pwm;
 
   int dir = 1;
 

@@ -24,15 +24,14 @@ typedef struct motor_pid_t {
 } motor_pid_config_t;
 
 typedef struct motor_pins_t {
-  const int ENCA, ENCB, L_PWM, R_PWM = 0;
-  ledc_channel_t LEDC_CHANNEL_L, LEDC_CHANNEL_R;
+  const int ENCA, PWM, L_IN, R_IN = 0;
+  ledc_channel_t LEDC_CHANNEL;
 } motor_pins_t;
 
 class MotorDC {
 public:
-  MotorDC(const int ENCA, const int ENCB, const int L_PWM, const int R_PWM,
-          ledc_channel_t LEDC_CHANNEL_L,
-          ledc_channel_t LEDC_CHANNEL_R); // Construtor da classe MotorDC
+  MotorDC(const int ENCA, const int PWM, const int L_IN, const int R_IN,
+          ledc_channel_t LEDC_CHANNEL); // Construtor da classe MotorDC
   void stop_motor();
   void configure_motor(int ticks_per_turn, float kp, float ki,
                        float kd); // Função para configurar o motor
@@ -49,6 +48,7 @@ public:
   float return_ki();
   float return_kd();
   void tweak_pid(int variable, float diff);
+  double desired_speed_rpm = 0; // velocidade desejada em rpm
   volatile double current_speed_rpm = 0;
   volatile double last_error = 0;        // erro anterior para o PID
   volatile double accumulated_error = 0; // erro acumulado para o PID
@@ -61,12 +61,10 @@ public:
 
 private:
   int ENCA; // Cabo amarelo
-  int ENCB; // Cabo branco
-  int L_EN;
-  int L_PWM;
-  int R_PWM;
-  ledc_channel_t LEDC_CHANNEL_L;
-  ledc_channel_t LEDC_CHANNEL_R;
+  int PWM; // Cabo branco
+  int L_IN;
+  int R_IN;
+  ledc_channel_t LEDC_CHANNEL;
   int ticks_per_turn; // valor de encoder referente a uma volta completa da roda
   float kp;           // valor de kp para o PID
   float ki;           // valor de ki para o PID
