@@ -12,38 +12,43 @@
 // 34, 35
 
 // #define L_EN_LEFT_FRONT 23  // placeholders
-#define L_IN_LEFT_FRONT 19 //22 // placeholders
-#define R_IN_LEFT_FRONT 21 //23 // placeholders
-#define PWM_LEFT_FRONT  32 //25 // placeholders
+#define L_IN_LEFT_FRONT 21 // 22 // placeholders
+#define R_IN_LEFT_FRONT 19 // 23 // placeholders
+#define PWM_LEFT_FRONT 32  // 25 // placeholders
 #define OUTPUT_LEFT_FRONT                                                      \
-  ((1ULL << L_IN_LEFT_FRONT) | (1ULL << R_IN_LEFT_FRONT) | (1ULL << PWM_LEFT_FRONT))
-#define ENCA_LEFT_FRONT 26 //26 // placeholders
+  ((1ULL << L_IN_LEFT_FRONT) | (1ULL << R_IN_LEFT_FRONT) |                     \
+   (1ULL << PWM_LEFT_FRONT))
+#define ENCA_LEFT_FRONT 26 // 26 // placeholders
 
 // #define L_EN_LEFT_BACK 22  // placeholders FUNCIONANDO
-#define L_IN_LEFT_BACK 23 //21 // placeholders
-#define R_IN_LEFT_BACK 22 //19 // placeholders
-#define PWM_LEFT_BACK 25 //32 // placeholders
-#define OUTPUT_LEFT_BACK ((1ULL << R_IN_LEFT_BACK) | (1ULL << L_IN_LEFT_BACK) | (1ULL << PWM_LEFT_BACK))
-#define ENCA_LEFT_BACK 33 //33 // placeholders
+#define L_IN_LEFT_BACK 23 // 21 // placeholders
+#define R_IN_LEFT_BACK 22 // 19 // placeholders
+#define PWM_LEFT_BACK 25  // 32 // placeholders
+#define OUTPUT_LEFT_BACK                                                       \
+  ((1ULL << R_IN_LEFT_BACK) | (1ULL << L_IN_LEFT_BACK) |                       \
+   (1ULL << PWM_LEFT_BACK))
+#define ENCA_LEFT_BACK 33 // 33 // placeholders
 
 // #define L_EN_RIGHT_FRONT 26  // placeholders
 #define L_IN_RIGHT_FRONT 27 // placeholders
 #define R_IN_RIGHT_FRONT 14 // placeholders
-#define PWM_RIGHT_FRONT 16 // placeholders 17
+#define PWM_RIGHT_FRONT 16  // placeholders 17
 #define OUTPUT_RIGHT_FRONT                                                     \
-  ((1ULL << L_IN_RIGHT_FRONT) | (1ULL << R_IN_RIGHT_FRONT) | (1ULL << PWM_RIGHT_FRONT))
+  ((1ULL << L_IN_RIGHT_FRONT) | (1ULL << R_IN_RIGHT_FRONT) |                   \
+   (1ULL << PWM_RIGHT_FRONT))
 #define ENCA_RIGHT_FRONT 17 // placeholders 16
 
 // #define L_EN_RIGHT_BACK 10
 #define L_IN_RIGHT_BACK 12
 #define R_IN_RIGHT_BACK 13
-#define PWM_RIGHT_BACK 5  // placeholders
+#define PWM_RIGHT_BACK 5 // placeholders
 #define OUTPUT_RIGHT_BACK                                                      \
-  ((1ULL << L_IN_RIGHT_BACK) | (1ULL << R_IN_RIGHT_BACK) | (1ULL << PWM_RIGHT_BACK))
+  ((1ULL << L_IN_RIGHT_BACK) | (1ULL << R_IN_RIGHT_BACK) |                     \
+   (1ULL << PWM_RIGHT_BACK))
 #define ENCA_RIGHT_BACK 18 // placeholders
 
-// #define PWM_GERAL                                                             
-//   ((1ULL << PWM_LEFT_FRONT) | (1ULL << PWM_LEFT_BACK) |                      
+// #define PWM_GERAL
+//   ((1ULL << PWM_LEFT_FRONT) | (1ULL << PWM_LEFT_BACK) |
 //    (1ULL << PWM_RIGHT_FRONT) | (1ULL << PWM_RIGHT_BACK))
 #define ENCA_GERAL                                                             \
   ((1ULL << ENCA_LEFT_FRONT) | (1ULL << ENCA_LEFT_BACK) |                      \
