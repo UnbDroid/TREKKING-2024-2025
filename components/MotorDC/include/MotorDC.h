@@ -41,21 +41,22 @@ public:
   void fetch_rpm();
   void move_pid(int desired_speed_rpm);
   int32_t diff_angular_position();
-  int32_t return_posi();
-  int32_t return_speed();
+  double return_posi();
+  double return_speed();
   double getAngularPosition();
   float return_kp();
   float return_ki();
   float return_kd();
   void tweak_pid(int variable, float diff);
   double desired_speed_rpm = 0; // velocidade desejada em rpm
-  volatile int32_t current_speed_rpm = 0;
+  volatile double current_speed_rpm = 0;
   volatile double last_error = 0;        // erro anterior para o PID
   volatile double accumulated_error = 0; // erro acumulado para o PID
+  bool incrementing = true;
   volatile int32_t posi = 0;             // posição do motor em ticks do encoder
   volatile int32_t last_posi = 0;        // posição do motor em ticks do encoder
   volatile double current_time = 0;
-  volatile double last_time = 0;
+  volatile int64_t last_time = 0;
   volatile double angular_position = 0;
   volatile double last_angular_position = 0;
 
@@ -69,7 +70,7 @@ private:
   float kp;           // valor de kp para o PID
   float ki;           // valor de ki para o PID
   float kd;           // valor de kd para o PID
-  double dt = 0;
+  int64_t dt = 0;
 };
 
 #endif

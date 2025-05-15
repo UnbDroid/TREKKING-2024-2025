@@ -34,7 +34,7 @@ void MotorDC::configure_motor(int tpt, float p, float i, float d) {
   this->kd = d;
 }
 
-int32_t MotorDC::return_posi() { return this->posi; }
+double MotorDC::return_posi() { return this->posi; }
 
 void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
@@ -54,31 +54,46 @@ void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
 void MotorDC::read_encoder(void *arg) {
 
-  if (this->desired_speed_rpm > 0) {
-    this->posi++;
-  } else if (this->desired_speed_rpm < 0) {
-    this->posi--;
+  if (this->desired_speed_rpm != 0) {
+    if (this->incrementing == true) {
+      this->posi++;
+    } else {
+      this->posi--;
+    }
   }
+  
 }
 
 void MotorDC::fetch_rpm() {
   this->current_time = esp_timer_get_time();
   long time = this->current_time;
-  this->dt = (double)(time - this->last_time);
-  this->dt = (this->dt / 1000000.0);
-  double delta_posi = (double)this->posi - (double)this->last_posi;
+  this->dt = (time - this->last_time);
+  // this->dt = (this->dt / 1000000.0);
+  int32_t delta_posi = this->posi - this->last_posi;
 
   this->current_speed_rpm =
-      (delta_posi / (double)this->ticks_per_turn) * 60 / this->dt;
-  // ESP_LOGI("MotorDC", "RPM: %f", this->current_speed_rpm);
+    ((double)delta_posi / (double)this->ticks_per_turn) * 60000000.0 / (double)this->dt;
+
   this->last_posi = this->posi;
   this->last_time = this->current_time;
+
+  if (this->current_speed_rpm > 0) {
+    incrementing = true;
+  } else if (this->current_speed_rpm < 0) {
+    incrementing = false;
+  } else {
+    if (this->desired_speed_rpm > 0) {
+      incrementing = true;
+    } else if (this->desired_speed_rpm < 0) {
+      incrementing = false;
+    }
+  }
 }
 
 void MotorDC::reset_encoder() { this->posi = 0; }
 
-int32_t MotorDC::return_speed() {
-  int32_t velocity = this->current_speed_rpm;
+double MotorDC::return_speed() {
+  double velocity = this->current_speed_rpm;
   return velocity;
 }
 

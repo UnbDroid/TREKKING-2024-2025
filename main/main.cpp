@@ -210,10 +210,10 @@ void robot_setup() {
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
 
-  left_front_motor.configure_motor(300, 1.4, 1.2, 0.00001);
-  right_front_motor.configure_motor(300, 1.8, 0.3, 0);
-  left_back_motor.configure_motor(450, 1.8, 0.5, 0);
-  right_back_motor.configure_motor(600, 1.8, 0.3, 0);
+  left_front_motor.configure_motor(300, 1.4, 0, 0);
+  right_front_motor.configure_motor(300, 1.8, 0, 0);
+  left_back_motor.configure_motor(300, 1.8, 0, 0);
+  right_back_motor.configure_motor(480, 1.8, 0, 0);
 }
 
 // RobotProperties robotProperties;
@@ -299,14 +299,15 @@ void test_motor_working(void *task_params) {
   bool incrementando = true;
   int vel = 0;
   while (1) {
-    left_front_motor.fetch_rpm();
-    left_back_motor.fetch_rpm();
-    right_front_motor.fetch_rpm();
-    right_back_motor.fetch_rpm();
+    // left_front_motor.fetch_rpm();
+    // left_back_motor.fetch_rpm();
+    // right_front_motor.fetch_rpm();
+    // right_back_motor.fetch_rpm();
+    // ESP_LOGI("MotorDC", "RPM: %f, Posi: %ld", left_front_motor.return_speed(), left_front_motor.posi);
     left_front_motor.move_pid(vel);
-    // left_back_motor.move_pid(vel);
-    // right_front_motor.move_pid(vel);
-    // right_back_motor.move_pid(vel);
+    left_back_motor.move_pid(vel);
+    right_front_motor.move_pid(vel);
+    right_back_motor.move_pid(vel);
     if (incrementando == true) {
       vel++;
     } else {
@@ -317,8 +318,8 @@ void test_motor_working(void *task_params) {
     } else if (vel <= -101) {
       incrementando = true;
     }
-    ESP_LOGI("videos", "posi % rpm %" PRId32, PRId32, left_front_motor.posi,
-             left_front_motor.return_speed());
+    // ESP_LOGI("videos", "posi % rpm %" PRId32, PRId32, left_front_motor.posi,
+    //          left_front_motor.return_speed());
 
     vTaskDelay(pdMS_TO_TICKS(10));
   }
