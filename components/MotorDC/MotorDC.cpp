@@ -6,14 +6,15 @@
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "hal/ledc_types.h"
+#include <cstdint>
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
 #include <freertos/task.h>
 #include <iostream>
 #include <stdio.h>
 
-MotorDC::MotorDC(const int ENCA, const int PWM, const int L_IN,
-                 const int R_IN, ledc_channel_t LEDC_CHANNEL) {
+MotorDC::MotorDC(const int ENCA, const int PWM, const int L_IN, const int R_IN,
+                 ledc_channel_t LEDC_CHANNEL) {
   this->ENCA = ENCA;
   this->PWM = PWM;
   this->L_IN = L_IN;
@@ -53,16 +54,10 @@ void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
 void MotorDC::read_encoder(void *arg) {
 
-  if ((this->current_speed_rpm) > 0) {
+  if (this->desired_speed_rpm > 0) {
     this->posi++;
-  } else if (this->current_speed_rpm < 0) {
+  } else if (this->desired_speed_rpm < 0) {
     this->posi--;
-  } else {
-    if (this->desired_speed_rpm > 0) {
-      this->posi++;
-    } else if (this->desired_speed_rpm < 0) {
-      this->posi--;
-    }
   }
 }
 
@@ -79,10 +74,11 @@ void MotorDC::fetch_rpm() {
   this->last_posi = this->posi;
   this->last_time = this->current_time;
 }
+
 void MotorDC::reset_encoder() { this->posi = 0; }
 
-double MotorDC::return_speed() {
-  double velocity = this->current_speed_rpm;
+int32_t MotorDC::return_speed() {
+  int32_t velocity = this->current_speed_rpm;
   return velocity;
 }
 

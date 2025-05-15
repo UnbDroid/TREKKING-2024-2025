@@ -42,14 +42,14 @@ public:
   void move_pid(int desired_speed_rpm);
   int32_t diff_angular_position();
   int32_t return_posi();
-  double return_speed();
+  int32_t return_speed();
   double getAngularPosition();
   float return_kp();
   float return_ki();
   float return_kd();
   void tweak_pid(int variable, float diff);
   double desired_speed_rpm = 0; // velocidade desejada em rpm
-  volatile double current_speed_rpm = 0;
+  volatile int32_t current_speed_rpm = 0;
   volatile double last_error = 0;        // erro anterior para o PID
   volatile double accumulated_error = 0; // erro acumulado para o PID
   volatile int32_t posi = 0;             // posição do motor em ticks do encoder
@@ -61,7 +61,7 @@ public:
 
 private:
   int ENCA; // Cabo amarelo
-  int PWM; // Cabo branco
+  int PWM;  // Cabo branco
   int L_IN;
   int R_IN;
   ledc_channel_t LEDC_CHANNEL;

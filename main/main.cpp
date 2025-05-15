@@ -140,6 +140,7 @@
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
+#include <cinttypes>
 
 #define RCCHECK(fn)                                                            \
   {                                                                            \
@@ -226,17 +227,15 @@ void robot_setup() {
 
 void *task_params = NULL;
 
-// void RPM_fetching(void *task_params)
-// {
-//   while (1)
-//   {
-//     left_back_motor.fetch_rpm();
-//     left_front_motor.fetch_rpm();
-//     right_back_motor.fetch_rpm();
-//     right_front_motor.fetch_rpm();
-//     vTaskDelay(pdMS_TO_TICKS(10));
-//   }
-// }
+void RPM_fetching(void *task_params) {
+  while (1) {
+    left_back_motor.fetch_rpm();
+    left_front_motor.fetch_rpm();
+    right_back_motor.fetch_rpm();
+    right_front_motor.fetch_rpm();
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
+}
 
 void task_velocity() {
   // Extract linear and angular velocities from the message
@@ -253,18 +252,18 @@ void task_velocity() {
   double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
 
   // Compute individual wheel speeds in RPS
-  double left_speed_mps = linear_x - (angular_z * wheel_base / 2);
-  double right_speed_mps = linear_x + (angular_z * wheel_base / 2);
+  double left_speed_mps = linear_x - angular_z;
+  double right_speed_mps = linear_x + angular_z;
 
   // Convert wheel speeds from RPS to RPM
   double left_speed_rpm = (left_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
   double right_speed_rpm = (right_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
 
   // Fetch current RPM values from the motors
-  left_front_motor.fetch_rpm();
-  left_back_motor.fetch_rpm();
-  right_front_motor.fetch_rpm();
-  right_back_motor.fetch_rpm();
+  //  left_front_motor.fetch_rpm();
+  //  left_back_motor.fetch_rpm();
+  //  right_front_motor.fetch_rpm();
+  //  right_back_motor.fetch_rpm();
 
   // Print speeds
   // ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
@@ -297,15 +296,30 @@ void task_velocity() {
 }
 
 void test_motor_working(void *task_params) {
+  bool incrementando = true;
+  int vel = 0;
   while (1) {
     left_front_motor.fetch_rpm();
     left_back_motor.fetch_rpm();
     right_front_motor.fetch_rpm();
     right_back_motor.fetch_rpm();
-    left_front_motor.move_pid(50);
-    left_back_motor.move_pid(50);
-    right_front_motor.move_pid(50);
-    right_back_motor.move_pid(50);
+    left_front_motor.move_pid(vel);
+    // left_back_motor.move_pid(vel);
+    // right_front_motor.move_pid(vel);
+    // right_back_motor.move_pid(vel);
+    if (incrementando == true) {
+      vel++;
+    } else {
+      vel--;
+    }
+    if (vel >= 101) {
+      incrementando = false;
+    } else if (vel <= -101) {
+      incrementando = true;
+    }
+    ESP_LOGI("videos", "posi % rpm %" PRId32, PRId32, left_front_motor.posi,
+             left_front_motor.return_speed());
+
     vTaskDelay(pdMS_TO_TICKS(10));
   }
 }
@@ -341,22 +355,17 @@ void rosStuff(void *task_params) {
 
 extern "C" void app_main(void) {
 
-  // #if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
-  // 	rmw_uros_set_custom_transport(
-  //     true,
-  //     (void *) &uart_port,
-  // 	esp32_serial_open,
-  // 	esp32_serial_close,
-  // 	esp32_serial_write,
-  // 	esp32_serial_read
-  // );
-  // #else
-  // #error micro-ROS transports misconfigured
-  // #endif  // RMW_UXRCE_TRANSPORT_CUSTOM
+#if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
+  rmw_uros_set_custom_transport(true, (void *)&uart_port, esp32_serial_open,
+                                esp32_serial_close, esp32_serial_write,
+                                esp32_serial_read);
+#else
+// #error micro-ROS transports misconfigured
+#endif // RMW_UXRCE_TRANSPORT_CUSTOM
 
   robot_setup();
 
-  // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   xTaskCreate(test_motor_working, "test_motor_working", 4 * 1024, NULL, 1,
