@@ -55,11 +55,24 @@ void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
 void MotorDC::read_encoder(void *arg) {
 
-  if (this->desired_speed_rpm > 0) {
+  // if (this->desired_speed_rpm > 0) {
+  //   this->posi++;
+  // } else if (this->desired_speed_rpm < 0) {
+  //   this->posi--;
+  // }
+
+  if (this->current_speed_rpm > 1) {
     this->posi++;
-  } else if (this->desired_speed_rpm < 0) {
+  } else if (this->current_speed_rpm < -1) {
     this->posi--;
+  } else {
+    if (this->desired_speed_rpm > 0) {
+      this->posi++;
+    } else if (this->desired_speed_rpm < 0) {
+      this->posi--;
+    }
   }
+
 }
 
 void MotorDC::fetch_rpm() {
@@ -88,7 +101,7 @@ void MotorDC::fetch_rpm() {
   }
 }
 
-void MotorDC::reset_encoder() { this->posi = 0; }
+void MotorDC::reset_encoder() { this->posi = 0; this->last_posi = 0; }
 
 double MotorDC::return_speed() {
   double velocity = this->current_speed_rpm;
@@ -115,24 +128,38 @@ void MotorDC::tweak_pid(int variable, float diff) {
 }
 
 void MotorDC::move_pid(int desired_speed_rpm) {
-
+  
+  // if (desired_speed_rpm > 0 && this->isGoingForward == false) {
+  //   this->isGoingForward = true;
+  //   this->stop_motor();
+  //   vTaskDelay(5000 / portTICK_PERIOD_MS);
+  //   this->reset_encoder();
+  //   this->isGoingForward = true;
+  // } else if (desired_speed_rpm < 0 && this->isGoingForward == true) {
+  //   this->isGoingForward = false;
+  //   this->stop_motor();
+  //   vTaskDelay(5000 / portTICK_PERIOD_MS);
+  //   this->reset_encoder();
+  //   this->isGoingForward = false;
+  // }
+  
   float posi = this->posi;
   float last_posi = this->last_posi;
-
+  
   this->current_time = esp_timer_get_time();
   this->dt = ((float)(this->current_time - this->last_time)) / 1.0e6;
-
+  
   float velocity = (posi - last_posi) / this->dt;
   float vel = velocity / this->ticks_per_turn * 60;
-
+  
   this->v1Filt = 0.854 * this->v1Filt + 0.0728 * vel + 0.0728 * this->v1Prev;
   this->v1Prev = vel;
-
+  
   this->current_speed_rpm = this->v1Filt;
-  this->last_posi = this->posi;
+  this->last_posi = posi;
   this->last_time = this->current_time;
+  
   this->desired_speed_rpm = desired_speed_rpm;
-
   this->error = this->desired_speed_rpm - this->current_speed_rpm;
   double p = this->kp * this->error;
   this->accumulated_error += this->error * this->dt;
@@ -146,7 +173,7 @@ void MotorDC::move_pid(int desired_speed_rpm) {
 
   // pwm = pwm * 255 / 625;
 
-  this->pwm = fabs(initiaL_IN + u);
+  this->pwm = initiaL_IN + u;
 
   int dir = 1;
 

@@ -213,7 +213,7 @@ void robot_setup() {
                        (void *)ENCA_RIGHT_BACK);
   // PULA
   left_front_motor.configure_motor(300, 1.8, 0, 0);
-  right_front_motor.configure_motor(450, 1.8, 0, 0);
+  right_front_motor.configure_motor(300, 1.8, 0, 0);
   left_back_motor.configure_motor(300, 1.8, 0, 0);
   right_back_motor.configure_motor(480, 1.8, 0, 0);
 }
@@ -272,27 +272,30 @@ void task_velocity() {
   //          right_back_motor.current_speed_rpm);
 
   // // Limit speed to a maximum value (50 RPM in this case)
-  if (left_speed_rpm > 80) {
-    left_speed_rpm = 80;
+  if (left_speed_rpm > 50) {
+    left_speed_rpm = 50;
   }
-  if (right_speed_rpm > 80) {
-    right_speed_rpm = 80;
+  if (right_speed_rpm > 50) {
+    right_speed_rpm = 50;
   }
-  if (left_speed_rpm < -80) {
-    left_speed_rpm = -80;
+  if (left_speed_rpm < -50) {
+    left_speed_rpm = -50;
   }
-  if (right_speed_rpm < -80) {
-    right_speed_rpm = -80;
+  if (right_speed_rpm < -50) {
+    right_speed_rpm = -50;
   }
+
+  int left_speed_rpm_int = static_cast<int>(left_speed_rpm);
+  int right_speed_rpm_int = static_cast<int>(right_speed_rpm);
 
   // Send the desired RPM values to the motors using PID control
-  left_front_motor.move_pid(left_speed_rpm);
-  left_back_motor.move_pid(left_speed_rpm);
-  right_front_motor.move_pid(right_speed_rpm);
-  right_back_motor.move_pid(right_speed_rpm);
+  left_front_motor.move_pid(left_speed_rpm_int);
+  left_back_motor.move_pid(left_speed_rpm_int);
+  right_front_motor.move_pid(right_speed_rpm_int);
+  right_back_motor.move_pid(right_speed_rpm_int);
 
   // Delay to allow the FreeRTOS task to yield
-  vTaskDelay(pdMS_TO_TICKS(10));
+  // vTaskDelay(pdMS_TO_TICKS(10));
 }
 
 void test_motor_working(void *task_params) {
@@ -336,7 +339,7 @@ void test_motor_working(void *task_params) {
     // ESP_LOGI("videos", "posi % rpm %" PRId32, PRId32, left_front_motor.posi,
     //          left_front_motor.return_speed());
 
-    vTaskDelay(pdMS_TO_TICKS(50));
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 }
 
@@ -365,7 +368,7 @@ void rosStuff(void *task_params) {
   while (1) {
     rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10000));
     task_velocity();
-    usleep(10000);
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 }
 
@@ -383,7 +386,7 @@ extern "C" void app_main(void) {
 
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
   xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
-  //  xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
+  // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
   //           NULL);
 
