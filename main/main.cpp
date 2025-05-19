@@ -135,13 +135,15 @@
 #include "btd_vhci.h"
 #include "esp_attr.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/idf_additions.h"
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
+#include "math.h"
 #include "nvs_flash.h"
 #include <cinttypes>
-
+#include <iterator>
 #define RCCHECK(fn)                                                            \
   {                                                                            \
     rcl_ret_t temp_rc = fn;                                                    \
@@ -209,8 +211,8 @@ void robot_setup() {
                        (void *)ENCA_RIGHT_FRONT);
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
-
-  left_front_motor.configure_motor(300, 1.4, 0, 0);
+  // PULA
+  left_front_motor.configure_motor(300, 1, 0, 0);
   right_front_motor.configure_motor(300, 1.8, 0, 0);
   left_back_motor.configure_motor(300, 1.8, 0, 0);
   right_back_motor.configure_motor(480, 1.8, 0, 0);
@@ -220,9 +222,8 @@ void robot_setup() {
 
 // PS4BT PS4;
 // RobotPs4Controller robo(&right_front_motor, &right_back_motor,
-//   &left_front_motor, &left_back_motor);
-
-// EspRaspRobot robot(&left_front_motor, &right_front_motor,
+//   &left_front_motor, &left_back_motor); EspRaspRobot robot(&left_front_motor,
+//   &right_front_motor,
 //                    &left_back_motor, &right_back_motor, &robotProperties);
 
 void *task_params = NULL;
@@ -259,8 +260,7 @@ void task_velocity() {
   double left_speed_rpm = (left_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
   double right_speed_rpm = (right_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
 
-  // Fetch current RPM values from the motors
-  //  left_front_motor.fetch_rpm();
+  // Fetch current RPM values from the motors left_front_motor.fetch_rpm();
   //  left_back_motor.fetch_rpm();
   //  right_front_motor.fetch_rpm();
   //  right_back_motor.fetch_rpm();
@@ -298,22 +298,53 @@ void task_velocity() {
 void test_motor_working(void *task_params) {
   bool incrementando = true;
   int vel = 0;
+  int posPrev = 0;
+  long prevT = esp_timer_get_time();
+  float angle = 0;
+
   while (1) {
-    // left_front_motor.fetch_rpm();
+    //    left_front_motor.fetch_rpm();
     // left_back_motor.fetch_rpm();
     // right_front_motor.fetch_rpm();
     // right_back_motor.fetch_rpm();
-    // ESP_LOGI("MotorDC", "RPM: %f, Posi: %ld", left_front_motor.return_speed(), left_front_motor.posi);
-    left_front_motor.move_pid(vel);
-    left_back_motor.move_pid(vel);
-    right_front_motor.move_pid(vel);
-    right_back_motor.move_pid(vel);
+    // long currT = esp_timer_get_time();
+    // float deltaT = ((float)(currT - prevT)) / 1.0e6;
+    // float posi = left_front_motor.posi;
+    // float velocity = (posi - posPrev) / deltaT;
+    float velocity = left_front_motor.current_speed_rpm;
+    float posi = left_front_motor.posi;
+    float erro = left_front_motor.accumulated_error;
+    float aaa = 100;
+    if (incrementando) {
+      vel = vel + 1;
+      if (vel > 80) {
+        incrementando = false;
+      }
+    } else {
+      vel = vel - 1;
+      if (vel < -80) {
+        incrementando = true;
+      }
+    }
+
+    ESP_LOGI("velocidade", "RPM: %f, erro: %f Target %f", velocity,
+             left_front_motor.last_error, aaa);
+    left_front_motor.move_pid(aaa);
+    angle += 0.6; // Aumenta lentamente o ângulo (ajuste para alterar a
+                  // "velocidade" da variação)
+    if (angle > 2 * PI) {
+      angle -= 2 * PI;
+    }
+    // left_back_motor.move_pid(vel);
+
+    // right_front_motor.move_pid(vel);
+    // right_back_motor.move_pid(vel);
     if (incrementando == true) {
       vel++;
     } else {
       vel--;
     }
-    if (vel >= 101) {
+    if (vel >= 150) {
       incrementando = false;
     } else if (vel <= -101) {
       incrementando = true;
@@ -321,7 +352,7 @@ void test_motor_working(void *task_params) {
     // ESP_LOGI("videos", "posi % rpm %" PRId32, PRId32, left_front_motor.posi,
     //          left_front_motor.return_speed());
 
-    vTaskDelay(pdMS_TO_TICKS(10));
+    vTaskDelay(pdMS_TO_TICKS(50));
   }
 }
 
@@ -366,10 +397,10 @@ extern "C" void app_main(void) {
 
   robot_setup();
 
-  xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
-  // xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
-  // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(test_motor_working, "test_motor_working", 4 * 1024, NULL, 1,
+  // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
+  //  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+  //  xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
               NULL);
 
   // right_front_motor.set_direction_pwm(1, 120);

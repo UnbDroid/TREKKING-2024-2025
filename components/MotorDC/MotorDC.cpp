@@ -54,14 +54,11 @@ void MotorDC::set_direction_pwm(int direcao, double pwmVal)
 
 void MotorDC::read_encoder(void *arg) {
 
-  if (this->desired_speed_rpm != 0) {
-    if (this->incrementing == true) {
-      this->posi++;
-    } else {
-      this->posi--;
-    }
+  if (this->desired_speed_rpm > 0) {
+    this->posi++;
+  } else if (this->desired_speed_rpm < 0) {
+    this->posi--;
   }
-  
 }
 
 void MotorDC::fetch_rpm() {
@@ -72,7 +69,7 @@ void MotorDC::fetch_rpm() {
   int32_t delta_posi = this->posi - this->last_posi;
 
   this->current_speed_rpm =
-    ((double)delta_posi / (double)this->ticks_per_turn) * 60000000.0 / (double)this->dt;
+      (delta_posi / this->ticks_per_turn) * 60000000 / this->dt;
 
   this->last_posi = this->posi;
   this->last_time = this->current_time;
@@ -117,7 +114,24 @@ void MotorDC::tweak_pid(int variable, float diff) {
 }
 
 void MotorDC::move_pid(int desired_speed_rpm) {
+  float v1Filt = 0;
+  float v1Prev = 0;
 
+  float posi = this->posi;
+  float last_posi = this->last_posi;
+
+  this->current_time = esp_timer_get_time();
+  this->dt = ((float)(this->current_time - this->last_time)) / 1.0e6;
+
+  float velocity = (posi - last_posi) / dt;
+  float vel = velocity / this->ticks_per_turn * 60;
+
+  v1Filt = 0.854 * v1Filt + 0.0728 * vel + 0.0728 * v1Prev;
+  v1Prev = vel;
+
+  this->current_speed_rpm = v1Filt;
+  this->last_posi = this->posi;
+  this->last_time = this->current_time;
   this->desired_speed_rpm = desired_speed_rpm;
   double error = this->desired_speed_rpm - this->current_speed_rpm;
   double p = this->kp * error;
