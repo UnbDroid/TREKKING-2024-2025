@@ -47,6 +47,11 @@ public:
   float return_kp();
   float return_ki();
   float return_kd();
+  float v1Filt = 0;
+  float v1Prev = 0;
+  float dt = 0;
+  int pwm = 0;
+
   void tweak_pid(int variable, float diff);
   double desired_speed_rpm = 0; // velocidade desejada em rpm
   volatile int current_speed_rpm = 0;
@@ -59,6 +64,7 @@ public:
   volatile int64_t last_time = 0;
   volatile double angular_position = 0;
   volatile double last_angular_position = 0;
+  float error = 0;
 
 private:
   int ENCA; // Cabo amarelo
@@ -70,7 +76,6 @@ private:
   float kp;           // valor de kp para o PID
   float ki;           // valor de ki para o PID
   float kd;           // valor de kd para o PID
-  float dt = 0;
 };
 
 #endif

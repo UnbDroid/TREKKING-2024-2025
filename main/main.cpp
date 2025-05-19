@@ -212,8 +212,8 @@ void robot_setup() {
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
   // PULA
-  left_front_motor.configure_motor(300, 1, 0, 0);
-  right_front_motor.configure_motor(300, 1.8, 0, 0);
+  left_front_motor.configure_motor(300, 1.8, 0, 0);
+  right_front_motor.configure_motor(450, 1.8, 0, 0);
   left_back_motor.configure_motor(300, 1.8, 0, 0);
   right_back_motor.configure_motor(480, 1.8, 0, 0);
 }
@@ -245,8 +245,8 @@ void task_velocity() {
 
   // Multiply both by 5
 
-  // linear_x = linear_x * 2;
-  // angular_z = angular_z * 5;
+  linear_x = linear_x * 2;
+  angular_z = angular_z * 4;
 
   // Convert velocities to motor speeds using differential drive kinematics
   double wheel_base = 0.235;                 // Distance between wheels (meters)
@@ -311,44 +311,28 @@ void test_motor_working(void *task_params) {
     // float deltaT = ((float)(currT - prevT)) / 1.0e6;
     // float posi = left_front_motor.posi;
     // float velocity = (posi - posPrev) / deltaT;
-    float velocity = left_front_motor.current_speed_rpm;
-    float posi = left_front_motor.posi;
-    float erro = left_front_motor.accumulated_error;
-    float aaa = 100;
-    if (incrementando) {
-      vel = vel + 1;
-      if (vel > 80) {
-        incrementando = false;
-      }
-    } else {
-      vel = vel - 1;
-      if (vel < -80) {
-        incrementando = true;
-      }
-    }
+    float velocity_lf = left_front_motor.current_speed_rpm;
+    float velocity_lb = left_back_motor.current_speed_rpm;
+    float velocity_rf = right_front_motor.current_speed_rpm;
+    float velocity_rb = right_back_motor.current_speed_rpm;
+    float aaa = 60;
 
-    ESP_LOGI("velocidade", "RPM: %f, erro: %f Target %f", velocity,
-             left_front_motor.last_error, aaa);
+    ESP_LOGI("velocidade_lf", "RPM: %f, erro: %f Target %f", velocity_lf,
+             left_front_motor.error, aaa);
+    ESP_LOGI("velocidade_lb", "RPM: %f, erro: %f Target %f", velocity_lb,
+             left_back_motor.error, aaa);
+    ESP_LOGI("velocidade_rf", "RPM: %f, erro: %f Target %f", velocity_rf,
+             right_front_motor.error, aaa);
+    ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f", velocity_rb,
+             right_back_motor.error, aaa);
     left_front_motor.move_pid(aaa);
-    angle += 0.6; // Aumenta lentamente o ângulo (ajuste para alterar a
-                  // "velocidade" da variação)
-    if (angle > 2 * PI) {
-      angle -= 2 * PI;
-    }
+    left_back_motor.move_pid(aaa);
+    right_front_motor.move_pid(aaa);
+    right_back_motor.move_pid(aaa);
     // left_back_motor.move_pid(vel);
 
     // right_front_motor.move_pid(vel);
     // right_back_motor.move_pid(vel);
-    if (incrementando == true) {
-      vel++;
-    } else {
-      vel--;
-    }
-    if (vel >= 150) {
-      incrementando = false;
-    } else if (vel <= -101) {
-      incrementando = true;
-    }
     // ESP_LOGI("videos", "posi % rpm %" PRId32, PRId32, left_front_motor.posi,
     //          left_front_motor.return_speed());
 
@@ -398,10 +382,10 @@ extern "C" void app_main(void) {
   robot_setup();
 
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
-  //  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
   //  xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
-              NULL);
+  // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
+  //           NULL);
 
   // right_front_motor.set_direction_pwm(1, 120);
   // right_back_motor.set_direction_pwm(1, 120);

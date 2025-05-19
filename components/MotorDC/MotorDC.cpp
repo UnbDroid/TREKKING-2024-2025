@@ -6,6 +6,7 @@
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "hal/ledc_types.h"
+#include <cmath>
 #include <cstdint>
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
@@ -114,8 +115,6 @@ void MotorDC::tweak_pid(int variable, float diff) {
 }
 
 void MotorDC::move_pid(int desired_speed_rpm) {
-  float v1Filt = 0;
-  float v1Prev = 0;
 
   float posi = this->posi;
   float last_posi = this->last_posi;
@@ -123,37 +122,37 @@ void MotorDC::move_pid(int desired_speed_rpm) {
   this->current_time = esp_timer_get_time();
   this->dt = ((float)(this->current_time - this->last_time)) / 1.0e6;
 
-  float velocity = (posi - last_posi) / dt;
+  float velocity = (posi - last_posi) / this->dt;
   float vel = velocity / this->ticks_per_turn * 60;
 
-  v1Filt = 0.854 * v1Filt + 0.0728 * vel + 0.0728 * v1Prev;
-  v1Prev = vel;
+  this->v1Filt = 0.854 * this->v1Filt + 0.0728 * vel + 0.0728 * this->v1Prev;
+  this->v1Prev = vel;
 
-  this->current_speed_rpm = v1Filt;
+  this->current_speed_rpm = this->v1Filt;
   this->last_posi = this->posi;
   this->last_time = this->current_time;
   this->desired_speed_rpm = desired_speed_rpm;
-  double error = this->desired_speed_rpm - this->current_speed_rpm;
-  double p = this->kp * error;
-  this->accumulated_error += error * this->dt;
+
+  this->error = this->desired_speed_rpm - this->current_speed_rpm;
+  double p = this->kp * this->error;
+  this->accumulated_error += this->error * this->dt;
   double i = this->ki * this->accumulated_error;
-  double d = this->kd * (error - this->last_error) / dt;
-  this->last_error = error;
+  double d = this->kd * (this->error - this->last_error) / this->dt;
+  this->last_error = this->error;
 
-  double pwm = p + i + d;
+  double u = p + i + d;
 
-  // double initiaL_IN = ((double)desired_speed_rpm / 625) * 255;
+  double initiaL_IN = ((double)desired_speed_rpm / 400) * 255;
 
   // pwm = pwm * 255 / 625;
 
-  // double finaL_IN = initiaL_IN + pwm;
+  this->pwm = fabs(initiaL_IN + u);
 
   int dir = 1;
 
-  if (pwm < 0) {
-    pwm = -pwm;
+  if (this->desired_speed_rpm < 0) {
     dir = -1;
   }
 
-  this->set_direction_pwm(dir, pwm);
+  this->set_direction_pwm(dir, this->pwm);
 }
