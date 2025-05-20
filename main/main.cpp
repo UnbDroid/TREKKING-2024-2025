@@ -144,6 +144,8 @@
 #include "nvs_flash.h"
 #include <cinttypes>
 #include <iterator>
+#include "geometry_msgs/msg/vector3.h"
+
 #define RCCHECK(fn)                                                            \
   {                                                                            \
     rcl_ret_t temp_rc = fn;                                                    \
@@ -165,7 +167,10 @@
 uart_port_t uart_port = UART_NUM_0;
 
 rcl_subscription_t subscriber;
+rcl_publisher_t rpm_publisher;
+geometry_msgs__msg__Vector3 rpm_msg;
 geometry_msgs__msg__Twist msg;
+
 
 MotorDC left_front_motor(ENCA_LEFT_FRONT, PWM_LEFT_FRONT, L_IN_LEFT_FRONT,
                          R_IN_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_PWM);
@@ -285,6 +290,11 @@ void task_velocity() {
     right_speed_rpm = -50;
   }
 
+  rpm_msg.x = left_speed_rpm;
+  rpm_msg.y = right_speed_rpm;
+
+  rcl_ret_t ret = rcl_publish(&rpm_publisher, &rpm_msg, NULL);
+
   int left_speed_rpm_int = static_cast<int>(left_speed_rpm);
   int right_speed_rpm_int = static_cast<int>(right_speed_rpm);
 
@@ -354,6 +364,15 @@ void rosStuff(void *task_params) {
   // create node
   rcl_node_t node;
   RCCHECK(rclc_node_init_default(&node, "int32_subscriber_rclc", "", &support));
+
+  // create publisher
+  RCCHECK(rclc_publisher_init_default(
+  &rpm_publisher,
+  &node,
+  ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
+  "motor_rpm"
+));
+
 
   // create subscriber
   RCCHECK(rclc_subscription_init_default(
