@@ -140,11 +140,11 @@
 #include "freertos/idf_additions.h"
 #include "freertos/projdefs.h"
 #include "freertos/task.h"
+#include "geometry_msgs/msg/vector3.h"
 #include "math.h"
 #include "nvs_flash.h"
 #include <cinttypes>
 #include <iterator>
-#include "geometry_msgs/msg/vector3.h"
 
 #define RCCHECK(fn)                                                            \
   {                                                                            \
@@ -170,7 +170,6 @@ rcl_subscription_t subscriber;
 rcl_publisher_t rpm_publisher;
 geometry_msgs__msg__Vector3 rpm_msg;
 geometry_msgs__msg__Twist msg;
-
 
 MotorDC left_front_motor(ENCA_LEFT_FRONT, PWM_LEFT_FRONT, L_IN_LEFT_FRONT,
                          R_IN_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_PWM);
@@ -250,7 +249,7 @@ void task_velocity() {
 
   // Multiply both by 5
 
-  linear_x = linear_x * 2;
+  linear_x = linear_x * 1.5;
   angular_z = angular_z * 4;
 
   // Convert velocities to motor speeds using differential drive kinematics
@@ -277,19 +276,6 @@ void task_velocity() {
   //          right_back_motor.current_speed_rpm);
 
   // // Limit speed to a maximum value (50 RPM in this case)
-  if (left_speed_rpm > 50) {
-    left_speed_rpm = 50;
-  }
-  if (right_speed_rpm > 50) {
-    right_speed_rpm = 50;
-  }
-  if (left_speed_rpm < -50) {
-    left_speed_rpm = -50;
-  }
-  if (right_speed_rpm < -50) {
-    right_speed_rpm = -50;
-  }
-
   rpm_msg.x = left_speed_rpm;
   rpm_msg.y = right_speed_rpm;
 
@@ -314,7 +300,7 @@ void test_motor_working(void *task_params) {
   int posPrev = 0;
   long prevT = esp_timer_get_time();
   float angle = 0;
-
+  int flag = 0;
   while (1) {
     //    left_front_motor.fetch_rpm();
     // left_back_motor.fetch_rpm();
@@ -328,10 +314,24 @@ void test_motor_working(void *task_params) {
     float velocity_lb = left_back_motor.current_speed_rpm;
     float velocity_rf = right_front_motor.current_speed_rpm;
     float velocity_rb = right_back_motor.current_speed_rpm;
-    float aaa = 60;
+    float aaa = 0;
 
-    ESP_LOGI("velocidade_lf", "RPM: %f, erro: %f Target %f", velocity_lf,
-             left_front_motor.error, aaa);
+    if (flag < 450) {
+      aaa = 200;
+      flag++;
+      incrementando = false;
+    } else if (flag >= 450 && flag < 900) {
+      aaa = -200;
+      flag++;
+      incrementando = false;
+    }
+    if (flag >= 900) {
+      flag = 0;
+    }
+
+    int b = left_front_motor.posi;
+    ESP_LOGI("velocidade_lf", "RPM: %f, erro: %f Target %f Ticks %d",
+             velocity_lf, left_front_motor.error, aaa, b);
     ESP_LOGI("velocidade_lb", "RPM: %f, erro: %f Target %f", velocity_lb,
              left_back_motor.error, aaa);
     ESP_LOGI("velocidade_rf", "RPM: %f, erro: %f Target %f", velocity_rf,
@@ -367,12 +367,8 @@ void rosStuff(void *task_params) {
 
   // create publisher
   RCCHECK(rclc_publisher_init_default(
-  &rpm_publisher,
-  &node,
-  ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
-  "motor_rpm"
-));
-
+      &rpm_publisher, &node,
+      ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3), "motor_rpm"));
 
   // create subscriber
   RCCHECK(rclc_subscription_init_default(

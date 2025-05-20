@@ -2,11 +2,11 @@ dependencies:
   idf:
     source:
       type: idf
-    version: 5.2.0
+    version: 5.2.5
   pink0d/btd_vhci:
     dependencies: []
     source:
-      path: /home/caldo/Projects/DROID/TREKKING-2024-2025/components/pink0d__btd_vhci
+      path: /home/arthur/Projects/DROID/TREKKING-2024-2025/components/pink0d__btd_vhci
       type: local
     version: 0.5.1
 direct_dependencies:

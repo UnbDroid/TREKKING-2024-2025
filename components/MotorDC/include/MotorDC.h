@@ -52,6 +52,7 @@ public:
   float dt = 0;
   int pwm = 0;
   bool isGoingForward = true;
+  int dir = 0;
 
   void tweak_pid(int variable, float diff);
   double desired_speed_rpm = 0; // velocidade desejada em rpm
