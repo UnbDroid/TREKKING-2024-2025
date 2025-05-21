@@ -317,11 +317,11 @@ void test_motor_working(void *task_params) {
     float aaa = 0;
 
     if (flag < 450) {
-      aaa = 200;
+      aaa = 100;
       flag++;
       incrementando = false;
     } else if (flag >= 450 && flag < 900) {
-      aaa = -200;
+      aaa = -100;
       flag++;
       incrementando = false;
     }

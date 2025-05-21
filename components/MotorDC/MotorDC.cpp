@@ -160,5 +160,10 @@ void MotorDC::move_pid(int desired_speed_rpm) {
 
   this->pwm = initiaL_IN + u;
 
-  this->set_direction_pwm(dir, this->pwm);
+  if (this->desired_speed_rpm == 0) {
+    this->stop_motor();
+  } else {
+    this->set_direction_pwm(dir, this->pwm);
+  }
+
 }
