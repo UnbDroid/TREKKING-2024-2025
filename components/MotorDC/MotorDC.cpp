@@ -24,6 +24,8 @@ MotorDC::MotorDC(const int ENCA, const int PWM, const int L_IN, const int R_IN,
 }
 
 void MotorDC::stop_motor() {
+  ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(0));
+  ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
   gpio_set_level((gpio_num_t)this->L_IN, 0);
   gpio_set_level((gpio_num_t)this->R_IN, 0);
 }
@@ -147,14 +149,14 @@ void MotorDC::move_pid(int desired_speed_rpm) {
   this->error = this->desired_speed_rpm - this->current_speed_rpm;
 
   double p = this->kp * this->error;
-  this->accumulated_error += this->error * this->dt;
+  this->accumulated_error += this->error;
   double i = this->ki * this->accumulated_error;
   double d = this->kd * (this->error - this->last_error) / this->dt;
   this->last_error = this->error;
 
   double u = p + i + d;
 
-  double initiaL_IN = ((double)desired_speed_rpm / 400) * 255;
+  double initiaL_IN = ((double)this->desired_speed_rpm / 400) * 255;
 
   // pwm = pwm * 255 / 625;
 

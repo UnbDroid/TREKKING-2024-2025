@@ -171,6 +171,9 @@ rcl_publisher_t rpm_publisher;
 geometry_msgs__msg__Vector3 rpm_msg;
 geometry_msgs__msg__Twist msg;
 
+double linear_x_prev[5] = {0};
+double angular_z_prev[5] = {0};
+
 MotorDC left_front_motor(ENCA_LEFT_FRONT, PWM_LEFT_FRONT, L_IN_LEFT_FRONT,
                          R_IN_LEFT_FRONT, LEDC_CHANNEL_LEFT_FRONT_PWM);
 MotorDC left_back_motor(ENCA_LEFT_BACK, PWM_LEFT_BACK, L_IN_LEFT_BACK,
@@ -216,10 +219,10 @@ void robot_setup() {
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
   // PULA
-  left_front_motor.configure_motor(300, 1.8, 0, 0);
-  right_front_motor.configure_motor(300, 1.8, 0, 0);
-  left_back_motor.configure_motor(300, 1.8, 0, 0);
-  right_back_motor.configure_motor(480, 1.8, 0, 0);
+  left_front_motor.configure_motor(300, 1.8, 0.1, 0);
+  right_front_motor.configure_motor(300, 1.8, 0.1, 0);
+  left_back_motor.configure_motor(300, 1.8, 0.1, 0);
+  right_back_motor.configure_motor(480, 1.8, 0.1, 0);
 }
 
 // RobotProperties robotProperties;
@@ -247,22 +250,53 @@ void task_velocity() {
   double linear_x = (double)msg.linear.x;   // Linear velocity in m/s
   double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
 
+  bool linear_x_same = true;
+  bool angular_z_same = true;
+
+  // Check if the new values are the same as all previous ones
+  for (int i = 0; i < 5; ++i) {
+    if (linear_x != linear_x_prev[i]) {
+      linear_x_same = false;
+    }
+    if (angular_z != angular_z_prev[i]) {
+      angular_z_same = false;
+    }
+  }
+
+  // If the value is the same as all previous, set to 0
+  if (linear_x_same) {
+    linear_x = 0;
+  } else if (angular_z_same) {
+    angular_z = 0;
+  } else {
+    for (int i = 4; i > 0; --i) {
+      linear_x_prev[i] = linear_x_prev[i - 1];
+      angular_z_prev[i] = angular_z_prev[i - 1];
+    }
+    linear_x_prev[0] = linear_x;
+    angular_z_prev[0] = angular_z;
+  }
+
+  // Store the new value and remove the oldest one
+
   // Multiply both by 5
 
-  linear_x = linear_x * 1.5;
-  angular_z = angular_z * 4;
+  linear_x = linear_x * 3;
+  angular_z = angular_z * 25;
 
   // Convert velocities to motor speeds using differential drive kinematics
   double wheel_base = 0.235;                 // Distance between wheels (meters)
   double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
 
   // Compute individual wheel speeds in RPS
-  double left_speed_mps = linear_x - angular_z;
-  double right_speed_mps = linear_x + angular_z;
+  double left_speed_mps = linear_x - (angular_z * wheel_base / 2);
+  double right_speed_mps = linear_x + (angular_z * wheel_base / 2);
 
+  left_speed_mps = left_speed_mps/WHEEL_RADIUS_METERS;
+  right_speed_mps = right_speed_mps/WHEEL_RADIUS_METERS;
   // Convert wheel speeds from RPS to RPM
-  double left_speed_rpm = (left_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
-  double right_speed_rpm = (right_speed_mps / (2 * M_PI * wheel_radius)) * 60.0;
+  double left_speed_rpm = left_speed_mps * (60.0 / (2 * M_PI));
+  double right_speed_rpm = right_speed_mps * (60.0 / (2 * M_PI));
 
   // Fetch current RPM values from the motors left_front_motor.fetch_rpm();
   //  left_back_motor.fetch_rpm();
@@ -281,14 +315,16 @@ void task_velocity() {
 
   rcl_ret_t ret = rcl_publish(&rpm_publisher, &rpm_msg, NULL);
 
-  int left_speed_rpm_int = static_cast<int>(left_speed_rpm);
-  int right_speed_rpm_int = static_cast<int>(right_speed_rpm);
+  if (left_speed_rpm > 80) left_speed_rpm = 80;
+  if (left_speed_rpm < -80) left_speed_rpm = -80;
+  if (right_speed_rpm > 80) right_speed_rpm = 80;
+  if (right_speed_rpm < -80) right_speed_rpm = -80;
 
   // Send the desired RPM values to the motors using PID control
-  left_front_motor.move_pid(left_speed_rpm_int);
-  left_back_motor.move_pid(left_speed_rpm_int);
-  right_front_motor.move_pid(right_speed_rpm_int);
-  right_back_motor.move_pid(right_speed_rpm_int);
+  left_front_motor.move_pid(left_speed_rpm);
+  left_back_motor.move_pid(left_speed_rpm);
+  right_front_motor.move_pid(right_speed_rpm);
+  right_back_motor.move_pid(right_speed_rpm);
 
   // Delay to allow the FreeRTOS task to yield
   // vTaskDelay(pdMS_TO_TICKS(10));
@@ -316,28 +352,28 @@ void test_motor_working(void *task_params) {
     float velocity_rb = right_back_motor.current_speed_rpm;
     float aaa = 0;
 
-    if (flag < 450) {
-      aaa = 100;
+    if (flag < 200) {
+      aaa = 30;
       flag++;
       incrementando = false;
-    } else if (flag >= 450 && flag < 900) {
-      aaa = -100;
+    } else if (flag >= 200 && flag < 400) {
+      aaa = -30;
       flag++;
       incrementando = false;
-    }
-    if (flag >= 900) {
+  }
+    if (flag >= 400) {
       flag = 0;
     }
 
     int b = left_front_motor.posi;
-    ESP_LOGI("velocidade_lf", "RPM: %f, erro: %f Target %f Ticks %d",
-             velocity_lf, left_front_motor.error, aaa, b);
-    ESP_LOGI("velocidade_lb", "RPM: %f, erro: %f Target %f", velocity_lb,
-             left_back_motor.error, aaa);
-    ESP_LOGI("velocidade_rf", "RPM: %f, erro: %f Target %f", velocity_rf,
-             right_front_motor.error, aaa);
-    ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f", velocity_rb,
-             right_back_motor.error, aaa);
+    ESP_LOGI("velocidade_lf", "RPM: %f, erro: %f, Target %f, PWM %d",
+             velocity_lf, left_front_motor.error, aaa, left_front_motor.pwm);
+    ESP_LOGI("velocidade_lb", "RPM: %f, erro: %f, Target %f, PWM %d", velocity_lb,
+             left_back_motor.error, aaa, left_back_motor.pwm);
+    ESP_LOGI("velocidade_rf", "RPM: %f, erro: %f Target %f, PWM %d", velocity_rf,
+             right_front_motor.error, aaa, right_front_motor.pwm);
+    ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f, PWM %d", velocity_rb,
+             right_back_motor.error, aaa, right_back_motor.pwm);
     left_front_motor.move_pid(aaa);
     left_back_motor.move_pid(aaa);
     right_front_motor.move_pid(aaa);
@@ -381,7 +417,7 @@ void rosStuff(void *task_params) {
                                          &subscription_callback, ON_NEW_DATA));
 
   while (1) {
-    rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10000));
+    rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
     task_velocity();
     vTaskDelay(pdMS_TO_TICKS(10));
   }
@@ -403,7 +439,7 @@ extern "C" void app_main(void) {
   xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
-  //           NULL);
+  //   NULL);
 
   // right_front_motor.set_direction_pwm(1, 120);
   // right_back_motor.set_direction_pwm(1, 120);
