@@ -281,22 +281,27 @@ void task_velocity() {
 
   // Multiply both by 5
 
-  linear_x = linear_x * 3;
-  angular_z = angular_z * 25;
+  // linear_x = linear_x * 3;
+  //   angular_z = angular_z * 25;
 
   // Convert velocities to motor speeds using differential drive kinematics
   double wheel_base = 0.235;                 // Distance between wheels (meters)
   double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
 
   // Compute individual wheel speeds in RPS
-  double left_speed_mps = linear_x - (angular_z * wheel_base / 2);
-  double right_speed_mps = linear_x + (angular_z * wheel_base / 2);
+  double left_front_speed_mps =
+      ((-0.122 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
+  double left_back_speed_mps =
+      ((-0.125 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
+  double right_back_speed_mps =
+      ((0.141 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
+  double right_front_speed_mps =
+      ((0.141 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
 
-  left_speed_mps = left_speed_mps/WHEEL_RADIUS_METERS;
-  right_speed_mps = right_speed_mps/WHEEL_RADIUS_METERS;
-  // Convert wheel speeds from RPS to RPM
-  double left_speed_rpm = left_speed_mps * (60.0 / (2 * M_PI));
-  double right_speed_rpm = right_speed_mps * (60.0 / (2 * M_PI));
+  double left_front_speed_rpm = left_front_speed_mps * (60.0 / (2 * M_PI));
+  double left_back_speed_rpm = left_back_speed_mps * (60.0 / (2 * M_PI));
+  double right_front_speed_rpm = right_front_speed_mps * (60.0 / (2 * M_PI));
+  double right_back_speed_rpm = right_back_speed_mps * (60.0 / (2 * M_PI));
 
   // Fetch current RPM values from the motors left_front_motor.fetch_rpm();
   //  left_back_motor.fetch_rpm();
@@ -310,21 +315,16 @@ void task_velocity() {
   //          right_back_motor.current_speed_rpm);
 
   // // Limit speed to a maximum value (50 RPM in this case)
-  rpm_msg.x = left_speed_rpm;
-  rpm_msg.y = right_speed_rpm;
+  rpm_msg.x = left_front_speed_rpm;
+  rpm_msg.y = right_front_speed_rpm;
 
   rcl_ret_t ret = rcl_publish(&rpm_publisher, &rpm_msg, NULL);
 
-  if (left_speed_rpm > 80) left_speed_rpm = 80;
-  if (left_speed_rpm < -80) left_speed_rpm = -80;
-  if (right_speed_rpm > 80) right_speed_rpm = 80;
-  if (right_speed_rpm < -80) right_speed_rpm = -80;
-
   // Send the desired RPM values to the motors using PID control
-  left_front_motor.move_pid(left_speed_rpm);
-  left_back_motor.move_pid(left_speed_rpm);
-  right_front_motor.move_pid(right_speed_rpm);
-  right_back_motor.move_pid(right_speed_rpm);
+  left_front_motor.move_pid(left_front_speed_rpm);
+  left_back_motor.move_pid(left_back_speed_rpm);
+  right_front_motor.move_pid(right_front_speed_rpm);
+  right_back_motor.move_pid(right_back_speed_rpm);
 
   // Delay to allow the FreeRTOS task to yield
   // vTaskDelay(pdMS_TO_TICKS(10));
@@ -360,7 +360,7 @@ void test_motor_working(void *task_params) {
       aaa = -30;
       flag++;
       incrementando = false;
-  }
+    }
     if (flag >= 400) {
       flag = 0;
     }
@@ -368,12 +368,12 @@ void test_motor_working(void *task_params) {
     int b = left_front_motor.posi;
     ESP_LOGI("velocidade_lf", "RPM: %f, erro: %f, Target %f, PWM %d",
              velocity_lf, left_front_motor.error, aaa, left_front_motor.pwm);
-    ESP_LOGI("velocidade_lb", "RPM: %f, erro: %f, Target %f, PWM %d", velocity_lb,
-             left_back_motor.error, aaa, left_back_motor.pwm);
-    ESP_LOGI("velocidade_rf", "RPM: %f, erro: %f Target %f, PWM %d", velocity_rf,
-             right_front_motor.error, aaa, right_front_motor.pwm);
-    ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f, PWM %d", velocity_rb,
-             right_back_motor.error, aaa, right_back_motor.pwm);
+    ESP_LOGI("velocidade_lb", "RPM: %f, erro: %f, Target %f, PWM %d",
+             velocity_lb, left_back_motor.error, aaa, left_back_motor.pwm);
+    ESP_LOGI("velocidade_rf", "RPM: %f, erro: %f Target %f, PWM %d",
+             velocity_rf, right_front_motor.error, aaa, right_front_motor.pwm);
+    ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f, PWM %d",
+             velocity_rb, right_back_motor.error, aaa, right_back_motor.pwm);
     left_front_motor.move_pid(aaa);
     left_back_motor.move_pid(aaa);
     right_front_motor.move_pid(aaa);
