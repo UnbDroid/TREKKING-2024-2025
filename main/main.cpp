@@ -218,7 +218,6 @@ void robot_setup() {
                        (void *)ENCA_RIGHT_FRONT);
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
-  // PULA
   left_front_motor.configure_motor(300, 2, 0.0, 0);
   right_front_motor.configure_motor(300, 2, 0.0, 0);
   left_back_motor.configure_motor(300, 2, 0.0, 0);
@@ -272,18 +271,6 @@ void task_velocity() {
   double right_front_speed_rpm = right_front_speed_rps * (60.0 / (2 * M_PI));
   double right_back_speed_rpm = right_back_speed_rps * (60.0 / (2 * M_PI));
 
-  // Fetch current RPM values from the motors left_front_motor.fetch_rpm();
-  //  left_back_motor.fetch_rpm();
-  //  right_front_motor.fetch_rpm();
-  //  right_back_motor.fetch_rpm();
-
-  // Print speeds
-  // ESP_LOGI("v", "%f %f %f %f", left_front_motor.current_speed_rpm,
-  //          left_back_motor.current_speed_rpm,
-  //          right_front_motor.current_speed_rpm,
-  //          right_back_motor.current_speed_rpm);
-
-  // // Limit speed to a maximum value (50 RPM in this case)
   rpm_msg.x = left_front_speed_rpm;
   rpm_msg.y = right_front_speed_rpm;
 
@@ -359,6 +346,10 @@ void test_motor_working(void *task_params) {
   }
 }
 
+PS4BT Ps4;
+RobotPs4Controller robo(&right_front_motor, &right_back_motor,
+                        &left_front_motor, &left_back_motor);
+
 void rosStuff(void *task_params) {
   rclc_executor_t executor;
   rcl_allocator_t allocator = rcl_get_default_allocator();
@@ -385,7 +376,6 @@ void rosStuff(void *task_params) {
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg,
                                          &subscription_callback, ALWAYS));
-
   while (1) {
     rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
     task_velocity();
@@ -393,7 +383,23 @@ void rosStuff(void *task_params) {
   }
 }
 
+void ps4_controller_task(void *task_params) {
+  robo.task_robot_controll(task_params);
+}
+#define USARCONTROLE true
 extern "C" void app_main(void) {
+
+  robot_setup();
+
+  if (USARCONTROLE) {
+    esp_err_t ret;
+    ret = nvs_flash_init();
+    ret = btd_vhci_init();
+    btd_vhci_autoconnect(&Ps4);
+    robo.set_controller(&Ps4);
+
+    xTaskCreate(ps4_controller_task, "ps4_loop_task", 10 * 1024, NULL, 2, NULL);
+  }
 
 #if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
   rmw_uros_set_custom_transport(true, (void *)&uart_port, esp32_serial_open,
@@ -403,18 +409,12 @@ extern "C" void app_main(void) {
 // #error micro-ROS transports misconfigured
 #endif // RMW_UXRCE_TRANSPORT_CUSTOM
 
-  robot_setup();
-
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
   xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
   //   NULL);
-
-  // right_front_motor.set_direction_pwm(1, 120);
-  // right_back_motor.set_direction_pwm(1, 120);
-
-  // free resources
 
   vTaskDelete(NULL);
 }

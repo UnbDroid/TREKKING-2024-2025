@@ -21,7 +21,8 @@ RobotPs4Controller::RobotPs4Controller(MotorDC *right_front_motor,
 RobotPs4Controller::RobotPs4Controller() {}
 void RobotPs4Controller::move(DIRECTION direction, int pwm_right_motors,
                               int pwm_left_motors) {
-
+  pwm_left_motors = pwm_left_motors * direction;
+  pwm_right_motors = pwm_right_motors * direction;
   this->right_back_motor->move_pid(pwm_right_motors);
   this->right_front_motor->move_pid(pwm_right_motors);
   this->left_back_motor->move_pid(pwm_left_motors);
@@ -64,182 +65,69 @@ int map_analogHat(DIRECTION direction, int value) {
   return proportional * slliced_value;
 }
 void RobotPs4Controller::controll_robot() {
-  if (this->PS4->getAnalogHat(LeftHatY) > START_BACKWARD_ANALOG_HAT_VALUE ||
-      this->PS4->getAnalogHat(LeftHatY) < START_FOWARD_ANALOG_HAT_VALUE) {
 
-    int value = this->PS4->getAnalogHat(LeftHatY);
-    DIRECTION direction = DIRECTION::BACKWARD;
-    direction = value < START_FOWARD_ANALOG_HAT_VALUE ? DIRECTION::FOWARD
-                                                      : DIRECTION::BACKWARD;
-    value = map_analogHat(direction, value);
-    ESP_LOGI(LOG_TAG, "VALOR ANALOGICO: %d", value);
-    int left_velocity_motors = value;
-    int right_velocity_motors = value;
-    if (this->PS4->getAnalogButton(L2)) {
+  if (this->PS4->getButtonClick(START)) {
+    controlar_robo_total = !controlar_robo_total;
+  }
+  if (controlar_robo_total) {
+    this->PS4->setLed(0, 0, 255);
+
+    if (this->PS4->getAnalogHat(LeftHatY) > START_BACKWARD_ANALOG_HAT_VALUE ||
+        this->PS4->getAnalogHat(LeftHatY) < START_FOWARD_ANALOG_HAT_VALUE) {
+
+      int value = this->PS4->getAnalogHat(LeftHatY);
+      DIRECTION direction = DIRECTION::BACKWARD;
+      direction = value < START_FOWARD_ANALOG_HAT_VALUE ? DIRECTION::FOWARD
+                                                        : DIRECTION::BACKWARD;
+      value = map_analogHat(direction, value);
+      ESP_LOGI(LOG_TAG, "VALOR ANALOGICO: %d %d", value, direction);
+      int left_velocity_motors = value;
+      int right_velocity_motors = value;
+      if (this->PS4->getAnalogButton(L2)) {
+        int valor = this->PS4->getAnalogButton(L2);
+        int scalled_value = map_R2_and_L2_to_pwm(valor);
+        right_velocity_motors = right_velocity_motors - 2 * scalled_value;
+      } else if (this->PS4->getAnalogButton(R2)) {
+        int valor = this->PS4->getAnalogButton(R2);
+        int scalled_value = map_R2_and_L2_to_pwm(valor);
+        left_velocity_motors = left_velocity_motors - 2 * scalled_value;
+      }
+      move(direction, right_velocity_motors, left_velocity_motors);
+    } else if (this->PS4->getAnalogButton(L2)) {
+
       int valor = this->PS4->getAnalogButton(L2);
       int scalled_value = map_R2_and_L2_to_pwm(valor);
-      right_velocity_motors = right_velocity_motors - 2 * scalled_value;
+      // ESP_LOGI(LOG_TAG, " Valor L2 = %d , VALOR L2 MAPEADO = %d", valor,
+      //         scalled_value);
+      rotate(L2_TRIGGERED, scalled_value);
     } else if (this->PS4->getAnalogButton(R2)) {
+
       int valor = this->PS4->getAnalogButton(R2);
       int scalled_value = map_R2_and_L2_to_pwm(valor);
-      left_velocity_motors = left_velocity_motors - 2 * scalled_value;
+      ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
+               scalled_value);
+      rotate(R2_TRIGGERED, scalled_value);
+    } else { //    rotate(R2_TRIGGERED, 0);
+      move(DIRECTION::BACKWARD, 0, 0);
     }
-    move(direction, right_velocity_motors, left_velocity_motors);
-  } else if (this->PS4->getAnalogButton(L2)) {
 
-    int valor = this->PS4->getAnalogButton(L2);
-    int scalled_value = map_R2_and_L2_to_pwm(valor);
-    // ESP_LOGI(LOG_TAG, " Valor L2 = %d , VALOR L2 MAPEADO = %d", valor,
-    //         scalled_value);
-    rotate(L2_TRIGGERED, scalled_value);
-  } else if (this->PS4->getAnalogButton(R2)) {
-
-    int valor = this->PS4->getAnalogButton(R2);
-    int scalled_value = map_R2_and_L2_to_pwm(valor);
-    ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
-             scalled_value);
-    rotate(R2_TRIGGERED, scalled_value);
+    // Individual Motors PID configuration
   } else {
-    //    rotate(R2_TRIGGERED, 0);
-    //
-    move(DIRECTION::BACKWARD, 0, 0);
-    // move(FOWARD, 0, 0);
-  }
+    ESP_LOGI("controle", "aqui eu paro o robo usando o bolinha");
+    this->PS4->setLed(255, 0, 0);
 
-  // Individual Motors PID configuration
+    if (this->PS4->getAnalogButton(R2)) {
 
-  if (this->PS4->getButtonClick(R1)) {
-    this->currently_selected_motor += 1;
-    if (this->currently_selected_motor > 3) {
-      this->currently_selected_motor = 0;
+      move(DIRECTION::BACKWARD, 0, 0);
     }
-    ESP_LOGI("MOTOR-INFO", "MOTOR SELECIONADO: %d",
-             this->currently_selected_motor);
-  }
-
-  if (this->PS4->getButtonClick(L1)) {
-    this->currently_selected_motor -= 1;
-    if (this->currently_selected_motor < 0) {
-      this->currently_selected_motor = 3;
-    }
-    ESP_LOGI("MOTOR-INFO", "MOTOR SELECIONADO: %d",
-             this->currently_selected_motor);
-  }
-
-  if (this->PS4->getButtonClick(CIRCLE)) {
-    if (currently_selected_motor == 0) {
-      this->left_front_motor->tweak_pid(current_pid_variable, chosen_pid_diff);
-    } else if (currently_selected_motor == 1) {
-      this->right_front_motor->tweak_pid(current_pid_variable, chosen_pid_diff);
-    } else if (currently_selected_motor == 2) {
-      this->left_back_motor->tweak_pid(current_pid_variable, chosen_pid_diff);
-    } else {
-      this->right_back_motor->tweak_pid(current_pid_variable, chosen_pid_diff);
-    }
-    if (current_pid_variable == 0) {
-      if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR_INFO", "KP: %f", this->left_front_motor->return_kp());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->right_front_motor->return_kp());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->left_back_motor->return_kp());
-      } else {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->right_back_motor->return_kp());
-      }
-    } else if (current_pid_variable == 1) {
-      if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->left_front_motor->return_ki());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->right_front_motor->return_ki());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->left_back_motor->return_ki());
-      } else {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->right_back_motor->return_ki());
-      }
-    } else {
-      if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->left_front_motor->return_kd());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->right_front_motor->return_kd());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->left_back_motor->return_kd());
-      } else {
-        ESP_LOGI("MOTOR-INFO", "KP: %f", this->right_back_motor->return_kd());
-      }
-    }
-  }
-  if (this->PS4->getButtonClick(CROSS)) {
-    if (currently_selected_motor == 0) {
-      this->left_front_motor->tweak_pid(current_pid_variable,
-                                        ((-1) * chosen_pid_diff));
-    } else if (currently_selected_motor == 1) {
-      this->right_front_motor->tweak_pid(current_pid_variable,
-                                         ((-1) * chosen_pid_diff));
-    } else if (currently_selected_motor == 2) {
-      this->left_back_motor->tweak_pid(current_pid_variable,
-                                       ((-1) * chosen_pid_diff));
-    } else {
-      this->right_back_motor->tweak_pid(current_pid_variable,
-                                        ((-1) * chosen_pid_diff));
-    }
-
-    if (current_pid_variable == 0) {
-      if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_kp());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kp());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_kp());
-      } else {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_kp());
-      }
-    } else if (current_pid_variable == 1) {
-      if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_ki());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_ki());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_ki());
-      } else {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_ki());
-      }
-    } else {
-      if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->left_front_motor->return_kd());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->right_front_motor->return_kd());
-      } else if (currently_selected_motor == 0) {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->left_back_motor->return_kd());
-      } else {
-        ESP_LOGI(LOG_TAG, "KP: %f", this->right_back_motor->return_kd());
-      }
-    }
-  }
-
-  if (this->PS4->getButtonClick(SQUARE)) {
-    this->current_pid_variable -= 1;
-    if (this->current_pid_variable < 0) {
-      this->current_pid_variable = 2;
-    }
-    ESP_LOGI(LOG_TAG, "VARIAVEL PID SELECIONADA: %d",
-             this->current_pid_variable);
-  }
-
-  if (this->PS4->getButtonClick(TRIANGLE)) {
-    this->current_pid_variable += 1;
-    if (this->current_pid_variable > 2) {
-      this->current_pid_variable = 0;
-    }
-    ESP_LOGI(LOG_TAG, "VARIAVEL PID SELECIONADA: %d",
-             this->current_pid_variable);
   }
 }
 
 void RobotPs4Controller::task_robot_controll(void *tasks_param) {
-
+  bool controlar = true;
   while (1) {
     btd_vhci_mutex_lock();
-
+    ESP_LOGI("teste", "to aqui na task do controle");
     controll_robot();
     btd_vhci_mutex_unlock();
     vTaskDelay(pdMS_TO_TICKS(100));
