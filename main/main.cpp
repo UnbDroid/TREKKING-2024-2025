@@ -388,7 +388,7 @@ void ps4_controller_task(void *task_params) {
 }
 #define USARCONTROLE true
 extern "C" void app_main(void) {
-
+  esp_log_level_set("*", ESP_LOG_NONE);
   robot_setup();
 
   if (USARCONTROLE) {
