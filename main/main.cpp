@@ -219,10 +219,10 @@ void robot_setup() {
   gpio_isr_handler_add((gpio_num_t)ENCA_RIGHT_BACK, read_encoder_right_back,
                        (void *)ENCA_RIGHT_BACK);
   // PULA
-  left_front_motor.configure_motor(300, 1.8, 0.1, 0);
-  right_front_motor.configure_motor(300, 1.8, 0.1, 0);
-  left_back_motor.configure_motor(300, 1.8, 0.1, 0);
-  right_back_motor.configure_motor(480, 1.8, 0.1, 0);
+  left_front_motor.configure_motor(300, 2, 0.0, 0);
+  right_front_motor.configure_motor(300, 2, 0.0, 0);
+  left_back_motor.configure_motor(300, 2, 0.0, 0);
+  right_back_motor.configure_motor(480, 3, 0.0, 0);
 }
 
 // RobotProperties robotProperties;
@@ -250,58 +250,27 @@ void task_velocity() {
   double linear_x = (double)msg.linear.x;   // Linear velocity in m/s
   double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
 
-  bool linear_x_same = true;
-  bool angular_z_same = true;
-
-  // Check if the new values are the same as all previous ones
-  for (int i = 0; i < 5; ++i) {
-    if (linear_x != linear_x_prev[i]) {
-      linear_x_same = false;
-    }
-    if (angular_z != angular_z_prev[i]) {
-      angular_z_same = false;
-    }
-  }
-
-  // If the value is the same as all previous, set to 0
-  if (linear_x_same) {
-    linear_x = 0;
-  } else if (angular_z_same) {
-    angular_z = 0;
-  } else {
-    for (int i = 4; i > 0; --i) {
-      linear_x_prev[i] = linear_x_prev[i - 1];
-      angular_z_prev[i] = angular_z_prev[i - 1];
-    }
-    linear_x_prev[0] = linear_x;
-    angular_z_prev[0] = angular_z;
-  }
-
-  // Store the new value and remove the oldest one
-
-  // Multiply both by 5
-
-  // linear_x = linear_x * 3;
-  //   angular_z = angular_z * 25;
+  // Multiply the angular speed due to mechanical properties of the robot
+  angular_z *= 4; // Adjust this factor based on your robot's design
 
   // Convert velocities to motor speeds using differential drive kinematics
   double wheel_base = 0.235;                 // Distance between wheels (meters)
   double wheel_radius = WHEEL_RADIUS_METERS; // Radius of the wheels (meters)
 
   // Compute individual wheel speeds in RPS
-  double left_front_speed_mps =
+  double left_front_speed_rps =
       ((-0.122 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
-  double left_back_speed_mps =
+  double left_back_speed_rps =
       ((-0.125 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
-  double right_back_speed_mps =
+  double right_back_speed_rps =
       ((0.141 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
-  double right_front_speed_mps =
+  double right_front_speed_rps =
       ((0.141 * angular_z) + linear_x) / WHEEL_RADIUS_METERS;
 
-  double left_front_speed_rpm = left_front_speed_mps * (60.0 / (2 * M_PI));
-  double left_back_speed_rpm = left_back_speed_mps * (60.0 / (2 * M_PI));
-  double right_front_speed_rpm = right_front_speed_mps * (60.0 / (2 * M_PI));
-  double right_back_speed_rpm = right_back_speed_mps * (60.0 / (2 * M_PI));
+  double left_front_speed_rpm = left_front_speed_rps * (60.0 / (2 * M_PI));
+  double left_back_speed_rpm = left_back_speed_rps * (60.0 / (2 * M_PI));
+  double right_front_speed_rpm = right_front_speed_rps * (60.0 / (2 * M_PI));
+  double right_back_speed_rpm = right_back_speed_rps * (60.0 / (2 * M_PI));
 
   // Fetch current RPM values from the motors left_front_motor.fetch_rpm();
   //  left_back_motor.fetch_rpm();
@@ -374,10 +343,11 @@ void test_motor_working(void *task_params) {
              velocity_rf, right_front_motor.error, aaa, right_front_motor.pwm);
     ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f, PWM %d",
              velocity_rb, right_back_motor.error, aaa, right_back_motor.pwm);
-    left_front_motor.move_pid(aaa);
-    left_back_motor.move_pid(aaa);
-    right_front_motor.move_pid(aaa);
-    right_back_motor.move_pid(aaa);
+    left_front_motor.move_pid(-19);
+    left_back_motor.move_pid(-19);
+    right_front_motor.move_pid(119);
+    right_back_motor.move_pid(119);
+
     // left_back_motor.move_pid(vel);
 
     // right_front_motor.move_pid(vel);
@@ -414,7 +384,7 @@ void rosStuff(void *task_params) {
   // create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg,
-                                         &subscription_callback, ON_NEW_DATA));
+                                         &subscription_callback, ALWAYS));
 
   while (1) {
     rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));

@@ -138,12 +138,11 @@ void MotorDC::move_pid(int desired_speed_rpm) {
   this->last_posi = posi;
   this->last_time = this->current_time;
 
-  this->desired_speed_rpm = desired_speed_rpm;
+  this->desired_speed_rpm = fabs(desired_speed_rpm);
   int dir = 1;
 
-  if (this->desired_speed_rpm < 0) {
+  if (desired_speed_rpm < 0) {
     dir = -1;
-    this->desired_speed_rpm = this->desired_speed_rpm * -1;
   }
 
   this->error = this->desired_speed_rpm - this->current_speed_rpm;
@@ -156,11 +155,16 @@ void MotorDC::move_pid(int desired_speed_rpm) {
 
   double u = p + i + d;
 
-  double initiaL_IN = ((double)this->desired_speed_rpm / 400) * 255;
+  double initiaL_IN = ((double)this->desired_speed_rpm / 300) * 255;
 
   // pwm = pwm * 255 / 625;
 
   this->pwm = initiaL_IN + u;
+  if (this->pwm < 0) {
+    this->pwm = 0;
+  } else if (this->pwm > 255) {
+    this->pwm = 255;
+  }
 
   if (this->desired_speed_rpm == 0) {
     this->stop_motor();
