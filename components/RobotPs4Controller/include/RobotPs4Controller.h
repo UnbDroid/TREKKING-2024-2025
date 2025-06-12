@@ -28,13 +28,14 @@ public:
                      MotorDC *left_front_motor, MotorDC *left_back_motor);
   void task_robot_controll(void *tasks_param);
   void set_controller(PS4BT *PS4B);
+  bool is_on = false;
+  void controll_robot();
 
 private:
   bool controlar_robo_total = false;
   const char *mac_addr_ps4_controller = "702084757537";
   void move(DIRECTION direction, int pwm_right_motors, int pwm_left_motors);
   void rotate(TRIGGER_BOTTON triggerBoton, int pwm_value);
-  void controll_robot();
   int current_pid_variable = 0; // [0, 1, 2] = [kp, ki, kd]
   float chosen_pid_diff = 0.01; // [0.01, 0.001, 0.001] = [kp, ki, kd]
   int currently_selected_motor =

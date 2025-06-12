@@ -66,61 +66,55 @@ int map_analogHat(DIRECTION direction, int value) {
 }
 void RobotPs4Controller::controll_robot() {
 
-  if (this->PS4->getButtonClick(START)) {
-    controlar_robo_total = !controlar_robo_total;
-  }
-  if (controlar_robo_total) {
-    this->PS4->setLed(0, 0, 255);
+  if (this->PS4->getAnalogHat(LeftHatY) > START_BACKWARD_ANALOG_HAT_VALUE ||
+      this->PS4->getAnalogHat(LeftHatY) < START_FOWARD_ANALOG_HAT_VALUE) {
 
-    if (this->PS4->getAnalogHat(LeftHatY) > START_BACKWARD_ANALOG_HAT_VALUE ||
-        this->PS4->getAnalogHat(LeftHatY) < START_FOWARD_ANALOG_HAT_VALUE) {
-
-      int value = this->PS4->getAnalogHat(LeftHatY);
-      DIRECTION direction = DIRECTION::BACKWARD;
-      direction = value < START_FOWARD_ANALOG_HAT_VALUE ? DIRECTION::FOWARD
-                                                        : DIRECTION::BACKWARD;
-      value = map_analogHat(direction, value);
-      ESP_LOGI(LOG_TAG, "VALOR ANALOGICO: %d %d", value, direction);
-      int left_velocity_motors = value;
-      int right_velocity_motors = value;
-      if (this->PS4->getAnalogButton(L2)) {
-        int valor = this->PS4->getAnalogButton(L2);
-        int scalled_value = map_R2_and_L2_to_pwm(valor);
-        right_velocity_motors = right_velocity_motors - 2 * scalled_value;
-      } else if (this->PS4->getAnalogButton(R2)) {
-        int valor = this->PS4->getAnalogButton(R2);
-        int scalled_value = map_R2_and_L2_to_pwm(valor);
-        left_velocity_motors = left_velocity_motors - 2 * scalled_value;
-      }
-      move(direction, right_velocity_motors, left_velocity_motors);
-    } else if (this->PS4->getAnalogButton(L2)) {
-
+    int value = this->PS4->getAnalogHat(LeftHatY);
+    DIRECTION direction = DIRECTION::BACKWARD;
+    direction = value < START_FOWARD_ANALOG_HAT_VALUE ? DIRECTION::FOWARD
+                                                      : DIRECTION::BACKWARD;
+    value = map_analogHat(direction, value);
+    ESP_LOGI(LOG_TAG, "VALOR ANALOGICO: %d %d", value, direction);
+    int left_velocity_motors = value;
+    int right_velocity_motors = value;
+    if (this->PS4->getAnalogButton(L2)) {
       int valor = this->PS4->getAnalogButton(L2);
       int scalled_value = map_R2_and_L2_to_pwm(valor);
-      // ESP_LOGI(LOG_TAG, " Valor L2 = %d , VALOR L2 MAPEADO = %d", valor,
-      //         scalled_value);
-      rotate(L2_TRIGGERED, scalled_value);
+      right_velocity_motors = right_velocity_motors - 2 * scalled_value;
     } else if (this->PS4->getAnalogButton(R2)) {
-
       int valor = this->PS4->getAnalogButton(R2);
       int scalled_value = map_R2_and_L2_to_pwm(valor);
-      ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
-               scalled_value);
-      rotate(R2_TRIGGERED, scalled_value);
-    } else { //    rotate(R2_TRIGGERED, 0);
-      move(DIRECTION::BACKWARD, 0, 0);
+      left_velocity_motors = left_velocity_motors - 2 * scalled_value;
     }
+    move(direction, right_velocity_motors, left_velocity_motors);
+  } else if (this->PS4->getAnalogButton(L2)) {
+
+    int valor = this->PS4->getAnalogButton(L2);
+    int scalled_value = map_R2_and_L2_to_pwm(valor);
+    // ESP_LOGI(LOG_TAG, " Valor L2 = %d , VALOR L2 MAPEADO = %d", valor,
+    //         scalled_value);
+    rotate(L2_TRIGGERED, scalled_value);
+  } else if (this->PS4->getAnalogButton(R2)) {
+
+    int valor = this->PS4->getAnalogButton(R2);
+    int scalled_value = map_R2_and_L2_to_pwm(valor);
+    ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
+              scalled_value);
+    rotate(R2_TRIGGERED, scalled_value);
+  } else { //    rotate(R2_TRIGGERED, 0);
+    move(DIRECTION::BACKWARD, 0, 0);
+  }
 
     // Individual Motors PID configuration
-  } else {
-    ESP_LOGI("controle", "aqui eu paro o robo usando o bolinha");
-    this->PS4->setLed(255, 0, 0);
+  // } else {
+  //   ESP_LOGI("controle", "aqui eu paro o robo usando o bolinha");
+  //   this->PS4->setLed(255, 0, 0);
 
-    if (this->PS4->getAnalogButton(R2)) {
+  //   if (this->PS4->getAnalogButton(R2)) {
 
-      move(DIRECTION::BACKWARD, 0, 0);
-    }
-  }
+  //     move(DIRECTION::BACKWARD, 0, 0);
+  //   }
+  // }
 }
 
 void RobotPs4Controller::task_robot_controll(void *tasks_param) {
@@ -130,6 +124,5 @@ void RobotPs4Controller::task_robot_controll(void *tasks_param) {
     ESP_LOGI("teste", "to aqui na task do controle");
     controll_robot();
     btd_vhci_mutex_unlock();
-    vTaskDelay(pdMS_TO_TICKS(100));
   }
 }

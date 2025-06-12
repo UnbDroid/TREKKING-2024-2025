@@ -171,6 +171,8 @@ rcl_publisher_t rpm_publisher;
 geometry_msgs__msg__Vector3 rpm_msg;
 geometry_msgs__msg__Twist msg;
 
+bool is_controller_on = false;
+
 double linear_x_prev[5] = {0};
 double angular_z_prev[5] = {0};
 
@@ -226,9 +228,10 @@ void robot_setup() {
 
 // RobotProperties robotProperties;
 
-// PS4BT PS4;
-// RobotPs4Controller robo(&right_front_motor, &right_back_motor,
-//   &left_front_motor, &left_back_motor); EspRaspRobot robot(&left_front_motor,
+PS4BT Ps4;
+RobotPs4Controller robo(&right_front_motor, &right_back_motor,
+  &left_front_motor, &left_back_motor); 
+  // EspRaspRobot robot(&left_front_motor,
 //   &right_front_motor,
 //                    &left_back_motor, &right_back_motor, &robotProperties);
 
@@ -277,10 +280,25 @@ void task_velocity() {
   rcl_ret_t ret = rcl_publish(&rpm_publisher, &rpm_msg, NULL);
 
   // Send the desired RPM values to the motors using PID control
-  left_front_motor.move_pid(left_front_speed_rpm);
-  left_back_motor.move_pid(left_back_speed_rpm);
-  right_front_motor.move_pid(right_front_speed_rpm);
-  right_back_motor.move_pid(right_back_speed_rpm);
+
+  if (Ps4.getButtonClick(START)) {
+    robo.is_on = !robo.is_on;
+  }
+
+  if (robo.is_on) {
+    Ps4.setLed(255, 0, 0); // Set LED to red when the robot is on
+    btd_vhci_mutex_lock();
+    ESP_LOGI("teste", "to aqui na task do controle");
+    robo.controll_robot();
+    btd_vhci_mutex_unlock();
+  } else {
+    Ps4.setLed(0, 0, 255); // Set LED to blue when the robot is off
+    left_front_motor.move_pid(left_front_speed_rpm);
+    left_back_motor.move_pid(left_back_speed_rpm);
+    right_front_motor.move_pid(right_front_speed_rpm);
+    right_back_motor.move_pid(right_back_speed_rpm);
+  }
+
 
   // Delay to allow the FreeRTOS task to yield
   // vTaskDelay(pdMS_TO_TICKS(10));
@@ -346,9 +364,9 @@ void test_motor_working(void *task_params) {
   }
 }
 
-PS4BT Ps4;
-RobotPs4Controller robo(&right_front_motor, &right_back_motor,
-                        &left_front_motor, &left_back_motor);
+// PS4BT Ps4;
+// RobotPs4Controller robo(&right_front_motor, &right_back_motor,
+//                         &left_front_motor, &left_back_motor);
 
 void rosStuff(void *task_params) {
   rclc_executor_t executor;
@@ -386,6 +404,7 @@ void rosStuff(void *task_params) {
 void ps4_controller_task(void *task_params) {
   robo.task_robot_controll(task_params);
 }
+
 #define USARCONTROLE true
 extern "C" void app_main(void) {
   esp_log_level_set("*", ESP_LOG_NONE);
@@ -398,7 +417,7 @@ extern "C" void app_main(void) {
     btd_vhci_autoconnect(&Ps4);
     robo.set_controller(&Ps4);
 
-    xTaskCreate(ps4_controller_task, "ps4_loop_task", 10 * 1024, NULL, 2, NULL);
+    // xTaskCreate(ps4_controller_task, "ps4_loop_task", 10 * 1024, NULL, 2, NULL);
   }
 
 #if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
