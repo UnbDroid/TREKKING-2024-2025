@@ -416,8 +416,6 @@ extern "C" void app_main(void) {
     ret = btd_vhci_init();
     btd_vhci_autoconnect(&Ps4);
     robo.set_controller(&Ps4);
-
-    // xTaskCreate(ps4_controller_task, "ps4_loop_task", 10 * 1024, NULL, 2, NULL);
   }
 
 #if defined(RMW_UXRCE_TRANSPORT_CUSTOM)
