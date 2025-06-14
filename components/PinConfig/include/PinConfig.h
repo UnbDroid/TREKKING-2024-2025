@@ -10,7 +10,7 @@
 
 // Used pins: 2, 4, 5, 10, 12, 13, 14, 16, 17, 19, 21, 22, 25, 26, 27, 32, 33,
 // 34, 35
-
+#define LED_PIN 33
 // #define L_EN_LEFT_FRONT 23  // placeholders
 #define L_IN_LEFT_FRONT 21 // 22 // placeholders
 #define R_IN_LEFT_FRONT 19 // 23 // placeholders
@@ -27,7 +27,7 @@
 #define OUTPUT_LEFT_BACK                                                       \
   ((1ULL << R_IN_LEFT_BACK) | (1ULL << L_IN_LEFT_BACK) |                       \
    (1ULL << PWM_LEFT_BACK))
-#define ENCA_LEFT_BACK 33 // 33 // placeholders
+#define ENCA_LEFT_BACK 35 // 33 // placeholders
 
 // #define L_EN_RIGHT_FRONT 26  // placeholders
 #define L_IN_RIGHT_FRONT 27 // placeholders
