@@ -404,7 +404,7 @@ void ps4_controller_task(void *task_params) {
   robo.task_robot_controll(task_params);
 }
 
-#define USARCONTROLE false
+#define USARCONTROLE true
 extern "C" void app_main(void) {
   esp_log_level_set("*", ESP_LOG_NONE);
   robot_setup();
@@ -426,7 +426,7 @@ extern "C" void app_main(void) {
 #endif // RMW_UXRCE_TRANSPORT_CUSTOM
 
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(ps4_controller_task, "task-ros", 4 * 1024, NULL, 1, NULL);
 
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,

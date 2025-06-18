@@ -99,13 +99,13 @@ void RobotPs4Controller::controll_robot() {
     int valor = this->PS4->getAnalogButton(R2);
     int scalled_value = map_R2_and_L2_to_pwm(valor);
     ESP_LOGI(LOG_TAG, " Valor R2 = %d , VALOR R2 MAPEADO = %d", valor,
-              scalled_value);
+             scalled_value);
     rotate(R2_TRIGGERED, scalled_value);
   } else { //    rotate(R2_TRIGGERED, 0);
     move(DIRECTION::BACKWARD, 0, 0);
   }
 
-    // Individual Motors PID configuration
+  // Individual Motors PID configuration
   // } else {
   //   ESP_LOGI("controle", "aqui eu paro o robo usando o bolinha");
   //   this->PS4->setLed(255, 0, 0);
@@ -123,6 +123,8 @@ void RobotPs4Controller::task_robot_controll(void *tasks_param) {
     btd_vhci_mutex_lock();
     ESP_LOGI("teste", "to aqui na task do controle");
     controll_robot();
+    vTaskDelay(pdMS_TO_TICKS(10));
+
     btd_vhci_mutex_unlock();
   }
 }
