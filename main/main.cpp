@@ -347,10 +347,10 @@ void test_motor_working(void *task_params) {
              velocity_rf, right_front_motor.error, aaa, right_front_motor.pwm);
     ESP_LOGI("velocidade_rb", "RPM: %f, erro: %f Target %f, PWM %d",
              velocity_rb, right_back_motor.error, aaa, right_back_motor.pwm);
-    left_front_motor.move_pid(-19);
-    left_back_motor.move_pid(-19);
-    right_front_motor.move_pid(-119);
-    right_back_motor.move_pid(-119);
+    left_front_motor.move_pid(100);
+    left_back_motor.move_pid(100);
+    right_front_motor.move_pid(100);
+    right_back_motor.move_pid(100);
 
     // left_back_motor.move_pid(vel);
 
@@ -406,7 +406,7 @@ void ps4_controller_task(void *task_params) {
 
 #define USARCONTROLE false
 extern "C" void app_main(void) {
-  // esp_log_level_set("*", ESP_LOG_NONE);
+  esp_log_level_set("*", ESP_LOG_NONE);
   robot_setup();
 
   if (USARCONTROLE) {
@@ -426,11 +426,11 @@ extern "C" void app_main(void) {
 #endif // RMW_UXRCE_TRANSPORT_CUSTOM
 
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
-  // xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
 
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
-              NULL);
+  // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
+  //             NULL);
 
   // vTaskDelete(NULL);
 }
