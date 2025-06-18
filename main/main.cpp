@@ -281,23 +281,10 @@ void task_velocity() {
 
   // Send the desired RPM values to the motors using PID control
 
-  if (Ps4.getButtonClick(START)) {
-    robo.is_on = !robo.is_on;
-  }
-
-  if (robo.is_on) {
-    Ps4.setLed(255, 0, 0); // Set LED to red when the robot is on
-    btd_vhci_mutex_lock();
-    ESP_LOGI("teste", "to aqui na task do controle");
-    robo.controll_robot();
-    btd_vhci_mutex_unlock();
-  } else {
-    Ps4.setLed(0, 0, 255); // Set LED to blue when the robot is off
-    left_front_motor.move_pid(left_front_speed_rpm);
-    left_back_motor.move_pid(left_back_speed_rpm);
-    right_front_motor.move_pid(right_front_speed_rpm);
-    right_back_motor.move_pid(right_back_speed_rpm);
-  }
+  left_front_motor.move_pid(left_front_speed_rpm);
+  left_back_motor.move_pid(left_back_speed_rpm);
+  right_front_motor.move_pid(right_front_speed_rpm);
+  right_back_motor.move_pid(right_back_speed_rpm);
 
   // Delay to allow the FreeRTOS task to yield
   // vTaskDelay(pdMS_TO_TICKS(10));
@@ -394,8 +381,26 @@ void rosStuff(void *task_params) {
   RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg,
                                          &subscription_callback, ALWAYS));
   while (1) {
-    rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
-    task_velocity();
+    btd_vhci_mutex_lock();
+    if (Ps4.getButtonClick(OPTIONS)) {
+      if (!is_controller_on) {
+        is_controller_on = true;
+        Ps4.setLed(0, 0, 255); // Set LED to green when the robot is on
+      } else {
+        is_controller_on = false;
+        Ps4.setLed(255, 0, 0);
+      }
+    }
+    btd_vhci_mutex_unlock();
+    if (is_controller_on) {
+      btd_vhci_mutex_lock();
+      // ESP_LOGI("teste", "to aqui na task do controle");
+      robo.controll_robot();
+      btd_vhci_mutex_unlock();
+    } else {
+      rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
+      task_velocity();
+    }
     vTaskDelay(pdMS_TO_TICKS(10));
   }
 }
@@ -426,7 +431,7 @@ extern "C" void app_main(void) {
 #endif // RMW_UXRCE_TRANSPORT_CUSTOM
 
   // xTaskCreate(RPM_fetching, "RPM_fetching", 4 * 1024, NULL, 1, NULL);
-  xTaskCreate(ps4_controller_task, "task-ros", 4 * 1024, NULL, 1, NULL);
+  xTaskCreate(rosStuff, "task-ros", 4 * 1024, NULL, 1, NULL);
 
   // xTaskCreate(task_velocity, "task_velocity", 4 * 1024, NULL, 1, NULL);
   // xTaskCreate(test_motor_working, "test_motor_working", 2 * 1024, NULL, 1,
