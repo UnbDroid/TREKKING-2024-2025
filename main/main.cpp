@@ -253,7 +253,7 @@ void task_velocity() {
   double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
 
   // Multiply the angular speed due to mechanical properties of the robot
-  angular_z *= 4; // Adjust this factor based on your robot's design
+  angular_z *= 2.8; // Adjust this factor based on your robot's design
 
   // Convert velocities to motor speeds using differential drive kinematics
   double wheel_base = 0.235;                 // Distance between wheels (meters)
@@ -373,32 +373,37 @@ void rosStuff(void *task_params) {
 
   // create subscriber
   RCCHECK(rclc_subscription_init_default(
-      &subscriber, &node,
-      ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "cmd_vel_nav"));
-
+  &subscriber, &node,
+  ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "cmd_vel"));
+  #define USARCONTROLE false
+    
   // create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg,
-                                         &subscription_callback, ALWAYS));
+  &subscription_callback, ALWAYS));
   while (1) {
-    btd_vhci_mutex_lock();
-    if (Ps4.getButtonClick(OPTIONS)) {
-      if (!is_controller_on) {
-        is_controller_on = true;
-        Ps4.setLed(0, 0, 255); // Set LED to green when the robot is on
-      } else {
-        is_controller_on = false;
-        Ps4.setLed(255, 0, 0);
+    if (USARCONTROLE) {
+      btd_vhci_mutex_lock();
+      if (Ps4.getButtonClick(OPTIONS)) {
+        if (!is_controller_on) {
+          is_controller_on = true;
+          Ps4.setLed(0, 0, 255); // Set LED to green when the robot is on
+        } else {
+          is_controller_on = false;
+          Ps4.setLed(255, 0, 0);
+        }
       }
+      btd_vhci_mutex_unlock();
     }
-    btd_vhci_mutex_unlock();
-    if (is_controller_on) {
+    
+    rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
+
+    if (is_controller_on && USARCONTROLE) {
       btd_vhci_mutex_lock();
       // ESP_LOGI("teste", "to aqui na task do controle");
       robo.controll_robot();
       btd_vhci_mutex_unlock();
     } else {
-      rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
       task_velocity();
     }
     vTaskDelay(pdMS_TO_TICKS(10));
@@ -409,7 +414,6 @@ void ps4_controller_task(void *task_params) {
   robo.task_robot_controll(task_params);
 }
 
-#define USARCONTROLE true
 extern "C" void app_main(void) {
   esp_log_level_set("*", ESP_LOG_NONE);
   robot_setup();
