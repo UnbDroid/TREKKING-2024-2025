@@ -24,10 +24,10 @@ MotorDC::MotorDC(const int ENCA, const int PWM, const int L_IN, const int R_IN,
 }
 
 void MotorDC::stop_motor() {
-  ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(0));
+  ledc_set_duty(LEDC_MODE, this->LEDC_CHANNEL, (uint32_t)(255));
   ledc_update_duty(LEDC_MODE, this->LEDC_CHANNEL);
-  gpio_set_level((gpio_num_t)this->L_IN, 0);
-  gpio_set_level((gpio_num_t)this->R_IN, 0);
+  gpio_set_level((gpio_num_t)this->L_IN, 1);
+  gpio_set_level((gpio_num_t)this->R_IN, 1);
 }
 
 void MotorDC::configure_motor(int tpt, float p, float i, float d) {

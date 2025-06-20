@@ -253,7 +253,7 @@ void task_velocity() {
   double angular_z = (double)msg.angular.z; // Angular velocity in rad/s
 
   // Multiply the angular speed due to mechanical properties of the robot
-  angular_z *= 2.8; // Adjust this factor based on your robot's design
+  angular_z *= 4.0; // Adjust this factor based on your robot's design
 
   // Convert velocities to motor speeds using differential drive kinematics
   double wheel_base = 0.235;                 // Distance between wheels (meters)
